@@ -1,59 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Rekoptik
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Mulai Dikembangkan:** Desember 2025
 
-## About Laravel
+## Deskripsi Proyek
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Rekoptik** adalah aplikasi web berbasis **Laravel 12** yang dirancang untuk melakukan rekapitulasi dan pengelolaan data medis optik secara terstruktur, aman, dan mudah digunakan. Aplikasi ini membantu klinik optik atau tenaga kesehatan mata dalam mencatat, menyimpan, serta menganalisis data pemeriksaan pasien secara digital sehingga proses administrasi menjadi lebih efisien dan minim kesalahan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Aplikasi ini dikembangkan dengan pendekatan modern Laravel serta memanfaatkan paket autentikasi bawaan untuk menjamin keamanan akses data.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Pengembangan aplikasi Rekoptik mulai dilakukan pada tahun 2025 sebagai bagian dari upaya digitalisasi pencatatan dan rekap data medis optik. Proses pengembangan difokuskan pada pembuatan sistem yang stabil, mudah dikembangkan, serta sesuai dengan kebutuhan operasional klinik optik dan tenaga kesehatan mata.
 
-## Learning Laravel
+## Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* **Framework**: Laravel 12
+* **Bahasa Pemrograman**: PHP
+* **Database**: MySQL / MariaDB (dapat disesuaikan)
+* **Frontend**: Blade Template Engine
+* **Authentication Package**: Laravel Breeze
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Package Utama
 
-## Laravel Sponsors
+### Laravel Breeze
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Laravel Breeze digunakan sebagai solusi autentikasi sederhana dan ringan yang menyediakan:
 
-### Premium Partners
+* Login dan Logout
+* Registrasi pengguna
+* Reset dan verifikasi password
+* Struktur autentikasi yang rapi dan mudah dikembangkan
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Dengan Breeze, sistem Rekoptik memiliki fondasi keamanan yang baik untuk membatasi akses data medis hanya kepada pengguna yang berwenang.
 
-## Contributing
+## Fitur Utama Aplikasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Autentikasi pengguna (Admin / Petugas)
+* Manajemen data pasien optik
+* Rekap data pemeriksaan medis mata
+* Penyimpanan riwayat pemeriksaan
+* Pengelolaan data secara terpusat dan terdokumentasi
+* Antarmuka sederhana dan mudah dipahami
 
-## Code of Conduct
+## Tujuan Pengembangan
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Pengembangan aplikasi Rekoptik bertujuan untuk:
 
-## Security Vulnerabilities
+1. Meningkatkan efisiensi pengelolaan data medis optik
+2. Mengurangi pencatatan manual yang rawan kesalahan
+3. Mempermudah proses rekap dan pelaporan data pasien
+4. Mendukung transformasi digital pada layanan kesehatan optik
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Instalasi Singkat
 
-## License
+1. Clone repository proyek
+2. Jalankan perintah instalasi dependency:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```bash
+   composer install
+   ```
+3. Salin file environment:
+
+   ```bash
+   cp .env.example .env
+   ```
+4. Generate application key:
+
+   ```bash
+   php artisan key:generate
+   ```
+5. Konfigurasi database pada file `.env`
+6. Jalankan migrasi database:
+
+   ```bash
+   php artisan migrate
+   ```
+7. Jalankan server aplikasi:
+
+   ```bash
+   php artisan serve
+   ```
+
+
