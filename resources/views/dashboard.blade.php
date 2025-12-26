@@ -6,11 +6,11 @@
         </h2>
     </x-slot>
 
-    <!-- <x-slot name="headerAction">
+    {{-- <x-slot name="headerAction">
         <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
             + Tambah
         </a>
-    </x-slot> -->
+    </x-slot> --}}
 
     <!-- Content -->
     <div class="bg-white rounded-lg border p-6">

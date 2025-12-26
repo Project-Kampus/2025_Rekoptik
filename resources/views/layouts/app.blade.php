@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title> {{ config('app.name', 'Laravel') }} </title>
+
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,9 +23,10 @@
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow">
         <div class="flex items-center justify-between px-6 py-2">
             <!-- Logo -->
-            <div class="text-xl font-bold text-blue-600">
+            <a href="{{ route('welcome') }}" class="text-xl font-bold text-blue-600">
                 Rekoptik
-            </div>
+            </a>
+
 
             <!-- Account -->
             <div class="flex items-center">
@@ -66,43 +68,48 @@
 
     <!-- Main Content -->
     <main class="ml-64 pt-20 px-6 bg-gray-100 min-h-screen">
-        <!-- Header -->
-        @if (isset($header))
-        <header class="max-w-7xl mx-auto bg-white border border-gray-200 rounded-lg mb-4">
-            <div class="px-6 py-4 flex items-center justify-between">
-                <!-- Title -->
-                {{ $header }}
-                <!-- Header Action (optional) -->
-                @isset($headerAction)
-                <div class="flex items-center gap-2">
-                    {{ $headerAction }}
-                </div>
-                @endisset
-            </div>
-        </header>
-        @endif
 
-        <!-- Content -->
-        <div class="flex flex-col space-y-2 max-w-7xl mx-auto">
-            {{ $slot }}
+        <!-- Wrapper Flex -->
+        <div class="mx-auto flex flex-col min-h-[calc(100vh-5rem)]">
+
+            <!-- Header -->
+            @if (isset($header))
+            <header class="bg-white border border-gray-200 rounded-lg mb-4">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    {{ $header }}
+
+                    @isset($headerAction)
+                    <div class="flex items-center gap-2">
+                        {{ $headerAction }}
+                    </div>
+                    @endisset
+                </div>
+            </header>
+            @endif
+
+            <!-- Content -->
+            <div class="flex-grow flex flex-col space-y-2">
+                {{ $slot }}
+            </div>
+
+            <!-- Footer -->
+            <footer class="mt-8 border-t border-gray-200">
+                <div class="px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
+                    <div>
+                        © {{ date('Y') }} <span class="font-medium text-gray-700">Rekoptik</span>. All rights reserved.
+                    </div>
+                    <div class="flex items-center gap-4 mt-2 sm:mt-0">
+                        <a href="#" class="hover:text-gray-700">Privacy Policy</a>
+                        <a href="#" class="hover:text-gray-700">Terms</a>
+                        <a href="#" class="hover:text-gray-700">Support</a>
+                    </div>
+                </div>
+            </footer>
+
         </div>
 
-        <!-- Footer -->
-        <footer class="mt-8 border-t border-gray-200">
-            <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
-                <div>
-                    © {{ date('Y') }} <span class="font-medium text-gray-700">Rekoptik</span>. All rights reserved.
-                </div>
-                <div class="flex items-center gap-4 mt-2 sm:mt-0">
-                    <a href="#" class="hover:text-gray-700 transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-700 transition">Terms</a>
-                    <a href="#" class="hover:text-gray-700 transition">Support</a>
-                </div>
-
-            </div>
-        </footer>
-
     </main>
+
 
 
 </html>
