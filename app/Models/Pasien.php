@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Pasien extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pasiens';
+
+    /**
+     * Mass assignment
+     */
+    protected $fillable = [
+        'nama_pasien',
+        'no_kartu',
+        'no_hp',
+        'tanggal_masuk',
+        'no_sep',
+        'tanggal_pemeriksaan',
+        'alamat',
+        'kategori',
+
+        // Resep OD
+        'od_sferis',
+        'od_silindris',
+        'od_axis',
+        'od_add_lensa',
+
+        // Resep OS
+        'os_sferis',
+        'os_silindris',
+        'os_axis',
+        'os_add_lensa',
+
+        'resep_dari',
+
+        // Kacamata
+        'lensa',
+        'pd',
+        'frame_id',
+
+        // Biaya
+        'biaya_kacamata',
+        'dibayar_bpjs',
+        'dibayar_pasien',
+        'sisa',
+
+        'tanggal_pengambilan',
+    ];
+
+    /**
+     * Casting tipe data
+     */
+    protected $casts = [
+        'tanggal_masuk' => 'date',
+        'tanggal_pemeriksaan' => 'date',
+        'tanggal_pengambilan' => 'date',
+
+        'od_sferis' => 'decimal:2',
+        'od_silindris' => 'decimal:2',
+        'od_add_lensa' => 'decimal:2',
+
+        'os_sferis' => 'decimal:2',
+        'os_silindris' => 'decimal:2',
+        'os_add_lensa' => 'decimal:2',
+
+        'pd' => 'decimal:2',
+    ];
+
+    /**
+     * Relasi ke Frame
+     */
+    public function frame()
+    {
+        return $this->belongsTo(Frame::class);
+    }
+
+    /**
+     * Helper: hitung sisa otomatis
+     */
+    public function hitungSisa()
+    {
+        return ($this->biaya_kacamata ?? 0)
+            - (($this->dibayar_bpjs ?? 0) + ($this->dibayar_pasien ?? 0));
+    }
+}

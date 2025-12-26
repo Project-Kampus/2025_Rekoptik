@@ -16,10 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // user admin
         User::create([
             'name'     => 'Administrator',
             'email'    => 'admin@gmail.com',
             'password' => Hash::make('password'),
         ]);
+
+        // frame
+        $this->call(FrameSeeder::class);
     }
+
 }

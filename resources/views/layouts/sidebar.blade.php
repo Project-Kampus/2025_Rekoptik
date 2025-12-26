@@ -38,32 +38,17 @@ $inactiveClass = 'text-gray-600 hover:bg-gray-100 hover:text-gray-800';
       </a>
    </li>
 
-   <!-- Manajemen Bingkai -->
+   <!-- Manajemen Frame -->
    <li>
-      <a href="{{ route('bingkai.index') }}"
+      <a href="{{ route('frame.index') }}"
          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition leading-tight
-           {{ request()->routeIs('bingkai.*') ? $activeClass : $inactiveClass }}">
+           {{ request()->routeIs('frame.*') ? $activeClass : $inactiveClass }}">
 
          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2" />
          </svg>
 
-         <span>Manajemen Bingkai</span>
-      </a>
-   </li>
-
-   <!-- Manajemen Lensa -->
-   <li>
-      <a href="{{ route('lensa.index') }}"
-         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition leading-tight
-           {{ request()->routeIs('lensa.*') ? $activeClass : $inactiveClass }}">
-
-         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <circle cx="8" cy="12" r="4" stroke-width="2" />
-            <circle cx="16" cy="12" r="4" stroke-width="2" />
-         </svg>
-
-         <span>Manajemen Lensa</span>
+         <span>Manajemen Freme</span>
       </a>
    </li>
 

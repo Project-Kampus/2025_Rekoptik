@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\BingkaiController;
-use App\Http\Controllers\LensaController;
+use App\Http\Controllers\FrameController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\SettingController;
@@ -24,24 +23,14 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::delete('/{id}', [RekamMedisController::class, 'destroy'])->name('destroy');
     });
 
-    // Manajemen Bingkai
-    Route::prefix('bingkai')->name('bingkai.')->group(function () {
-        Route::get('/', [BingkaiController::class, 'index'])->name('index');
-        Route::get('/create', [BingkaiController::class, 'create'])->name('create');
-        Route::post('/', [BingkaiController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [BingkaiController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [BingkaiController::class, 'update'])->name('update');
-        Route::delete('/{id}', [BingkaiController::class, 'destroy'])->name('destroy');
-    });
-
-    // Manajemen Lensa
-    Route::prefix('lensa')->name('lensa.')->group(function () {
-        Route::get('/', [LensaController::class, 'index'])->name('index');
-        Route::get('/create', [LensaController::class, 'create'])->name('create');
-        Route::post('/', [LensaController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [LensaController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [LensaController::class, 'update'])->name('update');
-        Route::delete('/{id}', [LensaController::class, 'destroy'])->name('destroy');
+    // Manajemen Frame
+    Route::prefix('frame')->name('frame.')->group(function () {
+        Route::get('/', [FrameController::class, 'index'])->name('index');
+        Route::get('/create', [FrameController::class, 'create'])->name('create');
+        Route::post('/', [FrameController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [FrameController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [FrameController::class, 'update'])->name('update');
+        Route::delete('/{id}', [FrameController::class, 'destroy'])->name('destroy');
     });
 
     // Pengaturan Sistem
