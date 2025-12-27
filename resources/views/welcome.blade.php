@@ -67,12 +67,14 @@
 
         <!-- Ilustrasi -->
         <div class="hidden md:flex justify-center">
-            <div class="bg-indigo-100 rounded-2xl p-10">
-                <svg class="w-48 h-48 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                        d="M9 12h6m-6 4h6M7 8h10M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" />
-                </svg>
+            <div class="bg-indigo-100 rounded-2xl p-10 flex justify-center items-center">
+
+                <img
+                    src="{{ asset('favicon.png') }}"
+                    alt="Logo {{ config('app.name') }}"
+                    class="h-24 object-contain">
             </div>
+
         </div>
     </section>
 

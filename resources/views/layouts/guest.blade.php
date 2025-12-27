@@ -11,6 +11,17 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    @php
+    $logo = $pengaturan->logo ?? null;
+    $ext = $logo ? strtolower(pathinfo($logo, PATHINFO_EXTENSION)) : null;
+    @endphp
+
+    @if($logo && $ext === 'ico')
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $logo) }}">
+    @else
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    @endif
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,8 +30,22 @@
 <body class="font-sans text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            <a href="/" class="flex justify-center">
+                @php
+                $logo = $pengaturan->logo ?? null;
+                @endphp
+
+                @if ($logo)
+                <img
+                    src="{{ asset('storage/' . $logo) }}"
+                    alt="Logo {{ config('app.name') }}"
+                    class="h-20 object-contain">
+                @else
+                <img
+                    src="{{ asset('favicon.ico') }}"
+                    alt="Logo {{ config('app.name') }}"
+                    class="h-20 object-contain">
+                @endif
             </a>
         </div>
 

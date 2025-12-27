@@ -68,7 +68,6 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
       </ul>
    </li>
 
-   <li class="my-3 border-t border-gray-200"></li>
 
    <!-- MANAJEMEN FRAME -->
    <li x-data="{ open: {{ $isFrameActive ? 'true' : 'false' }} }">
