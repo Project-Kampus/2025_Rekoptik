@@ -15,13 +15,12 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     @php
     $logo = $pengaturan->logo ?? null;
-    $ext = $logo ? strtolower(pathinfo($logo, PATHINFO_EXTENSION)) : null;
     @endphp
 
-    @if($logo && $ext === 'ico')
+    @if($logo )
     <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $logo) }}">
     @else
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     @endif
 
 
