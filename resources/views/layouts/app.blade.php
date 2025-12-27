@@ -6,20 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title> {{ config('app.name', 'Laravel') }} </title>
-
+    <title>
+        {{ $pengaturan->nama_aplikasi ?? config('app.name', 'Laravel') }}
+    </title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <!-- Alpine Plugins -->
+    @php
+    $logo = $pengaturan->logo ?? null;
+    $ext = $logo ? strtolower(pathinfo($logo, PATHINFO_EXTENSION)) : null;
+    @endphp
+
+    @if($logo && $ext === 'ico')
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $logo) }}">
+    @else
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    @endif
+
+
+    <!-- Alpine -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-     
-    <!-- Alpine Core -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-
-    <!-- Scripts -->
+    <!-- Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -28,9 +38,19 @@
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow">
         <div class="flex items-center justify-between px-6 py-2">
-            <!-- Logo -->
-            <a href="{{ route('welcome') }}" class="text-xl font-bold text-blue-600">
-                Rekoptik
+
+            <!-- LOGO & NAMA -->
+            <a href="{{ route('welcome') }}" class="flex items-center gap-3">
+                @if(!empty($pengaturan?->logo))
+                <img
+                    src="{{ asset('storage/' . $pengaturan->logo) }}"
+                    class="h-9 w-auto"
+                    alt="Logo">
+                @endif
+
+                <span class="text-xl font-bold text-blue-600">
+                    {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}
+                </span>
             </a>
 
 
@@ -99,77 +119,27 @@
             </div>
 
             <!-- Footer -->
-            <footer class="mt-8 border-t border-gray-200">
-                <div class="px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500">
+            <footer class="mt-8 border-t bg-white">
+                <div class="px-6 py-4 flex flex-col sm:flex-row justify-between text-sm text-gray-500">
                     <div>
-                        © {{ date('Y') }} <span class="font-medium text-gray-700">Rekoptik</span>. All rights reserved.
+                        © {{ date('Y') }}
+                        <span class="font-medium text-gray-700">
+                            {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}
+                        </span>
                     </div>
-                    <div class="flex items-center gap-4 mt-2 sm:mt-0">
-                        <a href="#" class="hover:text-gray-700">Privacy Policy</a>
-                        <a href="#" class="hover:text-gray-700">Terms</a>
-                        <a href="#" class="hover:text-gray-700">Support</a>
+
+                    <div class="mt-2 sm:mt-0">
+                        {{ $pengaturan->footer ?? 'All rights reserved.' }}
                     </div>
                 </div>
             </footer>
+
 
         </div>
 
     </main>
 
     <!-- Notification -->
-    @if (session('success') || session('error') || $errors->any())
-    <div
-        x-data="{ show: true }"
-        x-init="setTimeout(() => show = false, 5000)"
-        x-show="show"
-        x-transition:enter="transform transition ease-out duration-300"
-        x-transition:enter-start="translate-x-full opacity-0"
-        x-transition:enter-end="translate-x-0 opacity-100"
-        x-transition:leave="transform transition ease-in duration-200"
-        x-transition:leave-start="translate-x-0 opacity-100"
-        x-transition:leave-end="translate-x-full opacity-0"
-        class="fixed top-20 right-6 z-50 max-w-sm w-full">
-        <div class="
-        flex items-start gap-3
-        px-4 py-3 rounded-lg shadow-lg border
-        @if (session('success'))
-            bg-green-50 border-green-200
-        @elseif (session('error') || $errors->any())
-            bg-red-50 border-red-200
-        @endif
-    ">
-            <!-- Close Button (Left) -->
-            <button
-                @click="show = false"
-                class="text-gray-400 hover:text-gray-600 focus:outline-none">
-                ✕
-            </button>
-
-            <!-- Content -->
-            <div class="flex-1 text-sm">
-                @if (session('success'))
-                <p class="font-medium text-green-700">
-                    {{ session('success') }}
-                </p>
-                @elseif (session('error'))
-                <p class="font-medium text-red-700">
-                    {{ session('error') }}
-                </p>
-                @elseif ($errors->any())
-                <p class="font-medium text-red-700 mb-1">
-                    Terjadi kesalahan:
-                </p>
-                <ul class="list-disc list-inside text-red-600">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                @endif
-            </div>
-        </div>
-    </div>
-    @endif
-
-
+    @include('layouts.notification')
 
 </html>

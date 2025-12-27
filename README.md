@@ -20,8 +20,8 @@ Pengembangan aplikasi Rekoptik mulai dilakukan pada tahun 2025 sebagai bagian da
 
 ## Package Utama
 
-* Laravel Breeze
-* Maatwebsite **maatwebsite/excel**
+* **Laravel Breeze** - Laravel Breeze
+* **maatwebsite/excel** - Export dan import data ke format Excel
 
 
 ## Fitur Utama Aplikasi
@@ -66,10 +66,24 @@ Pengembangan aplikasi Rekoptik bertujuan untuk:
    ```bash
    php artisan migrate
    ```
-7. Jalankan server aplikasi:
+7. Jalankan seeder
+
+   ```bash
+   php artisan db:seed
+   ```
+8. Buat symbolic link storage:
+
+   ```bash
+   php artisan storage:link
+   ```
+9. Jalankan server aplikasi:
 
    ```bash
    php artisan serve
    ```
+Aplikasi dapat diakses melalui browser di:
+```bash
+http://localhost:8000
+```
 
 

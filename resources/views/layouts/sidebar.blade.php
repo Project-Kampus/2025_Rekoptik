@@ -113,9 +113,9 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
 
    <!-- Pengaturan Sistem -->
    <li>
-      <a href="{{ route('settings.index') }}"
+      <a href="{{ route('pengaturan.index') }}"
          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
-         {{ request()->routeIs('settings.*') ? $activeClass : $inactiveClass }}">
+         {{ request()->routeIs('pengaturan.*') ? $activeClass : $inactiveClass }}">
          <span>Pengaturan Sistem</span>
       </a>
    </li>

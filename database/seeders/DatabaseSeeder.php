@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
 
         // frame
         $this->call(FrameSeeder::class);
+        $this->call(PengaturanSeeder::class);
     }
-
 }

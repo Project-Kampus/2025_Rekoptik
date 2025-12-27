@@ -4,7 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekoptik | Sistem Rekap Data Medis Optik</title>
+    <title> {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}| Sistem Rekap Data Medis Optik</title>
+    @php
+    $logo = $pengaturan->logo ?? null;
+    $ext = $logo ? strtolower(pathinfo($logo, PATHINFO_EXTENSION)) : null;
+    @endphp
+
+    @if($logo && $ext === 'ico')
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $logo) }}">
+    @else
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    @endif
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -15,7 +26,7 @@
     <nav class="bg-white shadow">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-xl font-semibold text-indigo-600">
-                Rekoptik
+                {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}
             </div>
 
             <div>
@@ -36,7 +47,7 @@
             </h1>
 
             <p class="text-gray-600 mb-8">
-                Rekoptik membantu klinik optik dan tenaga kesehatan mata
+                {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }} membantu klinik optik dan tenaga kesehatan mata
                 dalam mencatat, mengelola, dan merekap data pemeriksaan
                 pasien secara terstruktur, aman, dan efisien.
             </p>
@@ -69,7 +80,7 @@
     <section id="fitur" class="bg-white py-16">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-2xl font-bold text-center mb-12">
-                Fitur Utama Rekoptik
+                Fitur Utama {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -100,7 +111,7 @@
     <!-- Footer -->
     <footer class="bg-gray-100 py-6">
         <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
-            © {{ date('Y') }} Rekoptik. Sistem Rekap Data Medis Optik.
+            © {{ date('Y') }} {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}. Sistem Rekap Data Medis Optik.
         </div>
     </footer>
 

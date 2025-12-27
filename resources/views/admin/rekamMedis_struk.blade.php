@@ -65,8 +65,17 @@
          <div class="bold">OPTIK UTAMA</div>
          <div class="small">PERIKSA MATA GRATIS</div>
          <div class="small">
-            Jl. Rd. Mattaher No. 83 Pasar Jambi<br>
-            Telp. (0741) 20483 | WA. 0852 6452 4577
+            {{ $pengaturan['alamat'] ?? '-' }}
+         </div>
+
+         <div class="small">
+            @if(!empty($pengaturan['no_hp']))
+            Telp/WA. {{ $pengaturan['no_hp'] }}
+            @endif
+
+            @if(!empty($pengaturan['email']))
+            | {{ $pengaturan['email'] }}
+            @endif
          </div>
       </div>
 
