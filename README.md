@@ -76,11 +76,21 @@ Pengembangan aplikasi Rekoptik bertujuan untuk:
    ```bash
    php artisan storage:link
    ```
-9. Jalankan server aplikasi:
+9. Install Dependency Frontend (NPM)
 
    ```bash
-   php artisan serve
+   npm install
    ```
+10. Jalankan Build Asset Frontend
+
+      ```bash
+      npm run dev
+      ```
+11. Jalankan server aplikasi:
+
+      ```bash
+      php artisan serve
+      ```
 Aplikasi dapat diakses melalui browser di:
 ```bash
 http://localhost:8000
