@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nama_pasien');
             $table->string('no_kartu')->nullable();
             $table->string('no_hp')->nullable();
-            $table->date('tanggal_masuk')->nullable();
             $table->string('no_sep')->nullable();
             $table->date('tanggal_pemeriksaan');
             $table->string('alamat')->nullable();
@@ -38,7 +37,7 @@ return new class extends Migration
 
             // Kacamata yang Diberikan
             $table->string('lensa')->nullable();
-            $table->decimal('pd', 5, 2)->nullable();
+            $table->string('pd',)->nullable();
             $table->foreignId('frame_id')->nullable()->constrained('frames')->nullOnDelete();
 
             // Biaya

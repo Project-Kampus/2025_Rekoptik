@@ -15,13 +15,16 @@ class Pasien extends Model
      * Mass assignment
      */
     protected $fillable = [
+        // data pasien
         'nama_pasien',
-        'no_kartu',
         'no_hp',
-        'tanggal_masuk',
+        'no_kartu',
+        'alamat',
+
+        // pemeriksaan
+        'resep_dari',
         'no_sep',
         'tanggal_pemeriksaan',
-        'alamat',
         'kategori',
 
         // Resep OD
@@ -36,12 +39,11 @@ class Pasien extends Model
         'os_axis',
         'os_add_lensa',
 
-        'resep_dari',
 
         // Kacamata
+        'frame_id',
         'lensa',
         'pd',
-        'frame_id',
 
         // Biaya
         'biaya_kacamata',
@@ -68,7 +70,6 @@ class Pasien extends Model
         'os_silindris' => 'decimal:2',
         'os_add_lensa' => 'decimal:2',
 
-        'pd' => 'decimal:2',
     ];
 
     /**

@@ -15,8 +15,6 @@
       </a>
    </x-slot>
 
-   <script src="//unpkg.com/alpinejs" defer></script>
-
    <div class="bg-white rounded-lg border p-6">
       {{-- Header --}}
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">

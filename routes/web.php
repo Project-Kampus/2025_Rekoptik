@@ -18,9 +18,11 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/', [RekamMedisController::class, 'index'])->name('index');
         Route::get('/create', [RekamMedisController::class, 'create'])->name('create');
         Route::post('/', [RekamMedisController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [RekamMedisController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [RekamMedisController::class, 'update'])->name('update');
-        Route::delete('/{id}', [RekamMedisController::class, 'destroy'])->name('destroy');
+        Route::get('/{pasien}/edit', [RekamMedisController::class, 'edit'])->name('edit');
+        Route::put('/{pasien}', [RekamMedisController::class, 'update'])->name('update');
+        Route::delete('/{pasien}', [RekamMedisController::class, 'destroy'])->name('destroy');
+        Route::get('/{pasien}/struk', [RekamMedisController::class, 'struk'])->name('struk');
+        Route::get('/rekap', [RekamMedisController::class, 'rekap'])->name('rekap');
     });
 
     // Manajemen Frame
