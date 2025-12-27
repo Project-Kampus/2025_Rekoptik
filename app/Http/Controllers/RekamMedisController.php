@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RekapMedisExport;
 use App\Models\Frame;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RekamMedisController extends Controller
 {
@@ -43,28 +45,36 @@ class RekamMedisController extends Controller
     {
         $data = $request->validate([
             'nama_pasien' => 'required',
-            'resep_dari' => 'nullable',
-            'no_kartu' => 'required',
             'no_hp' => 'nullable',
+            'no_kartu' => 'required',
             'alamat' => 'nullable',
-            'kategori' => 'required',
+
+            'resep_dari' => 'nullable',
+            'no_sep' => 'required',
             'tanggal_pemeriksaan' => 'required|date',
+            'diagnosa' => 'required',
+            'kategori' => 'required',
 
             // Resep
             'od_sferis' => 'nullable|numeric',
             'od_silindris' => 'nullable|numeric',
             'od_axis' => 'nullable|numeric',
+            'od_add_lensa' => 'nullable|numeric',
+
             'os_sferis' => 'nullable|numeric',
             'os_silindris' => 'nullable|numeric',
             'os_axis' => 'nullable|numeric',
+            'os_add_lensa' => 'nullable|numeric',
 
+            'frame_id' => 'nullable|exists:frames,id',
             'lensa' => 'nullable',
             'pd' => 'nullable|string',
-            'frame_id' => 'nullable|exists:frames,id',
 
             'biaya_kacamata' => 'nullable|numeric',
             'dibayar_bpjs' => 'nullable|numeric',
             'dibayar_pasien' => 'nullable|numeric',
+
+            'tanggal_dipesan' => 'nullable|date',
             'tanggal_pengambilan' => 'nullable|date',
         ]);
 
@@ -95,28 +105,36 @@ class RekamMedisController extends Controller
     {
         $data = $request->validate([
             'nama_pasien' => 'required',
-            'resep_dari' => 'nullable',
-            'no_kartu' => 'required',
             'no_hp' => 'nullable',
+            'no_kartu' => 'required',
             'alamat' => 'nullable',
-            'kategori' => 'required',
+
+            'resep_dari' => 'nullable',
+            'no_sep' => 'required',
             'tanggal_pemeriksaan' => 'required|date',
+            'diagnosa' => 'required',
+            'kategori' => 'required',
 
             // Resep
             'od_sferis' => 'nullable|numeric',
             'od_silindris' => 'nullable|numeric',
             'od_axis' => 'nullable|numeric',
+            'od_add_lensa' => 'nullable|numeric',
+
             'os_sferis' => 'nullable|numeric',
             'os_silindris' => 'nullable|numeric',
             'os_axis' => 'nullable|numeric',
+            'os_add_lensa' => 'nullable|numeric',
 
+            'frame_id' => 'nullable|exists:frames,id',
             'lensa' => 'nullable',
             'pd' => 'nullable|string',
-            'frame_id' => 'nullable|exists:frames,id',
 
             'biaya_kacamata' => 'nullable|numeric',
             'dibayar_bpjs' => 'nullable|numeric',
             'dibayar_pasien' => 'nullable|numeric',
+
+            'tanggal_dipesan' => 'nullable|date',
             'tanggal_pengambilan' => 'nullable|date',
         ]);
 
@@ -158,4 +176,47 @@ class RekamMedisController extends Controller
     {
         return view('admin.rekamMedis_struk', compact('pasien'));
     }
+
+    public function rekap(Request $request)
+    {
+        $query = Pasien::with('frame');
+
+        // SEARCH
+        if ($request->filled('q')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('nama_pasien', 'like', '%' . $request->q . '%')
+                    ->orWhere('no_kartu', 'like', '%' . $request->q . '%');
+            });
+        }
+
+        // FILTER KATEGORI
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        // FILTER TANGGAL
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
+            $query->whereBetween('tanggal_pemeriksaan', [
+                $request->tanggal_awal,
+                $request->tanggal_akhir
+            ]);
+        }
+
+        $pasiens = $query
+            ->latest('tanggal_pemeriksaan')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.rekamMedis_rekap', compact('pasiens'));
+    }
+    public function rekapExcel(Request $request)
+    {
+        $fileName = 'rekap-medis-' . now()->format('d-m-Y') . '.xlsx';
+
+        return Excel::download(
+            new RekapMedisExport($request),
+            $fileName
+        );
+    }
+    public function rekapPdf() {}
 }

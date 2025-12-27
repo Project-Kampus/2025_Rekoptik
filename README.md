@@ -20,16 +20,9 @@ Pengembangan aplikasi Rekoptik mulai dilakukan pada tahun 2025 sebagai bagian da
 
 ## Package Utama
 
-### Laravel Breeze
+* Laravel Breeze
+* Maatwebsite **maatwebsite/excel**
 
-Laravel Breeze digunakan sebagai solusi autentikasi sederhana dan ringan yang menyediakan:
-
-* Login dan Logout
-* Registrasi pengguna
-* Reset dan verifikasi password
-* Struktur autentikasi yang rapi dan mudah dikembangkan
-
-Dengan Breeze, sistem Rekoptik memiliki fondasi keamanan yang baik untuk membatasi akses data medis hanya kepada pengguna yang berwenang.
 
 ## Fitur Utama Aplikasi
 

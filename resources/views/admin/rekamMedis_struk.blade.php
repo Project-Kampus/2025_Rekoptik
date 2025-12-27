@@ -95,7 +95,7 @@
             <td>: {{ $pasien->alamat ?? '-' }}</td>
          </tr>
          <tr>
-            <td>Gagang</td>
+            <td>Gagang/Frame</td>
             <td>: {{ $pasien->frame?->nama_frame ?? '-' }}</td>
          </tr>
          <tr>
@@ -104,7 +104,7 @@
          </tr>
          <tr>
             <td>Keterangan</td>
-            <td>: {{ $pasien->no_hp ?? '-' }}</td>
+            <td>: </td>
          </tr>
       </table>
 
@@ -112,7 +112,7 @@
       <table class="border mt">
          <thead>
             <tr>
-               <th colspan="3">OD</th>
+               <th colspan="4">OD</th>
                <th colspan="4">OS</th>
                <th rowspan="2">PD</th>
             </tr>
@@ -120,6 +120,7 @@
                <th>SPH</th>
                <th>CYL</th>
                <th>AXIS</th>
+               <th>ADD</th>
                <th>SPH</th>
                <th>CYL</th>
                <th>AXIS</th>
@@ -131,6 +132,7 @@
                <td>{{ $pasien->od_sferis }}</td>
                <td>{{ $pasien->od_silindris }}</td>
                <td>{{ $pasien->od_axis }}</td>
+               <td>{{ $pasien->od_add_lensa }}</td>
                <td>{{ $pasien->os_sferis }}</td>
                <td>{{ $pasien->os_silindris }}</td>
                <td>{{ $pasien->os_axis }}</td>
@@ -159,11 +161,11 @@
             <td>: Rp {{ number_format($pasien->sisa,0,',','.') }}</td>
          </tr>
          <tr>
-            <td>Dipesan</td>
+            <td>Dipesan tgl</td>
             <td>: {{ optional($pasien->tanggal_pemeriksaan)->format('d-m-Y') }}</td>
          </tr>
          <tr>
-            <td>Siap</td>
+            <td>Siap tgl</td>
             <td>: {{ optional($pasien->tanggal_pengambilan)->format('d-m-Y') }}</td>
          </tr>
       </table>

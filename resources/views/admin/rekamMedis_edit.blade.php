@@ -75,6 +75,15 @@
                </div>
 
                <div>
+                  <x-input-label value="Diagnosa" />
+                  <x-text-input
+                     name="diagnosa"
+                     class="mt-1 block w-full"
+                     value="{{ old('diagnosa', $pasien->diagnosa) }}"
+                     required />
+               </div>
+
+               <div>
                   <x-input-label value="No Rujukan / SEP" />
                   <x-text-input
                      name="no_sep"
@@ -110,32 +119,89 @@
          <!-- RESEP OD -->
          <div>
             <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kanan (OD)</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-               <x-text-input name="od_sferis" placeholder="Sferis"
-                  value="{{ old('od_sferis', $pasien->od_sferis) }}" />
-               <x-text-input name="od_silindris" placeholder="Silindris"
-                  value="{{ old('od_silindris', $pasien->od_silindris) }}" />
-               <x-text-input name="od_axis" placeholder="Axis"
-                  value="{{ old('od_axis', $pasien->od_axis) }}" />
-               <x-text-input name="od_add_lensa" placeholder="Add"
-                  value="{{ old('od_add_lensa', $pasien->od_add_lensa) }}" />
+               <div>
+                  <x-input-label value="Sferis (SPH)" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="od_sferis"
+                     placeholder="Contoh: -1.25"
+                     value="{{ old('od_sferis', $pasien->od_sferis) }}" />
+               </div>
+
+               <div>
+                  <x-input-label value="Silindris (CYL)" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="od_silindris"
+                     placeholder="Contoh: -0.50"
+                     value="{{ old('od_silindris', $pasien->od_silindris) }}" />
+               </div>
+
+               <div>
+                  <x-input-label value="Axis (AX)" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="od_axis"
+                     placeholder="0 – 180"
+                     value="{{ old('od_axis', $pasien->od_axis) }}" />
+               </div>
+
+               <div>
+                  <x-input-label value="Add" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="od_add_lensa"
+                     placeholder="+1.00"
+                     value="{{ old('od_add_lensa', $pasien->od_add_lensa) }}" />
+               </div>
             </div>
          </div>
 
-         <!-- RESEP OS -->
+
          <div>
             <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kiri (OS)</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-               <x-text-input name="os_sferis" placeholder="Sferis"
-                  value="{{ old('os_sferis', $pasien->os_sferis) }}" />
-               <x-text-input name="os_silindris" placeholder="Silindris"
-                  value="{{ old('os_silindris', $pasien->os_silindris) }}" />
-               <x-text-input name="os_axis" placeholder="Axis"
-                  value="{{ old('os_axis', $pasien->os_axis) }}" />
-               <x-text-input name="os_add_lensa" placeholder="Add"
-                  value="{{ old('os_add_lensa', $pasien->os_add_lensa) }}" />
+               <div>
+                  <x-input-label value="Sferis (SPH)" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="os_sferis"
+                     placeholder="Contoh: -1.00"
+                     value="{{ old('os_sferis', $pasien->os_sferis) }}" />
+               </div>
+
+               <div>
+                  <x-input-label value="Silindris (CYL)" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="os_silindris"
+                     placeholder="Contoh: -0.75"
+                     value="{{ old('os_silindris', $pasien->os_silindris) }}" />
+               </div>
+
+               <div>
+                  <x-input-label value="Axis (AX)" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="os_axis"
+                     placeholder="0 – 180"
+                     value="{{ old('os_axis', $pasien->os_axis) }}" />
+               </div>
+
+               <div>
+                  <x-input-label value="Add" />
+                  <x-text-input
+                     class="mt-1 block w-full"
+                     name="os_add_lensa"
+                     placeholder="+1.00"
+                     value="{{ old('os_add_lensa', $pasien->os_add_lensa) }}" />
+               </div>
             </div>
          </div>
+
 
          <!-- KACAMATA -->
          <div>
@@ -202,6 +268,11 @@
                   <input type="hidden" name="dibayar_pasien" id="dibayar_pasien" value="{{ old('dibayar_pasien', $pasien->dibayar_pasien) }}">
                </div>
 
+               <div>
+                  <x-input-label value="Tanggal Pemesanan" />
+                  <x-text-input class="mt-1 block w-full" type="date" name="tanggal_dipesan"
+                     value="{{ old('tanggal_dipesan', optional($pasien->tanggal_dipesan)->format('Y-m-d')) }}" />
+               </div>
                <div>
                   <x-input-label value="Tanggal Pengambilan" />
                   <x-text-input class="mt-1 block w-full" type="date" name="tanggal_pengambilan"

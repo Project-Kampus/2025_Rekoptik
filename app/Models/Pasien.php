@@ -25,6 +25,7 @@ class Pasien extends Model
         'resep_dari',
         'no_sep',
         'tanggal_pemeriksaan',
+        'diagnosa',
         'kategori',
 
         // Resep OD
@@ -51,6 +52,7 @@ class Pasien extends Model
         'dibayar_pasien',
         'sisa',
 
+        'tanggal_dipesan',
         'tanggal_pengambilan',
     ];
 
@@ -60,15 +62,16 @@ class Pasien extends Model
     protected $casts = [
         'tanggal_masuk' => 'date',
         'tanggal_pemeriksaan' => 'date',
+        'tanggal_dipesan' => 'date',
         'tanggal_pengambilan' => 'date',
 
         'od_sferis' => 'decimal:2',
         'od_silindris' => 'decimal:2',
-        'od_add_lensa' => 'decimal:2',
+        'od_axis' => 'decimal:2',
 
         'os_sferis' => 'decimal:2',
         'os_silindris' => 'decimal:2',
-        'os_add_lensa' => 'decimal:2',
+        'os_axis' => 'decimal:2',
 
     ];
 

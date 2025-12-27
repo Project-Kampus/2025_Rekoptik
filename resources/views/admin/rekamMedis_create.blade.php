@@ -59,8 +59,13 @@
                </div>
 
                <div>
+                  <x-input-label value="Diagnosa" />
+                  <x-text-input name="diagnosa" class="mt-1 block w-full" placeholder="Diagnosa" required />
+               </div>
+
+               <div>
                   <x-input-label value="No Rujukan/SEP" />
-                  <x-text-input name="no_kartu" class="mt-1 block w-full" />
+                  <x-text-input name="no_sep" class="mt-1 block w-full" />
                </div>
 
                <div>
@@ -84,24 +89,57 @@
          <!-- RESEP OD -->
          <div>
             <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kanan (OD)</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-               <x-text-input name="od_sferis" placeholder="Sferis" />
-               <x-text-input name="od_silindris" placeholder="Silindris" />
-               <x-text-input name="od_axis" placeholder="Axis" />
-               <x-text-input name="od_add_lensa" placeholder="Add" />
+               <div>
+                  <x-input-label value="Sferis (SPH)" />
+                  <x-text-input class="mt-1 block w-full" name="od_sferis" placeholder="Contoh: -1.25" />
+               </div>
+
+               <div>
+                  <x-input-label value="Silindris (CYL)" />
+                  <x-text-input class="mt-1 block w-full" name="od_silindris" placeholder="Contoh: -0.50" />
+               </div>
+
+               <div>
+                  <x-input-label value="Axis (AX)" />
+                  <x-text-input class="mt-1 block w-full" name="od_axis" placeholder="0 – 180" />
+               </div>
+
+               <div>
+                  <x-input-label value="Add" />
+                  <x-text-input class="mt-1 block w-full" name="od_add_lensa" placeholder="+1.00" />
+               </div>
             </div>
          </div>
 
          <!-- RESEP OS -->
          <div>
             <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kiri (OS)</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-               <x-text-input name="os_sferis" placeholder="Sferis" />
-               <x-text-input name="os_silindris" placeholder="Silindris" />
-               <x-text-input name="os_axis" placeholder="Axis" />
-               <x-text-input name="os_add_lensa" placeholder="Add" />
+               <div>
+                  <x-input-label value="Sferis (SPH)" />
+                  <x-text-input class="mt-1 block w-full" name="os_sferis" placeholder="Contoh: -1.00" />
+               </div>
+
+               <div>
+                  <x-input-label value="Silindris (CYL)" />
+                  <x-text-input class="mt-1 block w-full" name="os_silindris" placeholder="Contoh: -0.75" />
+               </div>
+
+               <div>
+                  <x-input-label value="Axis (AX)" />
+                  <x-text-input class="mt-1 block w-full" name="os_axis" placeholder="0 – 180" />
+               </div>
+
+               <div>
+                  <x-input-label value="Add" />
+                  <x-text-input class="mt-1 block w-full" name="os_add_lensa" placeholder="+1.00" />
+               </div>
             </div>
          </div>
+
 
          <!-- KACAMATA -->
          <div>
@@ -169,6 +207,10 @@
                </div>
 
                {{-- Tanggal Pengambilan --}}
+               <div>
+                  <x-input-label value="Tanggal Pemesanan" />
+                  <x-text-input type="date" name="tanggal_dipesan" class="mt-1 block w-full" />
+               </div>
                <div>
                   <x-input-label value="Tanggal Pengambilan" />
                   <x-text-input type="date" name="tanggal_pengambilan" class="mt-1 block w-full" />

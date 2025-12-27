@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrameController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
@@ -11,7 +12,7 @@ Route::get('/', fn() => view('welcome'))->name('welcome');
 
 Route::middleware('auth', 'verified')->group(function () {
     // Dashboard
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Rekam Medis
     Route::prefix('rekam-medis')->name('rekam-medis.')->group(function () {
@@ -23,6 +24,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::delete('/{pasien}', [RekamMedisController::class, 'destroy'])->name('destroy');
         Route::get('/{pasien}/struk', [RekamMedisController::class, 'struk'])->name('struk');
         Route::get('/rekap', [RekamMedisController::class, 'rekap'])->name('rekap');
+        // Route::get('/rekap/pdf', [RekamMedisController::class, 'rekapPdf'])->name('rekapPdf');
+        Route::get('/rekap/excel', [RekamMedisController::class, 'rekapExcel'])->name('rekapExcel');
     });
 
     // Manajemen Frame
