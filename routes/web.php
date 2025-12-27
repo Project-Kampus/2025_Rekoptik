@@ -28,9 +28,15 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/', [FrameController::class, 'index'])->name('index');
         Route::get('/create', [FrameController::class, 'create'])->name('create');
         Route::post('/', [FrameController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [FrameController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [FrameController::class, 'update'])->name('update');
-        Route::delete('/{id}', [FrameController::class, 'destroy'])->name('destroy');
+        Route::get('/{frame}/edit', [FrameController::class, 'edit'])->name('edit');
+        Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
+        Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
+        Route::get('/{frame}/riwayat', [FrameController::class, 'riwayat'])->name('riwayat');
+        Route::get('/riwayatAll', [FrameController::class, 'riwayatAll'])->name('riwayat.all');
+
+
+        Route::get('/stok/create', [FrameController::class, 'createStok'])->name('stok.create');
+        Route::post('/stok/create', [FrameController::class, 'storeStok'])->name('stok.store');
     });
 
     // Pengaturan Sistem

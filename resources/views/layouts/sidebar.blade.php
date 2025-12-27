@@ -1,6 +1,8 @@
 @php
 $activeClass = 'bg-blue-50 text-blue-600 font-medium';
 $inactiveClass = 'text-gray-600 hover:bg-gray-100 hover:text-gray-800';
+
+$isFrameActive = request()->routeIs('frame.*');
 @endphp
 
 <ul class="px-3 py-4 space-y-2 text-sm">
@@ -8,64 +10,71 @@ $inactiveClass = 'text-gray-600 hover:bg-gray-100 hover:text-gray-800';
    <!-- Dashboard -->
    <li>
       <a href="{{ route('dashboard') }}"
-         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition leading-tight
-           {{ request()->routeIs('dashboard') ? $activeClass : $inactiveClass }}">
-
-         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-               d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z" />
-         </svg>
-
+         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
+         {{ request()->routeIs('dashboard') ? $activeClass : $inactiveClass }}">
          <span>Dashboard</span>
       </a>
    </li>
 
-   <!-- Divider -->
    <li class="my-3 border-t border-gray-200"></li>
 
    <!-- Rekam Medis -->
    <li>
       <a href="{{ route('rekam-medis.index') }}"
-         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition leading-tight
-           {{ request()->routeIs('rekam-medis.*') ? $activeClass : $inactiveClass }}">
-
-         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-               d="M9 12h6m-3-3v6M4.5 19.5h15A1.5 1.5 0 0021 18V6A1.5 1.5 0 0019.5 4.5h-15A1.5 1.5 0 003 6v12A1.5 1.5 0 004.5 19.5z" />
-         </svg>
-
+         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
+         {{ request()->routeIs('rekam-medis.*') ? $activeClass : $inactiveClass }}">
          <span>Rekam Medis</span>
       </a>
    </li>
 
-   <!-- Manajemen Frame -->
-   <li>
-      <a href="{{ route('frame.index') }}"
-         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition leading-tight
-           {{ request()->routeIs('frame.*') ? $activeClass : $inactiveClass }}">
+   <!-- MANAGEMEN FRAME (PARENT) -->
+   <li x-data="{ open: {{ $isFrameActive ? 'true' : 'false' }} }">
 
-         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2" />
+      <!-- Parent -->
+      <button
+         @click="open = !open"
+         class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition
+         {{ $isFrameActive ? $activeClass : $inactiveClass }}">
+
+         <span>Manajemen Frame</span>
+
+         <svg class="w-4 h-4 transition-transform"
+            :class="open ? 'rotate-180' : ''"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M19 9l-7 7-7-7" />
          </svg>
+      </button>
 
-         <span>Manajemen Freme</span>
-      </a>
+      <!-- Submenu -->
+      <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
+
+         <li>
+            <a href="{{ route('frame.index') }}"
+               class="block px-4 py-2 rounded-md transition
+               {{ request()->routeIs('frame.index') ? $activeClass : $inactiveClass }}">
+               Data Frame
+            </a>
+         </li>
+
+         <li>
+            <a href="{{ route('frame.riwayat.all') }}"
+               class="block px-4 py-2 rounded-md transition
+               {{ request()->routeIs('frame.riwayat.*') ? $activeClass : $inactiveClass }}">
+               Riwayat Frame
+            </a>
+         </li>
+
+      </ul>
    </li>
 
-   <!-- Divider -->
    <li class="my-3 border-t border-gray-200"></li>
 
    <!-- Pengaturan Sistem -->
    <li>
       <a href="{{ route('settings.index') }}"
-         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition leading-tight
-           {{ request()->routeIs('settings.*') ? $activeClass : $inactiveClass }}">
-
-         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-               d="M12 6.75V3m0 18v-3.75M6.75 12H3m18 0h-3.75" />
-         </svg>
-
+         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
+         {{ request()->routeIs('settings.*') ? $activeClass : $inactiveClass }}">
          <span>Pengaturan Sistem</span>
       </a>
    </li>
