@@ -183,7 +183,9 @@
                      class="mt-1 block w-full border-gray-300 rounded-md rupiah"
                      data-target="biaya_kacamata"
                      placeholder="Rp 0">
-                  <input type="hidden" name="biaya_kacamata" id="biaya_kacamata" value="0">
+                  <input type="hidden" name="bia
+                  
+                  ya_kacamata" id="biaya_kacamata" value="0">
                </div>
 
                {{-- Dibayar BPJS --}}

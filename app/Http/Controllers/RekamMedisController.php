@@ -22,10 +22,10 @@ class RekamMedisController extends Controller
             ->when($request->kategori, function ($q) use ($request) {
                 $q->where('kategori', strtoupper($request->kategori));
             })
-            ->when($request->tanggal_awal && $request->tanggal_akhir, function ($q) use ($request) {
+            ->when($request->tanggal_pemeriksaan && $request->tanggal_pemeriksaan, function ($q) use ($request) {
                 $q->whereBetween('created_at', [
-                    $request->tanggal_awal,
-                    $request->tanggal_akhir
+                    $request->tanggal_pemeriksaan,
+                    $request->tanggal_pemeriksaan
                 ]);
             })
             ->latest()
@@ -131,8 +131,19 @@ class RekamMedisController extends Controller
             'pd' => 'nullable|string',
 
             'biaya_kacamata' => 'nullable|numeric',
-            'dibayar_bpjs' => 'nullable|numeric',
-            'dibayar_pasien' => 'nullable|numeric',
+            'dibayar_bpjs' => [
+                'nullable',
+                'numeric',
+                'min:0',
+                'lte:biaya_kacamata',
+            ],
+
+            'dibayar_pasien' => [
+                'nullable',
+                'numeric',
+                'min:0',
+                'lte:biaya_kacamata',
+            ],
 
             'tanggal_dipesan' => 'nullable|date',
             'tanggal_pengambilan' => 'nullable|date',
