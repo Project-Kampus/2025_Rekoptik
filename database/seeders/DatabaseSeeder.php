@@ -24,7 +24,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // frame
-        $this->call(FrameSeeder::class);
-        $this->call(PengaturanSeeder::class);
+        $this->call([
+            FrameSeeder::class,
+            PasienSeeder::class,
+            PengaturanSeeder::class
+        ]);
     }
 }

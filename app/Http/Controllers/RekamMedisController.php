@@ -22,14 +22,14 @@ class RekamMedisController extends Controller
             ->when($request->kategori, function ($q) use ($request) {
                 $q->where('kategori', strtoupper($request->kategori));
             })
-            ->when($request->tanggal_pemeriksaan && $request->tanggal_pemeriksaan, function ($q) use ($request) {
-                $q->whereBetween('created_at', [
-                    $request->tanggal_pemeriksaan,
-                    $request->tanggal_pemeriksaan
+            ->when($request->tanggal_awal && $request->tanggal_akhir, function ($q) use ($request) {
+                $q->whereBetween('tanggal_pemeriksaan', [
+                    $request->tanggal_awal,
+                    $request->tanggal_akhir
                 ]);
             })
             ->latest()
-            ->paginate(10)
+            ->paginate(20)
             ->withQueryString();
 
         return view('admin.rekamMedis_index', compact('pasiens'));

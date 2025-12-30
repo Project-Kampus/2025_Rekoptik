@@ -43,6 +43,9 @@
                </select>
             </div>
 
+            <a href="{{route('rekam-medis.index')}}"
+               class="px-4 py-2 bg-gray-700 text-white text-sm rounded hover:bg-gray-800">Reset</a>
+
             <button type="submit"
                class="px-4 py-2 bg-gray-700 text-white text-sm rounded hover:bg-gray-800">
                Terapkan
