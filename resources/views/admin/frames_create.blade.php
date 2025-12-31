@@ -21,6 +21,25 @@
          <!-- GRID FORM -->
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
+            <!-- Supplier -->
+            <div>
+               <x-input-label for="supplier_id" value="Supplier" />
+               <select
+                  id="supplier_id"
+                  name="supplier_id"
+                  class="mt-1 block w-full rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500"
+                  required>
+                  <option value="">-- Pilih Supplier --</option>
+                  @foreach ($suppliers as $supplier)
+                  <option value="{{ $supplier->id }}"
+                     {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
+                     {{ $supplier->nama }}
+                  </option>
+                  @endforeach
+               </select>
+               <x-input-error :messages="$errors->get('supplier_id')" class="mt-2" />
+            </div>
+
             <!-- Kode Frame -->
             <div>
                <x-input-label for="kode_frame" value="Kode Frame" />
@@ -64,6 +83,7 @@
                   class="mt-1 block w-full"
                   placeholder="Metal, Plastik, TR90, dll" />
             </div>
+
          </div>
 
          <!-- TOMBOL -->

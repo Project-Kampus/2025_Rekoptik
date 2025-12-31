@@ -13,7 +13,6 @@
    </x-slot>
 
    <div class="bg-white rounded-lg border p-6">
-      {{-- Header --}}
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
          <div>
             <h2 class="text-lg font-medium text-gray-900">
@@ -57,6 +56,9 @@
                   <th class="px-4 py-3 border">Kategori</th>
                   <th class="px-4 py-3 border">Material</th>
                   <th class="px-4 py-3 border">Coating</th>
+                  <th class="px-4 py-3 border">OD</th>
+                  <th class="px-4 py-3 border">OS</th>
+                  <th class="px-4 py-3 border">Supplier</th>
                   <th class="px-4 py-3 border text-center">Aksi</th>
                </tr>
             </thead>
@@ -75,16 +77,25 @@
                   <td class="px-4 py-2 border">
                      {{ $lensa->coating ?? '-' }}
                   </td>
+                  <td class="px-4 py-2 border">
+                     {{ $lensa->od ?? '-' }}
+                  </td>
+                  <td class="px-4 py-2 border">
+                     {{ $lensa->os ?? '-' }}
+                  </td>
+                  <td class="px-4 py-2 border">
+                     {{ $lensa->supplier->nama ?? '-' }}
+                  </td>
                   <td class="px-4 py-2 border text-center">
                      <div class="flex justify-center gap-3">
                         <a href="{{ route('lensa.edit', $lensa->id) }}"
-                           class="text-blue-600 hover:underline text-sm">
+                           class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700 hover:bg-blue-200">
                            Edit
                         </a>
 
                         <button
                            type="button"
-                           class="text-red-600 hover:underline text-sm"
+                           class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 hover:bg-red-200"
                            onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'delete-lensa-{{ $lensa->id }}' }))">
                            Hapus
                         </button>

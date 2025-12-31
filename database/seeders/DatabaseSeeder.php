@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
 
         // frame
         $this->call([
+            SupplierSeeder::class,
             FrameSeeder::class,
             LensaSeeder::class,
             PasienSeeder::class,

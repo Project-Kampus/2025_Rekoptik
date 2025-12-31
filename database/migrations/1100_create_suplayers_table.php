@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('frames', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-
-            // Informasi Frame
-            $table->string('kode_frame')->unique();
-            $table->string('merk')->nullable();
-            $table->string('warna')->nullable();
-            $table->string('bahan')->nullable(); // metal, plastik, TR90, dll
-
+            $table->string('nama');
+            $table->string('kontak');
+            $table->string('alamat')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('frames');
+        Schema::dropIfExists('suppliers');
     }
 };

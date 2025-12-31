@@ -17,6 +17,14 @@ return new class extends Migration
             $table->string('kategori');
             $table->string('material')->nullable();
             $table->string('coating')->nullable();
+            $table->string('od')->nullable();
+            $table->string('os')->nullable();
+
+            $table->foreignId('supplier_id')
+                ->constrained('suppliers')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
             $table->timestamps();
         });
     }

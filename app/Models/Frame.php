@@ -8,48 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Frame extends Model
 {
     use HasFactory;
-
     protected $table = 'frames';
-
-    /**
-     * Mass assignment
-     */
     protected $fillable = [
+        'supplier_id',
         'kode_frame',
         'merk',
         'warna',
         'bahan',
     ];
 
-    /**
-     * Casting tipe data
-     */
+
     protected $casts = [
         'harga' => 'integer',
     ];
 
-    /**
-     * Relasi ke Pasien
-     * Satu frame bisa dipakai banyak pasien
-     */
     public function pasiens()
     {
         return $this->hasMany(Pasien::class);
     }
 
-    /**
-     * Scope: frame BPJS
-     */
-    public function scopeBpjs($query)
+    public function supplier()
     {
-        return $query->where('kategori', 'bpjs');
-    }
-
-    /**
-     * Scope: frame non-BPJS
-     */
-    public function scopeNonBpjs($query)
-    {
-        return $query->where('kategori', 'non_bpjs');
+        return $this->belongsTo(Supplier::class);
     }
 }
