@@ -68,50 +68,25 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
       </ul>
    </li>
 
-
-   <!-- MANAJEMEN FRAME -->
-   <li x-data="{ open: {{ $isFrameActive ? 'true' : 'false' }} }">
-
-      <button
-         @click="open = !open"
-         class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition
-         {{ $isFrameActive ? $activeClass : $inactiveClass }}">
-
+   <li>
+      <a href="{{ route('frame.index') }}"
+         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
+         {{ request()->routeIs('frame.*') ? $activeClass : $inactiveClass }}">
          <span>Manajemen Frame</span>
-
-         <svg class="w-4 h-4 transition-transform"
-            :class="open ? 'rotate-180' : ''"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-               d="M19 9l-7 7-7-7" />
-         </svg>
-      </button>
-
-      <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
-
-         <li>
-            <a href="{{ route('frame.index') }}"
-               class="block px-4 py-2 rounded-md transition
-               {{ request()->routeIs('frame.index') ? $activeClass : $inactiveClass }}">
-               Data Frame
-            </a>
-         </li>
-         <li>
-            <a href="{{ route('frame.riwayat.all') }}"
-               class="block px-4 py-2 rounded-md transition
-               {{ request()->routeIs('frame.riwayat.*') ? $activeClass : $inactiveClass }}">
-               Riwayat Frame
-            </a>
-         </li>
-
-      </ul>
+      </a>
    </li>
-
    <li>
       <a href="{{ route('lensa.index') }}"
          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
          {{ request()->routeIs('lensa.*') ? $activeClass : $inactiveClass }}">
          <span>Manajemen Lensa</span>
+      </a>
+   </li>
+   <li>
+      <a href="{{ route('riwayat.all') }}"
+         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
+         {{ request()->routeIs('riwayat.all') ? $activeClass : $inactiveClass }}">
+         <span>Riwayat Frame lensa</span>
       </a>
    </li>
 

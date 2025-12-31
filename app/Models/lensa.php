@@ -13,6 +13,5 @@ class lensa extends Model
         'kategori',
         'material',
         'coating',
-        'harga',
     ];
 }

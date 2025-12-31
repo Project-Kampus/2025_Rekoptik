@@ -28,8 +28,6 @@ Route::middleware('auth', 'verified')->group(function () {
         // Route::get('/rekap/pdf', [RekamMedisController::class, 'rekapPdf'])->name('rekapPdf');
         Route::get('/rekap/excel', [RekamMedisController::class, 'rekapExcel'])->name('rekapExcel');
         Route::get('/{pasien}/detail', [RekamMedisController::class, 'show'])->name('show');
-
-
     });
 
     // Manajemen Frame
@@ -40,10 +38,12 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/{frame}/edit', [FrameController::class, 'edit'])->name('edit');
         Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
         Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
-        Route::get('/riwayatAll', [FrameController::class, 'riwayatAll'])->name('riwayat.all');
     });
 
     Route::resource('lensa', LensaController::class);
+
+    Route::get('/riwayatAll', [DashboardController::class, 'riwayatAll'])->name('riwayat.all');
+
 
     // Pengaturan Sistem
     Route::prefix('pengaturan')->name('pengaturan.')->group(function () {

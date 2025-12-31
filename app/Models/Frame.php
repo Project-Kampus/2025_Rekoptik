@@ -19,8 +19,6 @@ class Frame extends Model
         'merk',
         'warna',
         'bahan',
-        'kategori',
-        'harga',
     ];
 
     /**
