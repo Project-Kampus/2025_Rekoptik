@@ -6,19 +6,20 @@
 
                 {{-- STATUS --}}
                 @php
-                if ($pasien->tanggal_pengambilan) {
-                $status = 'Sudah Diambil';
-                $color = 'green';
-                } elseif ($pasien->tanggal_dipesan) {
-                $status = 'Dipesan';
-                $color = 'blue';
-                } else {
-                $status = 'Proses Pemeriksaan';
-                $color = 'yellow';
-                }
+                    if ($pasien->tanggal_pengambilan) {
+                        $status = 'Sudah Diambil';
+                        $color = 'green';
+                    } elseif ($pasien->tanggal_dipesan) {
+                        $status = 'Dipesan';
+                        $color = 'blue';
+                    } else {
+                        $status = 'Proses Pemeriksaan';
+                        $color = 'yellow';
+                    }
                 @endphp
 
-                <span class="px-3 py-1 rounded-full text-sm font-semibold
+                <span
+                    class="px-3 py-1 rounded-full text-sm font-semibold
                 bg-{{ $color }}-100 text-{{ $color }}-800">
                     {{ $status }}
                 </span>
@@ -51,11 +52,10 @@
             </a>
 
             @if ($pasien->tanggal_pengambilan === null)
-            <button
-                onclick="openPengambilanModal()"
-                class="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
-                Pengambilan
-            </button>
+                <button onclick="openPengambilanModal()"
+                    class="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                    Pengambilan
+                </button>
             @endif
         </div>
 
@@ -64,16 +64,17 @@
             <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Data Pasien</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ([
-                'Nama Pasien' => $pasien->nama_pasien,
-                'No HP' => $pasien->no_hp ?? '-',
-                'Kategori' => ucfirst($pasien->kategori),
-                'No Kartu' => $pasien->no_kartu ?? '-',
-                'Alamat' => $pasien->alamat ?? '-',
-                ] as $label => $value)
-                <div class="flex flex-col">
-                    <span class="text-gray-500 text-sm">{{ $label }}</span>
-                    <span class="bg-gray-50 p-2 rounded text-gray-700 font-medium">{{ $value }}</span>
-                </div>
+        'Nama Pasien' => $pasien->nama_pasien,
+        'No HP' => $pasien->no_hp ?? '-',
+        'Kategori' => ucfirst($pasien->kategori),
+        'No Kartu' => $pasien->no_kartu ?? '-',
+        'Alamat' => $pasien->alamat ?? '-',
+        'Umur' => $pasien->umur ? $pasien->umur . ' tahun' : '-',
+    ] as $label => $value)
+                    <div class="flex flex-col">
+                        <span class="text-gray-500 text-sm">{{ $label }}</span>
+                        <span class="bg-gray-50 p-2 rounded text-gray-700 font-medium">{{ $value }}</span>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -83,15 +84,15 @@
             <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Data Pemeriksaan</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ([
-                'Resep Dari' => $pasien->resep_dari,
-                'No SEP' => $pasien->no_sep ?? '-',
-                'Tanggal Pemeriksaan' => $pasien->tanggal_pemeriksaan?->format('d-m-Y'),
-                'Diagnosa' => $pasien->diagnosa ?? '-',
-                ] as $label => $value)
-                <div class="flex flex-col">
-                    <span class="text-gray-500 text-sm">{{ $label }}</span>
-                    <span class="bg-gray-50 p-2 rounded text-gray-700 font-medium">{{ $value }}</span>
-                </div>
+        'Resep Dari' => $pasien->resep_dari,
+        'No SEP' => $pasien->no_sep ?? '-',
+        'Tanggal Pemeriksaan' => $pasien->tanggal_pemeriksaan?->format('d-m-Y'),
+        'Diagnosa' => $pasien->diagnosa ?? '-',
+    ] as $label => $value)
+                    <div class="flex flex-col">
+                        <span class="text-gray-500 text-sm">{{ $label }}</span>
+                        <span class="bg-gray-50 p-2 rounded text-gray-700 font-medium">{{ $value }}</span>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -101,17 +102,17 @@
             <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Riwayat Pasien</h3>
             <div class="space-y-4">
                 @foreach ([
-                'Keluhan Utama' => $pasien->keluhan_utama,
-                'Riwayat Penyakit' => $pasien->riwayat_penyakit,
-                'Penyakit Sekarang' => $pasien->penyakit_sekarang,
-                'Penyakit Keluarga' => $pasien->penyakit_keluarga,
-                'Kebiasaan' => $pasien->kebiasaan,
-                'Pengobatan' => $pasien->pengobatan,
-                ] as $label => $value)
-                <div class="flex flex-col">
-                    <span class="text-gray-500 text-sm">{{ $label }}</span>
-                    <span class="bg-blue-50 p-3 rounded text-gray-700 font-medium">{{ $value ?? '-' }}</span>
-                </div>
+        'Keluhan Utama' => $pasien->keluhan_utama,
+        'Riwayat Penyakit' => $pasien->riwayat_penyakit,
+        'Penyakit Sekarang' => $pasien->penyakit_sekarang,
+        'Penyakit Keluarga' => $pasien->penyakit_keluarga,
+        'Kebiasaan' => $pasien->kebiasaan,
+        'Pengobatan' => $pasien->pengobatan,
+    ] as $label => $value)
+                    <div class="flex flex-col">
+                        <span class="text-gray-500 text-sm">{{ $label }}</span>
+                        <span class="bg-blue-50 p-3 rounded text-gray-700 font-medium">{{ $value ?? '-' }}</span>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -149,25 +150,24 @@
                 <div>Lensa: <strong>{{ $pasien->lensa?->nama_lensa ?? '-' }}</strong></div>
                 <div>PD: <strong>{{ $pasien->pd ?? '-' }}</strong></div>
 
-                <div>Biaya: <strong>Rp {{ number_format($pasien->biaya_kacamata,0,',','.') }}</strong></div>
+                <div>Biaya: <strong>Rp {{ number_format($pasien->biaya_kacamata, 0, ',', '.') }}</strong></div>
                 @if ($pasien->kategori === 'bpjs')
-                <div>
-                    Dibayar BPJS:
-                    <strong>
-                        Rp {{ number_format($pasien->dibayar_bpjs ?? 0, 0, ',', '.') }}
-                    </strong>
-                </div>
-
+                    <div>
+                        Dibayar BPJS:
+                        <strong>
+                            Rp {{ number_format($pasien->dibayar_bpjs ?? 0, 0, ',', '.') }}
+                        </strong>
+                    </div>
                 @elseif ($pasien->kategori === 'asuransi')
-                <div>
-                    Dibayar Asuransi:
-                    <strong>
-                        Rp {{ number_format($pasien->dibayar_asuransi ?? 0, 0, ',', '.') }}
-                    </strong>
-                </div>
+                    <div>
+                        Dibayar Asuransi:
+                        <strong>
+                            Rp {{ number_format($pasien->dibayar_asuransi ?? 0, 0, ',', '.') }}
+                        </strong>
+                    </div>
                 @endif
-                <div>Dibayar Pasien: <strong>Rp {{ number_format($pasien->dibayar_pasien,0,',','.') }}</strong></div>
-                <div>Sisa Pembayaran: <strong>Rp {{ number_format($pasien->sisa,0,',','.') }}</strong></div>
+                <div>Dibayar Pasien: <strong>Rp {{ number_format($pasien->dibayar_pasien, 0, ',', '.') }}</strong></div>
+                <div>Sisa Pembayaran: <strong>Rp {{ number_format($pasien->sisa, 0, ',', '.') }}</strong></div>
             </div>
         </div>
 
@@ -176,20 +176,20 @@
             <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Dokumen</h3>
             <ul class="space-y-2">
                 @foreach ([
-                'KTP' => $pasien->doc_ktp,
-                'Legalitas' => $pasien->doc_legalitas,
-                'Rujukan' => $pasien->doc_rujukan,
-                'Bukti' => $pasien->bukti_pengambil,
-                ] as $label => $file)
-                <li>
-                    {{ $label }} :
-                    @if ($file)
-                    <a href="{{ asset('storage/'.$file) }}" target="_blank"
-                        class="text-blue-600 hover:underline">Lihat</a>
-                    @else
-                    -
-                    @endif
-                </li>
+        'KTP' => $pasien->doc_ktp,
+        'Legalitas' => $pasien->doc_legalitas,
+        'Rujukan' => $pasien->doc_rujukan,
+        'Bukti' => $pasien->bukti_pengambil,
+    ] as $label => $file)
+                    <li>
+                        {{ $label }} :
+                        @if ($file)
+                            <a href="{{ asset('storage/' . $file) }}" target="_blank"
+                                class="text-blue-600 hover:underline">Lihat</a>
+                        @else
+                            -
+                        @endif
+                    </li>
                 @endforeach
             </ul>
         </div>
@@ -204,46 +204,36 @@
                 Form Pengambilan Kacamata
             </h3>
 
-            <form
-                action="{{ route('rekam-medis.pengambilan', $pasien->id) }}"
-                method="POST"
-                enctype="multipart/form-data"
-                class="space-y-4">
+            <form action="{{ route('rekam-medis.pengambilan', $pasien->id) }}" method="POST"
+                enctype="multipart/form-data" class="space-y-4">
                 @csrf
 
                 <!-- Tanggal Pengambilan -->
                 <div>
                     <label class="text-sm text-gray-600">Tanggal Pengambilan</label>
-                    <input type="date" name="tanggal_pengambilan"
-                        class="w-full mt-1 rounded border-gray-300"
+                    <input type="date" name="tanggal_pengambilan" class="w-full mt-1 rounded border-gray-300"
                         required>
                 </div>
 
                 <!-- Nama Pengambil -->
                 <div>
                     <label class="text-sm text-gray-600">Nama Pengambil</label>
-                    <input type="text" name="nama_pengambil"
-                        class="w-full mt-1 rounded border-gray-300"
-                        placeholder="Nama pengambil"
-                        required>
+                    <input type="text" name="nama_pengambil" class="w-full mt-1 rounded border-gray-300"
+                        placeholder="Nama pengambil" required>
                 </div>
 
                 <!-- Hubungan Pengambil -->
                 <div>
                     <label class="text-sm text-gray-600">Hubungan dengan Pasien</label>
-                    <input type="text" name="hub_pengambil"
-                        class="w-full mt-1 rounded border-gray-300"
-                        placeholder="Pasien / Keluarga / Lainnya"
-                        required>
+                    <input type="text" name="hub_pengambil" class="w-full mt-1 rounded border-gray-300"
+                        placeholder="Pasien / Keluarga / Lainnya" required>
                 </div>
 
                 <!-- Bukti Pengambilan -->
                 <div>
                     <label class="text-sm text-gray-600">Bukti Pengambilan</label>
-                    <input type="file" name="bukti_pengambil"
-                        class="w-full mt-1 rounded border-gray-300"
-                        accept="image/*,application/pdf"
-                        required>
+                    <input type="file" name="bukti_pengambil" class="w-full mt-1 rounded border-gray-300"
+                        accept="image/*,application/pdf" required>
                     <small class="text-xs text-gray-500">
                         JPG, PNG, atau PDF (maks 2MB)
                     </small>
@@ -251,14 +241,12 @@
 
                 <!-- BUTTON -->
                 <div class="flex justify-end gap-3 pt-4">
-                    <button type="button"
-                        onclick="closePengambilanModal()"
+                    <button type="button" onclick="closePengambilanModal()"
                         class="px-4 py-2 bg-gray-300 rounded text-sm hover:bg-gray-400">
                         Batal
                     </button>
 
-                    <button type="submit"
-                        class="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
                         Simpan Pengambilan
                     </button>
                 </div>

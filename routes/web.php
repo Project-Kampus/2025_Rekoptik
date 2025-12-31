@@ -7,6 +7,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\RiwayatFrameController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('welcome');
@@ -43,15 +44,12 @@ Route::middleware('auth', 'verified')->group(function () {
             Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
         });
 
-        // Manajemen Lensa
-        Route::prefix('lensa')->name('lensa.')->group(function () {
-            Route::get('/', [LensaController::class, 'index'])->name('index');
-            Route::get('/create', [LensaController::class, 'create'])->name('create');
-            Route::post('/', [LensaController::class, 'store'])->name('store');
-            Route::get('/{lensa}/edit', [LensaController::class, 'edit'])->name('edit');
-            Route::put('/{lensa}', [LensaController::class, 'update'])->name('update');
-            Route::delete('/{lensa}', [LensaController::class, 'destroy'])->name('destroy');
-        });
+        // riwayat frame
+        Route::get('/riwayat-frame', [RiwayatFrameController::class, 'index'])
+            ->name('frame.riwayat');
+
+
+        Route::resource('lensa', LensaController::class);
 
         // Manajemen Supplier
         Route::prefix('supplier')->name('supplier.')->group(function () {
