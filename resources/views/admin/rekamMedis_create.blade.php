@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Tambah Rekam Medis
-        </h2>
-    </x-slot>
 
     <div class="bg-white rounded-lg border p-6">
         <header class="mb-6">
@@ -15,14 +10,14 @@
             </p>
         </header>
 
-        <form method="POST" action="{{ route('rekam-medis.store') }}" class="space-y-8">
+        <form method="POST" action="{{ route('rekam-medis.store') }}" class="space-y-6">
             @csrf
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Data Pasien
+                </h3>
 
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Data Pasien & Riwayat</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-                    <!-- DATA PASIEN -->
                     <div>
                         <x-input-label value="Nama Pasien" />
                         <x-text-input name="nama_pasien" class="mt-1 block w-full" required />
@@ -53,8 +48,15 @@
                         <x-input-label value="Alamat" />
                         <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2"></textarea>
                     </div>
+                </div>
+            </div>
 
-                    <!-- RIWAYAT PASIEN -->
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Riwayat Pasien
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="md:col-span-2 lg:col-span-1">
                         <x-input-label value="Keluhan Utama" />
                         <textarea name="keluhan_utama" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3"></textarea>
@@ -84,15 +86,15 @@
                         <x-input-label value="Pengobatan / Konsumsi Obat" />
                         <textarea name="pengobatan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3"></textarea>
                     </div>
-
                 </div>
             </div>
 
-            <!-- DATA PEMERIKSAAN -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Data Pemeriksaan</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Pemeriksaan
+                </h3>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Pemberi Resep" />
                         <x-text-input name="resep_dari" class="mt-1 block w-full" placeholder="Dokter / Optometris"
@@ -114,70 +116,73 @@
                         <x-input-label value="Tanggal Pemeriksaan" />
                         <x-text-input type="date" name="tanggal_pemeriksaan" class="mt-1 block w-full" required />
                     </div>
-
                 </div>
             </div>
 
 
-            <!-- RESEP OD -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kanan (OD)</h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div>
-                        <x-input-label value="Sferis (SPH)" />
-                        <x-text-input class="mt-1 block w-full" name="od_sferis" placeholder="Contoh: -1.25" />
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <div>
-                        <x-input-label value="Silindris (CYL)" />
-                        <x-text-input class="mt-1 block w-full" name="od_silindris" placeholder="Contoh: -0.50" />
-                    </div>
+                <!-- OD -->
+                <div class="border bg-gray-50  rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">Mata Kanan (OD)</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <x-input-label value="Sferis (SPH)" />
+                            <x-text-input class="mt-1 block w-full" name="od_sferis" placeholder="Contoh: -1.25" />
+                        </div>
 
-                    <div>
-                        <x-input-label value="Axis (AX)" />
-                        <x-text-input class="mt-1 block w-full" name="od_axis" placeholder="0 – 180" />
-                    </div>
+                        <div>
+                            <x-input-label value="Silindris (CYL)" />
+                            <x-text-input class="mt-1 block w-full" name="od_silindris" placeholder="Contoh: -0.50" />
+                        </div>
 
-                    <div>
-                        <x-input-label value="Add" />
-                        <x-text-input class="mt-1 block w-full" name="od_add_lensa" placeholder="+1.00" />
-                    </div>
-                </div>
-            </div>
+                        <div>
+                            <x-input-label value="Axis (AX)" />
+                            <x-text-input class="mt-1 block w-full" name="od_axis" placeholder="0 – 180" />
+                        </div>
 
-            <!-- RESEP OS -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kiri (OS)</h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div>
-                        <x-input-label value="Sferis (SPH)" />
-                        <x-text-input class="mt-1 block w-full" name="os_sferis" placeholder="Contoh: -1.00" />
-                    </div>
-
-                    <div>
-                        <x-input-label value="Silindris (CYL)" />
-                        <x-text-input class="mt-1 block w-full" name="os_silindris" placeholder="Contoh: -0.75" />
-                    </div>
-
-                    <div>
-                        <x-input-label value="Axis (AX)" />
-                        <x-text-input class="mt-1 block w-full" name="os_axis" placeholder="0 – 180" />
-                    </div>
-
-                    <div>
-                        <x-input-label value="Add" />
-                        <x-text-input class="mt-1 block w-full" name="os_add_lensa" placeholder="+1.00" />
+                        <div>
+                            <x-input-label value="Add" />
+                            <x-text-input class="mt-1 block w-full" name="od_add_lensa" placeholder="+1.00" />
+                        </div>
                     </div>
                 </div>
+
+                <!-- OS -->
+                <div class="border bg-gray-50 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">Mata Kiri (OS)</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <x-input-label value="Sferis (SPH)" />
+                            <x-text-input class="mt-1 block w-full" name="os_sferis" placeholder="Contoh: -1.00" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Silindris (CYL)" />
+                            <x-text-input class="mt-1 block w-full" name="os_silindris" placeholder="Contoh: -0.75" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Axis (AX)" />
+                            <x-text-input class="mt-1 block w-full" name="os_axis" placeholder="0 – 180" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Add" />
+                            <x-text-input class="mt-1 block w-full" name="os_add_lensa" placeholder="+1.00" />
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    👓 Kacamata
+                </h3>
 
-            <!-- KACAMATA -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Kacamata</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Frame" />
                         <select
@@ -211,16 +216,15 @@
                         <x-input-label value="PD" />
                         <x-text-input name="pd" class="mt-1 block w-full" />
                     </div>
-
                 </div>
             </div>
 
-            <!-- PEMBAYARAN -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Pembayaran</h3>
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Biaya & Pembayaran
+                </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {{-- Biaya Kacamata --}}
                     <div>
                         <x-input-label value="Biaya Kacamata" />
@@ -252,6 +256,15 @@
                             data-target="dibayar_pasien" placeholder="Rp 0">
                         <input type="hidden" name="dibayar_pasien" id="dibayar_pasien" value="0">
                     </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Tanggal
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <div>
                         <x-input-label value="Tanggal Pemesanan" />
@@ -265,21 +278,23 @@
                 </div>
             </div>
 
+
+            <div class="flex items-center gap-3">
+                <x-primary-button>
+                    Simpan Rekam Medis
+                </x-primary-button>
+
+                <a href="{{ route('rekam-medis.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+                    Batal
+                </a>
+            </div>
+
+
+
+        </form>
     </div>
 
 
-    <!-- TOMBOL -->
-    <div class="flex items-center gap-3">
-        <x-primary-button>
-            Simpan Rekam Medis
-        </x-primary-button>
-
-        <a href="{{ route('rekam-medis.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
-            Batal
-        </a>
-    </div>
-
-    </form>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -372,5 +387,4 @@
 
 
 
-    </div>
 </x-app-layout>
