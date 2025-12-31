@@ -159,21 +159,41 @@
             <div>
                 <h3 class="font-semibold text-gray-800 mb-3">Kacamata</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-                    <select name="frame_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="">-- Pilih Frame --</option>
-                        @foreach ($frames as $frame)
+                    <div>
+                        <x-input-label value="Frame" />
+                        <select
+                            name="frame_id"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <option value="">-- Pilih Frame --</option>
+                            @foreach ($frames as $frame)
                             <option value="{{ $frame->id }}"
                                 {{ old('frame_id', $pasien->frame_id) == $frame->id ? 'selected' : '' }}>
-                                {{ $frame->kode_frame }} - {{ $frame->nama_frame }}
+                                {{ $frame->merk }} - {{ $frame->kode_frame }}
                             </option>
-                        @endforeach
-                    </select>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <x-text-input name="lensa" class="mt-1 block w-full"
-                        value="{{ old('lensa', $pasien->lensa) }}" />
+                    <div>
+                        <x-input-label value="Lensa" />
+                        <select
+                            name="lensa_id"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <option value="">-- Pilih Lensa --</option>
+                            @foreach ($lensas as $lensa)
+                            <option value="{{ $lensa->id }}"
+                                {{ old('lensa_id', $pasien->lensa_id) == $lensa->id ? 'selected' : '' }}>
+                                {{ $lensa->nama_lensa }}
+                                ({{ $lensa->kategori }})
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <x-text-input name="pd" class="mt-1 block w-full" value="{{ old('pd', $pasien->pd) }}" />
+                    <div>
+                        <x-input-label value="pd" />
+                        <x-text-input name="pd" class="mt-1 block w-full" value="{{ old('pd', $pasien->pd) }}" />
+                    </div>
 
                 </div>
             </div>

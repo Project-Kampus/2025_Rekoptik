@@ -180,19 +180,31 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Frame" />
-                        <select name="frame_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <select
+                            name="frame_id"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Frame --</option>
                             @foreach ($frames as $frame)
-                                <option value="{{ $frame->id }}">
-                                    {{ $frame->merk }} - {{ $frame->kode_frame }}
-                                </option>
+                            <option value="{{ $frame->id }}">
+                                {{ $frame->merk }} - {{ $frame->kode_frame }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div>
                         <x-input-label value="Lensa" />
-                        <x-text-input name="lensa" class="mt-1 block w-full" />
+                        <select
+                            name="lensa_id"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <option value="">-- Pilih Lensa --</option>
+                            @foreach ($lensas as $lensa)
+                            <option value="{{ $lensa->id }}">
+                                {{ $lensa->nama_lensa }}
+                                ({{ $lensa->kategori }})
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div>

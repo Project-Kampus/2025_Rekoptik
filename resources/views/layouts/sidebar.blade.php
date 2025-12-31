@@ -97,14 +97,6 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
             </a>
          </li>
          <li>
-            <a href="{{ route('lensa.index') }}"
-               class="block px-4 py-2 rounded-md transition
-               {{ request()->routeIs('lensa.index') ? $activeClass : $inactiveClass }}">
-               Data Lensa
-            </a>
-         </li>
-
-         <li>
             <a href="{{ route('frame.riwayat.all') }}"
                class="block px-4 py-2 rounded-md transition
                {{ request()->routeIs('frame.riwayat.*') ? $activeClass : $inactiveClass }}">
@@ -113,6 +105,14 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
          </li>
 
       </ul>
+   </li>
+
+   <li>
+      <a href="{{ route('lensa.index') }}"
+         class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition
+         {{ request()->routeIs('lensa.*') ? $activeClass : $inactiveClass }}">
+         <span>Manajemen Lensa</span>
+      </a>
    </li>
 
    <li class="my-3 border-t border-gray-200"></li>

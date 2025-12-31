@@ -61,7 +61,7 @@ class PasienSeeder extends Seeder
 
                 // Kacamata
                 'frame_id' => 1,
-                'lensa' => 'Anti Radiasi',
+                'lensa_id' => 1,
                 'pd' => 62,
 
                 // Biaya

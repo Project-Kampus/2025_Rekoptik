@@ -44,7 +44,7 @@ return new class extends Migration {
 
             // Kacamata
             $table->foreignId('frame_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('lensa')->nullable();
+            $table->foreignId('lensa_id')->nullable()->constrained('lensas');
             $table->string('pd')->nullable();
 
             // Pembayaran
