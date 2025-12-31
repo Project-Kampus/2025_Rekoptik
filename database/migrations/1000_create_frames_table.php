@@ -20,12 +20,6 @@ return new class extends Migration
             $table->string('warna')->nullable();
             $table->string('bahan')->nullable(); // metal, plastik, TR90, dll
 
-            // Kategori & Status
-            $table->enum('kategori', ['bpjs', 'non_bpjs'])->default('bpjs');
-
-            // Harga & Stok
-            $table->unsignedBigInteger('harga')->default(0);
-
             $table->timestamps();
         });
     }

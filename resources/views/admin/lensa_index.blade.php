@@ -57,7 +57,6 @@
                   <th class="px-4 py-3 border">Kategori</th>
                   <th class="px-4 py-3 border">Material</th>
                   <th class="px-4 py-3 border">Coating</th>
-                  <th class="px-4 py-3 border">Harga</th>
                   <th class="px-4 py-3 border text-center">Aksi</th>
                </tr>
             </thead>
@@ -75,9 +74,6 @@
                   </td>
                   <td class="px-4 py-2 border">
                      {{ $lensa->coating ?? '-' }}
-                  </td>
-                  <td class="px-4 py-2 border">
-                     Rp {{ number_format($lensa->harga, 0, ',', '.') }}
                   </td>
                   <td class="px-4 py-2 border text-center">
                      <div class="flex justify-center gap-3">

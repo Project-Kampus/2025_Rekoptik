@@ -69,35 +69,6 @@
                   placeholder="Metal, Plastik, TR90, dll" />
             </div>
 
-            <!-- Kategori -->
-            <div>
-               <x-input-label for="kategori" value="Kategori" />
-               <select
-                  id="kategori"
-                  name="kategori"
-                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                  required>
-                  <option value="bpjs" {{ old('kategori', $frame->kategori) == 'bpjs' ? 'selected' : '' }}>
-                     BPJS
-                  </option>
-                  <option value="non_bpjs" {{ old('kategori', $frame->kategori) == 'non_bpjs' ? 'selected' : '' }}>
-                     Non BPJS
-                  </option>
-               </select>
-            </div>
-
-            <!-- Harga -->
-            <div>
-               <x-input-label for="harga" value="Harga" />
-               <x-text-input
-                  id="harga"
-                  name="harga"
-                  type="number"
-                  class="mt-1 block w-full"
-                  min="0"
-                  value="{{ old('harga', $frame->harga) }}" />
-            </div>
-
          </div>
 
          <!-- TOMBOL -->

@@ -49,8 +49,6 @@ class FrameController extends Controller
             'merk' => 'nullable|string',
             'warna' => 'nullable|string',
             'bahan' => 'nullable|string',
-            'kategori' => 'required|in:bpjs,non_bpjs',
-            'harga' => 'nullable|numeric|min:0',
         ]);
 
         $frame = Frame::create($request->all());
@@ -77,8 +75,6 @@ class FrameController extends Controller
             'merk' => 'nullable|string',
             'warna' => 'nullable|string',
             'bahan' => 'nullable|string',
-            'kategori' => 'required|in:bpjs,non_bpjs',
-            'harga' => 'nullable|numeric|min:0',
         ]);
 
         $frame->update($request->all());
@@ -86,43 +82,6 @@ class FrameController extends Controller
         return redirect()->route('frame.index')
             ->with('success', 'Frame berhasil diperbarui');
     }
-
-    /**
-     * Riwayat frame
-     */
-
-    public function riwayatAll(Request $request)
-    {
-        $rekam = DB::table('pasiens')
-            ->join('frames', 'frames.id', '=', 'pasiens.frame_id')
-            ->whereNotNull('pasiens.tanggal_pengambilan')
-            ->select([
-                DB::raw('pasiens.tanggal_pengambilan as tanggal'),
-                'frames.kode_frame',
-                // .....
-                DB::raw("'keluar' as jenis"),
-                DB::raw('1 as jumlah'),
-                DB::raw("'Digunakan untuk pasien' as keterangan"),
-                DB::raw("'rekam_medis' as sumber"),
-            ]);
-
-        $query = DB::query()
-            ->fromSub($rekam, 'riwayat')
-            ->when($request->filled('from'), function ($q) use ($request) {
-                $q->whereDate('tanggal', '>=', $request->from);
-            })
-            ->when($request->filled('to'), function ($q) use ($request) {
-                $q->whereDate('tanggal', '<=', $request->to);
-            });
-
-        $riwayat = $query
-            ->orderBy('tanggal', 'desc')
-            ->paginate(20)
-            ->withQueryString();
-
-        return view('admin.frames_riwayatAll', compact('riwayat'));
-    }
-
 
     /**
      * Hapus frame

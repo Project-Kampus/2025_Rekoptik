@@ -74,19 +74,6 @@
                   placeholder="HMC, Blue Cut, Anti Radiasi" />
             </div>
 
-            <!-- Harga -->
-            <div>
-               <x-input-label for="harga" value="Harga" />
-               <x-text-input
-                  id="harga"
-                  name="harga"
-                  type="number"
-                  class="mt-1 block w-full"
-                  min="0"
-                  value="{{ old('harga', 0) }}" />
-               <x-input-error :messages="$errors->get('harga')" class="mt-2" />
-            </div>
-
          </div>
 
          <!-- TOMBOL -->

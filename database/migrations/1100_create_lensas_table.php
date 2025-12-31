@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('kategori');
             $table->string('material')->nullable();
             $table->string('coating')->nullable();
-            $table->unsignedBigInteger('harga')->default(0);
             $table->timestamps();
         });
     }

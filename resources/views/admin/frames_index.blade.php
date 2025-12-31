@@ -56,9 +56,9 @@
                <tr class="text-left text-sm text-gray-600">
                   <th class="px-4 py-3 border">Kode</th>
                   <th class="px-4 py-3 border">Merk</th>
-                  <th class="px-4 py-3 border">Kategori</th>
-                  <th class="px-4 py-3 border">Harga</th>
-                  <th class="px-4 py-3 border text-center">Status</th>
+                  <th class="px-4 py-3 border">Warna</th>
+                  <th class="px-4 py-3 border">Bahan</th>
+                  <th class="px-4 py-3 border text-center">Aksi</th>
                </tr>
             </thead>
             <tbody class="text-sm text-gray-700">
@@ -70,11 +70,11 @@
                   <td class="px-4 py-2 border">
                      {{ $frame->merk ?? '-' }}
                   </td>
-                  <td class="px-4 py-2 border capitalize">
-                     {{ str_replace('_', ' ', $frame->kategori) }}
+                  <td class="px-4 py-2 border">
+                     {{ $frame->warna ?? '-' }}
                   </td>
                   <td class="px-4 py-2 border">
-                     Rp {{ number_format($frame->harga, 0, ',', '.') }}
+                     {{ $frame->bahan ?? '-' }}
                   </td>
                   <td class="px-4 py-2 border text-center">
                      <div class="flex justify-center gap-2">
