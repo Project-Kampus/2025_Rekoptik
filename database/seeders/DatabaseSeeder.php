@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,12 +17,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // user admin
-        User::create([
-            'name'     => 'Administrator',
-            'email'    => 'admin@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $bpjsRole  = Role::firstOrCreate(['name' => 'bpjs']);
+
+        $admin = User::firstOrCreate(
+            [
+                'email' => 'admin@gmail.com',
+                'name'     => 'Administrator',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $admin->roles()->syncWithoutDetaching([$adminRole->id]);
+
+
+        $bpjs = User::firstOrCreate(
+            [
+                'email' => 'bpjs@gmail.com',
+                'name'     => 'Petugas BPJS',
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        $bpjs->roles()->syncWithoutDetaching([$bpjsRole->id]);
 
         // frame
         $this->call([
