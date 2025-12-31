@@ -179,7 +179,7 @@
 
             <div class="bg-gray-50 border rounded-xl p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    👓 Kacamata
+                    Kacamata
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -288,8 +288,6 @@
                     Batal
                 </a>
             </div>
-
-
 
         </form>
     </div>
