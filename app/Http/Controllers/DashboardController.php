@@ -17,8 +17,13 @@ class DashboardController extends Controller
 
         $totalBpjs = Pasien::where('kategori', 'bpjs')->count();
         $totalUmum = Pasien::where('kategori', 'umum')->count();
+        $totalAsuransi = Pasien::where('kategori', 'asuransi')->count();
 
         $hariIni = Pasien::whereDate('tanggal_pemeriksaan', Carbon::today())->count();
+
+        // PASIEN BELUM DIAMBIL
+        $belumDiambil = Pasien::where('status', 'dipesan')->count();
+
 
         // AKTIVITAS TERBARU (5 DATA)
         $aktivitas = Pasien::orderBy('tanggal_pemeriksaan', 'desc')
@@ -47,7 +52,9 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'totalPasien',
             'totalBpjs',
+            'totalAsuransi',
             'totalUmum',
+            'belumDiambil',
             'hariIni',
             'aktivitas',
             'bulan',

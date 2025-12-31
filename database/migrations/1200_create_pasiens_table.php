@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('no_hp')->nullable();
             $table->string('no_kartu')->nullable();
             $table->text('alamat')->nullable();
+            $table->integer('umur')->nullable();
 
             // riwayar keluhan
             $table->text('keluhan_utama')->nullable();

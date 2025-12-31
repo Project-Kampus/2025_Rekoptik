@@ -1,66 +1,124 @@
-<table border="1">
-   <thead>
-      <tr style="background:#f3f4f6; font-weight:bold;">
-         <th>No</th>
-         <th>Tanggal Pemeriksaan</th>
-         <th>Nama Pasien</th>
-         <th>Resep Asal Kacamata</th>
-         <th>No. Kartu Peserta</th>
-         <th>No. SEP</th>
-         <th>No HP</th>
+<!DOCTYPE html>
+<html>
 
-         <th>OD Sph</th>
-         <th>OD Cyl</th>
-         <th>OD Axis</th>
-         <th>OD Add</th>
+<head>
+    <meta charset="utf-8">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 12px;
+        }
 
-         <th>OS Sph</th>
-         <th>OS Cyl</th>
-         <th>OS Axis</th>
-         <th>OS Add</th>
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 4px;
+            vertical-align: middle;
+        }
 
-         <th>PD</th>
-         <th>Diagnosa </th>
-      </tr>
-   </thead>
+        th {
+            text-align: center;
+            font-weight: bold;
+        }
 
-   <tbody>
-      @foreach ($pasiens as $i => $pasien)
-      <tr>
-         <td>{{ $i + 1 }}</td>
+        td {
+            text-align: center;
+        }
 
-         <td>
-            {{ optional($pasien->tanggal_pemeriksaan)->format('d-m-Y') }}
-         </td>
+        .text-left {
+            text-align: left;
+        }
 
-         <td>{{ $pasien->nama_pasien }}</td>
+        .text-right {
+            text-align: right;
+        }
 
-         <td>{{ $pasien->resep_dari ?? '-' }}</td>
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
 
-         <td>{{ $pasien->no_kartu ?? '-' }}</td>
+<body>
 
-         <td>{{ $pasien->no_sep ?? '-' }}</td>
+    {{-- JUDUL --}}
+    <table>
+        <tr>
+            <td colspan="13">DAFTAR BUKTI PELAYANAN KACAMATA PESERTA BPJS KESEHATAN</td>
+        </tr>
+        <tr>
+            <td colspan="13">OPTIK UTAMA JAMBI</td>
+        </tr>
+        <tr>
+            <td colspan="13"></td>
+        </tr>
 
-         <td>{{ $pasien->no_hp ?? '-' }}</td>
+        {{-- HEADER UTAMA --}}
+        <tr>
+            <td>No</td>
+            <td>Tanggal Pengambilan</td>
+            <td>Umur</td>
+            <td>No BPJS</td>
+            <td>Resep Dokter</td>
+            <td></td>
+            <td>Ukuran Lensa</td>
+            <td></td>
+            <td>ADD</td>
+            <td></td>
+            <td>Biaya Kacamata</td>
+            <td>Dibayar BPJS</td>
+            <td>Selisih Biaya</td>
+        </tr>
 
-         <!-- OD -->
-         <td>{{ $pasien->od_sferis }}</td>
-         <td>{{ $pasien->od_silindris }}</td>
-         <td>{{ $pasien->od_axis }}</td>
-         <td>{{ $pasien->od_add_lensa }}</td>
+        {{-- SUB HEADER --}}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Nama</td>
+            <td>Tanggal</td>
+            <td>OD</td>
+            <td>OS</td>
+            <td>OD</td>
+            <td>OS</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-         <!-- OS -->
-         <td>{{ $pasien->os_sferis }}</td>
-         <td>{{ $pasien->os_silindris }}</td>
-         <td>{{ $pasien->os_axis }}</td>
-         <td>{{ $pasien->os_add_lensa }}</td>
+        {{-- DATA --}}
+        @foreach ($pasiens as $i => $p)
+            @php
+                $biaya = $p->biaya_kacamata ?? 0;
+                $bpjs = $p->dibayar_bpjs ?? 0;
+            @endphp
+            <tr>
+                <td>{{ $i + 1 }}</td>
+                <td>
+                    {{ $p->tanggal_pengambilan ? \Carbon\Carbon::parse($p->tanggal_pengambilan)->toDateString() : '' }}
+                </td>
+                <td>{{ $p->umur }}</td>
+                <td>{{ $p->no_kartu }}</td>
+                <td>{{ $p->resep_dari }}</td>
+                <td>
+                    {{ $p->tanggal_pemeriksaan ? \Carbon\Carbon::parse($p->tanggal_pemeriksaan)->toDateString() : '' }}
+                </td>
+                <td>{{ $p->od_sferis }}</td>
+                <td>{{ $p->os_sferis }}</td>
+                <td>{{ $p->od_add_lensa }}</td>
+                <td>{{ $p->os_add_lensa }}</td>
+                <td>{{ $biaya }}</td>
+                <td>{{ $bpjs }}</td>
+                <td>{{ $biaya - $bpjs }}</td>
+            </tr>
+        @endforeach
+    </table>
 
-         <td>{{ $pasien->pd }}</td>
 
-         <td>
-            {{ $pasien->diagnosa ?? '-' }}
-         </td>
-      </tr>
-      @endforeach
-   </tbody>
-</table>
+</body>
+
+</html>

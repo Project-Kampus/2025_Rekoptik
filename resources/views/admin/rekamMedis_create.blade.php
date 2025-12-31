@@ -53,6 +53,12 @@
                         <x-input-label value="Alamat" />
                         <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2"></textarea>
                     </div>
+                    <div>
+                        <x-input-label value="Umur (Tahun)" />
+                        <x-text-input type="number" name="umur" min="0" class="mt-1 block w-full"
+                            placeholder="Contoh: 25" value="{{ old('umur') }}" />
+                    </div>
+
                 </div>
             </div>
 
@@ -130,11 +136,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Kartu Pasien" />
-                        <input
-                            type="file"
-                            name="doc_ktp"
-                            multiple
-                            accept="image/*,.pdf"
+                        <input type="file" name="doc_ktp" multiple accept="image/*,.pdf"
                             class="mt-1 block w-full text-sm text-gray-700
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
@@ -147,11 +149,7 @@
                     </div>
                     <div>
                         <x-input-label value="Surat Legalitas" />
-                        <input
-                            type="file"
-                            name="doc_legalitas"
-                            multiple
-                            accept="image/*,.pdf"
+                        <input type="file" name="doc_legalitas" multiple accept="image/*,.pdf"
                             class="mt-1 block w-full text-sm text-gray-700
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
@@ -164,11 +162,7 @@
                     </div>
                     <div>
                         <x-input-label value="Surat Rujukan" />
-                        <input
-                            type="file"
-                            name="doc_rujukan"
-                            multiple
-                            accept="image/*,.pdf"
+                        <input type="file" name="doc_rujukan" multiple accept="image/*,.pdf"
                             class="mt-1 block w-full text-sm text-gray-700
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-md file:border-0
@@ -193,7 +187,8 @@
 
                         <div>
                             <x-input-label value="Silindris (CYL)" />
-                            <x-text-input class="mt-1 block w-full" name="od_silindris" placeholder="Contoh: -0.50" />
+                            <x-text-input class="mt-1 block w-full" name="od_silindris"
+                                placeholder="Contoh: -0.50" />
                         </div>
 
                         <div>
@@ -219,7 +214,8 @@
 
                         <div>
                             <x-input-label value="Silindris (CYL)" />
-                            <x-text-input class="mt-1 block w-full" name="os_silindris" placeholder="Contoh: -0.75" />
+                            <x-text-input class="mt-1 block w-full" name="os_silindris"
+                                placeholder="Contoh: -0.75" />
                         </div>
 
                         <div>
@@ -244,29 +240,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Frame" />
-                        <select
-                            name="frame_id"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <select name="frame_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Frame --</option>
                             @foreach ($frames as $frame)
-                            <option value="{{ $frame->id }}">
-                                {{ $frame->merk }} - {{ $frame->kode_frame }}
-                            </option>
+                                <option value="{{ $frame->id }}">
+                                    {{ $frame->merk }} - {{ $frame->kode_frame }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div>
                         <x-input-label value="Lensa" />
-                        <select
-                            name="lensa_id"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <select name="lensa_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Lensa --</option>
                             @foreach ($lensas as $lensa)
-                            <option value="{{ $lensa->id }}">
-                                {{ $lensa->nama_lensa }}
-                                ({{ $lensa->kategori }})
-                            </option>
+                                <option value="{{ $lensa->id }}">
+                                    {{ $lensa->nama_lensa }}
+                                    ({{ $lensa->kategori }})
+                                </option>
                             @endforeach
                         </select>
                     </div>

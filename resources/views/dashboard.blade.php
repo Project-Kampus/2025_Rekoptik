@@ -6,7 +6,7 @@
     </x-slot>
 
     <!-- STATISTIK -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
         <div class="bg-white border rounded-lg p-4">
             <p class="text-sm text-gray-500">Total Pasien</p>
             <h3 class="text-2xl font-bold">{{ $totalPasien ?? 0 }}</h3>
@@ -21,6 +21,21 @@
             <p class="text-sm text-gray-500">Pasien Umum</p>
             <h3 class="text-2xl font-bold text-blue-600">{{ $totalUmum ?? 0 }}</h3>
         </div>
+
+        <div class="bg-white border rounded-lg p-4">
+            <p class="text-sm text-gray-500">Pasien Asuransi</p>
+            <h3 class="text-2xl font-bold text-orange-600">
+                {{ $totalAsuransi ?? 0 }}
+            </h3>
+        </div>
+
+        <div class="bg-white border rounded-lg p-4">
+            <p class="text-sm text-gray-500">Belum Diambil</p>
+            <h3 class="text-2xl font-bold text-red-600">
+                {{ $belumDiambil ?? 0 }}
+            </h3>
+        </div>
+
 
         <div class="bg-white border rounded-lg p-4">
             <p class="text-sm text-gray-500">Hari Ini</p>
@@ -83,7 +98,7 @@
                                 {{ $item->kategori }}
                             </td>
                             <td class="px-3 py-2 border text-center">
-                                <a href="{{ route('rekam-medis.edit', $item) }}"
+                                <a href="{{ route('rekam-medis.show', $item) }}"
                                     class="text-blue-600 hover:underline text-xs">
                                     Detail
                                 </a>
@@ -126,9 +141,18 @@
         new Chart(document.getElementById('grafikKategori'), {
             type: 'doughnut',
             data: {
-                labels: ['BPJS', 'Umum'],
+                labels: ['BPJS', 'Umum', 'Asuransi'],
                 datasets: [{
-                    data: [{{ $totalBpjs ?? 0 }}, {{ $totalUmum ?? 0 }}]
+                    data: [
+                        {{ $totalBpjs ?? 0 }},
+                        {{ $totalUmum ?? 0 }},
+                        {{ $totalAsuransi ?? 0 }}
+                    ],
+                    backgroundColor: [
+                        '#10b981', // BPJS
+                        '#3b82f6', // Umum
+                        '#f97316' // Asuransi
+                    ]
                 }]
             },
             options: {

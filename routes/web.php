@@ -7,6 +7,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\RiwayatFrameController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('welcome');
@@ -41,6 +42,11 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
         Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
     });
+
+// riwayat frame
+    Route::get('/riwayat-frame', [RiwayatFrameController::class, 'index'])
+    ->name('frame.riwayat');
+
 
     Route::resource('lensa', LensaController::class);
 

@@ -38,6 +38,8 @@
                         <option value="">Semua</option>
                         <option value="bpjs" {{ request('kategori') == 'bpjs' ? 'selected' : '' }}>BPJS</option>
                         <option value="umum" {{ request('kategori') == 'umum' ? 'selected' : '' }}>Umum</option>
+                        <option value="asuransi" {{ request('kategori') == 'asuransi' ? 'selected' : '' }}>Asuransi
+                        </option>
                     </select>
                 </div>
 
@@ -73,79 +75,92 @@
                         <th class="px-3 py-2 border">Lensa</th>
                         <th class="px-3 py-2 border">Biaya</th>
                         <th class="px-3 py-2 border">Sisa</th>
+                        <th class="px-3 py-2 border">status</th>
                         <th class="px-3 py-2 border text-center">Aksi</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @forelse ($pasiens as $pasien)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-3 py-2 border">{{ $pasien->id }}</td>
-                        <td class="px-3 py-2 border">{{ $pasien->nama_pasien }}</td>
-                        <td class="px-3 py-2 border capitalize">{{ $pasien->kategori }}</td>
-                        <td class="px-3 py-2 border">
-                            {{ $pasien->tanggal_pemeriksaan?->format('d-m-Y') }}
-                        </td>
-                        <td class="px-3 py-2 border">
-                            {{ $pasien->frame?->kode_frame ?? '-' }}
-                        </td>
-                        <td class="px-3 py-2 border">
-                            {{ $pasien->lensa?->nama_lensa ?? '-' }}
-                        </td>
-                        <td class="px-3 py-2 border">
-                            Rp {{ number_format($pasien->biaya_kacamata, 0, ',', '.') }}
-                        </td>
-                        <td class="px-3 py-2 border">
-                            Rp {{ number_format($pasien->sisa, 0, ',', '.') }}
-                        </td>
-                        <td class="px-3 py-2 border text-center">
-                            <div class="flex justify-center gap-2">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-3 py-2 border">{{ $pasien->id }}</td>
+                            <td class="px-3 py-2 border">{{ $pasien->nama_pasien }}</td>
+                            <td class="px-3 py-2 border capitalize">{{ $pasien->kategori }}</td>
+                            <td class="px-3 py-2 border">
+                                {{ $pasien->tanggal_pemeriksaan?->format('d-m-Y') }}
+                            </td>
+                            <td class="px-3 py-2 border">
+                                {{ $pasien->frame?->kode_frame ?? '-' }}
+                            </td>
+                            <td class="px-3 py-2 border">
+                                {{ $pasien->lensa?->nama_lensa ?? '-' }}
+                            </td>
+                            <td class="px-3 py-2 border">
+                                Rp {{ number_format($pasien->biaya_kacamata, 0, ',', '.') }}
+                            </td>
+                            <td class="px-3 py-2 border">
+                                Rp {{ number_format($pasien->sisa, 0, ',', '.') }}
+                            </td>
+                            <td class="px-3 py-2 border text-center">
+                                @if ($pasien->status === 'diambil')
+                                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                        Sudah Diambil
+                                    </span>
+                                @else
+                                    <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700">
+                                        Belum Diambil
+                                    </span>
+                                @endif
+                            </td>
 
-                                <!-- Detail -->
-                                <a href="{{ route('rekam-medis.show', $pasien) }}"
-                                    class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700 hover:bg-gray-200">
-                                    Detail
-                                </a>
+                            <td class="px-3 py-2 border text-center">
+                                <div class="flex justify-center gap-2">
+
+                                    <!-- Detail -->
+                                    <a href="{{ route('rekam-medis.show', $pasien) }}"
+                                        class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700 hover:bg-gray-200">
+                                        Detail
+                                    </a>
 
 
-                                <!-- Hapus -->
-                                <button type="button"
-                                    onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'hapus-{{ $pasien->id }}' }))"
-                                    class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 hover:bg-red-200">
-                                    Hapus
-                                </button>
+                                    <!-- Hapus -->
+                                    <button type="button"
+                                        onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'hapus-{{ $pasien->id }}' }))"
+                                        class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 hover:bg-red-200">
+                                        Hapus
+                                    </button>
 
-                            </div>
-                        </td>
+                                </div>
+                            </td>
 
-                    </tr>
-                    <x-danger-modal id="hapus-{{ $pasien->id }}" title="Hapus Rekam Medis">
-                        <p class="text-sm text-gray-700">
-                            Apakah Anda yakin ingin menghapus rekam medis
-                            <strong>{{ $pasien->nama_pasien }}</strong>?
-                            <br>
-                            Tindakan ini tidak dapat dibatalkan.
-                        </p>
+                        </tr>
+                        <x-danger-modal id="hapus-{{ $pasien->id }}" title="Hapus Rekam Medis">
+                            <p class="text-sm text-gray-700">
+                                Apakah Anda yakin ingin menghapus rekam medis
+                                <strong>{{ $pasien->nama_pasien }}</strong>?
+                                <br>
+                                Tindakan ini tidak dapat dibatalkan.
+                            </p>
 
-                        <x-slot name="actions">
-                            <form method="POST" action="{{ route('rekam-medis.destroy', $pasien->id) }}">
-                                @csrf
-                                @method('DELETE')
+                            <x-slot name="actions">
+                                <form method="POST" action="{{ route('rekam-medis.destroy', $pasien->id) }}">
+                                    @csrf
+                                    @method('DELETE')
 
-                                <button type="submit"
-                                    class="px-4 py-2 bg-red-600 text-white rounded-md text-sm hover:bg-red-700">
-                                    Ya, Hapus
-                                </button>
-                            </form>
-                        </x-slot>
-                    </x-danger-modal>
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-red-600 text-white rounded-md text-sm hover:bg-red-700">
+                                        Ya, Hapus
+                                    </button>
+                                </form>
+                            </x-slot>
+                        </x-danger-modal>
 
                     @empty
-                    <tr>
-                        <td colspan="7" class="text-center py-6 text-gray-500">
-                            Belum ada data
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="7" class="text-center py-6 text-gray-500">
+                                Belum ada data
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>

@@ -12,29 +12,30 @@ use Maatwebsite\Excel\Facades\Excel;
 class RekamMedisController extends Controller
 {
     public function index(Request $request)
-    {
-        $pasiens = Pasien::with('frame')
-            ->when($request->q, function ($q) use ($request) {
-                $q->where(function ($qq) use ($request) {
-                    $qq->where('nama_pasien', 'like', "%{$request->q}%")
-                        ->orWhere('no_kartu', 'like', "%{$request->q}%");
-                });
-            })
-            ->when($request->kategori, function ($q) use ($request) {
-                $q->where('kategori', strtoupper($request->kategori));
-            })
-            ->when($request->tanggal_awal && $request->tanggal_akhir, function ($q) use ($request) {
-                $q->whereBetween('tanggal_pemeriksaan', [
-                    $request->tanggal_awal,
-                    $request->tanggal_akhir
-                ]);
-            })
-            ->latest()
-            ->paginate(20)
-            ->withQueryString();
+{
+    $pasiens = Pasien::with('frame')
+        ->when($request->q, function ($q) use ($request) {
+            $q->where(function ($qq) use ($request) {
+                $qq->where('nama_pasien', 'like', "%{$request->q}%")
+                   ->orWhere('no_kartu', 'like', "%{$request->q}%");
+            });
+        })
+        ->when($request->kategori, function ($q) use ($request) {
+            $q->where('kategori', $request->kategori);
+        })
+        ->when($request->tanggal_awal && $request->tanggal_akhir, function ($q) use ($request) {
+            $q->whereBetween('tanggal_pemeriksaan', [
+                $request->tanggal_awal,
+                $request->tanggal_akhir
+            ]);
+        })
+        ->latest('tanggal_pemeriksaan')
+        ->paginate(20)
+        ->withQueryString();
 
-        return view('admin.rekamMedis_index', compact('pasiens'));
-    }
+    return view('admin.rekamMedis_index', compact('pasiens'));
+}
+
 
     public function create()
     {
@@ -53,6 +54,7 @@ class RekamMedisController extends Controller
             'kategori' => 'required|in:bpjs,asuransi,umum',
             'no_kartu' => 'nullable|required_if:kategori,bpjs,asuransi',
             'alamat' => 'nullable|string',
+            'umur' => 'nullable|integer|min:0',
 
             // pemeriksaan
             'resep_dari' => 'required|string|max:255',
@@ -153,6 +155,7 @@ class RekamMedisController extends Controller
             'no_kartu' => 'nullable|required_if:kategori,bpjs,asuransi',
             'no_sep' => 'nullable|required_if:kategori,bpjs',
             'alamat' => 'nullable|string',
+            'umur' => 'nullable|integer|min:0',
 
             // Riwayat Pasien
             'keluhan_utama' => 'nullable|string',
@@ -296,21 +299,25 @@ class RekamMedisController extends Controller
     }
 
     public function pengambilan(Request $request, Pasien $pasien)
-    {
-        $data = $request->validate([
-            'tanggal_pengambilan' => 'required|date',
-            'nama_pengambil' => 'required|string|max:255',
-            'hub_pengambil' => 'required|string|max:100',
-            'bukti_pengambil' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
+{
+    $data = $request->validate([
+        'tanggal_pengambilan' => 'required|date',
+        'nama_pengambil' => 'required|string|max:255',
+        'hub_pengambil' => 'required|string|max:100',
+        'bukti_pengambil' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-        $data['bukti_pengambil'] = $request->file('bukti_pengambil')
-            ->store('rekam-medis/pengambilan', 'public');
+    $data['bukti_pengambil'] = $request->file('bukti_pengambil')
+        ->store('rekam-medis/pengambilan', 'public');
 
-        $pasien->update($data);
+    // 🔥 INI YANG KURANG
+    $data['status'] = 'diambil';
 
-        return redirect()
-            ->route('rekam-medis.show', $pasien->id)
-            ->with('success', 'Pengambilan berhasil disimpan');
-    }
+    $pasien->update($data);
+
+    return redirect()
+        ->route('rekam-medis.show', $pasien->id)
+        ->with('success', 'Pengambilan berhasil disimpan');
+}
+
 }
