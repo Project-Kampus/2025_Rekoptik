@@ -8,16 +8,17 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\RiwayatFrameController;
+use App\Http\Controllers\RoleRekamMedis;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('welcome');
 
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::middleware('role:admin')->group(function () {
-        // Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('role:admin');
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::middleware('role:admin|superadmin')->group(function () {
         // Rekam Medis
         Route::prefix('rekam-medis')->name('rekam-medis.')->group(function () {
             Route::get('/', [RekamMedisController::class, 'index'])->name('index');
@@ -64,13 +65,21 @@ Route::middleware('auth', 'verified')->group(function () {
 
 
         Route::get('/riwayatAll', [DashboardController::class, 'riwayatAll'])->name('riwayat.all');
+    });
 
-
+    Route::middleware('role:superadmin')->group(function () {
         // Pengaturan Sistem
         Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
             Route::get('/', [PengaturanController::class, 'index'])->name('index');
             Route::put('/storage', [PengaturanController::class, 'update'])->name('update');
         });
+    });
+
+    Route::middleware('role:bpjs')->group(function () {
+        Route::get('/rekapMedis', [RoleRekamMedis::class, 'rekapMedisBpjs'])->name('rekapMedis.Bpjs');
+        Route::get('/rekapMedis/{pasien}/detail', [RoleRekamMedis::class, 'rekapMedisDetail'])->name('rekapMedis.Bpjs');
+        Route::get('/rekapMedis/{pasien}/struk', [RoleRekamMedis::class, 'rekapMedisStruk'])->name('rekapMedis.Struk');
+        Route::get('/rekapMedis/{pasien}/suratBalasan', [RoleRekamMedis::class, 'rekapMedisSurat'])->name('rekapMedis.surat');
     });
 
     // Profile

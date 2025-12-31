@@ -56,7 +56,7 @@
    </style>
 </head>
 
-<body onload="window.print()">
+<body>
 
    <div class="container">
 
@@ -181,8 +181,8 @@
 
       <div class="mt center">
          <div>Hormat dan Terima kasih kami,</div>
-         <div class="bold mt">OPTIK UTAMA</div>
-         <div style="margin-top:30px;">( ..................... )</div>
+         <div id="ttd-online"></div>
+         <div style="margin-top:60px;" class="bold mt">OPTIK UTAMA</div>
       </div>
 
    </div>

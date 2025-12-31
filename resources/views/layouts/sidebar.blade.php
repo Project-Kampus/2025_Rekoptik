@@ -21,6 +21,7 @@ $isMasterActive = request()->routeIs('frame.*')
 
    <li class="my-3 border-t border-gray-200"></li>
 
+   @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
    <!-- Rekam Medis -->
    <li x-data="{ open: {{ $isRekamMedisActive ? 'true' : 'false' }} }">
       <button @click="open = !open"
@@ -111,7 +112,20 @@ $isMasterActive = request()->routeIs('frame.*')
          Riwayat Frame & Lensa
       </a>
    </li>
+   @endif
 
+   @if(auth()->user()->hasRole('bpjs'))
+   <li>
+      <a href="{{ route('rekapMedis.Bpjs') }}"
+         class="flex items-center px-4 py-2.5 rounded-lg transition
+           {{ request()->routeIs('rekapMedis.Bpjs') ? $activeClass : $inactiveClass }}">
+         Rekap Medis
+      </a>
+   </li>
+   @endif
+
+
+   @if(auth()->user()->hasRole('superadmin'))
    <li class="my-3 border-t border-gray-200"></li>
 
    <!-- Pengaturan -->
@@ -122,5 +136,5 @@ $isMasterActive = request()->routeIs('frame.*')
          Pengaturan Sistem
       </a>
    </li>
-
+   @endif
 </ul>
