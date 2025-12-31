@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }}| Sistem Rekap Data Medis Optik</title>
+    <title> {{ $pengaturan->nama_aplikasi ?? 'Rekoptik' }} | Sistem Rekap Data Medis Optik</title>
     @php
     $logo = $pengaturan->logo ?? null;
     $ext = $logo ? strtolower(pathinfo($logo, PATHINFO_EXTENSION)) : null;
