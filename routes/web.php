@@ -27,6 +27,9 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/rekap', [RekamMedisController::class, 'rekap'])->name('rekap');
         // Route::get('/rekap/pdf', [RekamMedisController::class, 'rekapPdf'])->name('rekapPdf');
         Route::get('/rekap/excel', [RekamMedisController::class, 'rekapExcel'])->name('rekapExcel');
+        Route::get('/{pasien}/detail', [RekamMedisController::class, 'show'])->name('show');
+
+
     });
 
     // Manajemen Frame
