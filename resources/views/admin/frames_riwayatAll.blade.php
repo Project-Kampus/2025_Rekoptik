@@ -66,7 +66,6 @@
                   </td>
                   <td class="px-4 py-2 border">
                      <div class="font-medium">{{ $row->kode_frame }}</div>
-                     <div class="text-xs text-gray-500">{{ $row->nama_frame }}</div>
                   </td>
                   <td class="px-4 py-2 border text-center">
                      @if ($row->jenis === 'masuk')

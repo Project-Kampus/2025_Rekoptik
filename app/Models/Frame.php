@@ -18,23 +18,18 @@ class Frame extends Model
      */
     protected $fillable = [
         'kode_frame',
-        'nama_frame',
         'merk',
         'warna',
         'bahan',
         'kategori',
-        'aktif',
         'harga',
-        'stok',
     ];
 
     /**
      * Casting tipe data
      */
     protected $casts = [
-        'aktif' => 'boolean',
         'harga' => 'integer',
-        'stok' => 'integer',
     ];
 
     /**
@@ -44,22 +39,6 @@ class Frame extends Model
     public function pasiens()
     {
         return $this->hasMany(Pasien::class);
-    }
-
-    /**
-     * Relasi ke histori stok
-     */
-    public function stok()
-    {
-        return $this->hasMany(frame_stoks::class);
-    }
-
-    /**
-     * Scope: hanya frame aktif
-     */
-    public function scopeAktif($query)
-    {
-        return $query->where('aktif', true);
     }
 
     /**

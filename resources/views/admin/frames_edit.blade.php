@@ -35,18 +35,6 @@
                <x-input-error :messages="$errors->get('kode_frame')" class="mt-2" />
             </div>
 
-            <!-- Nama Frame -->
-            <div>
-               <x-input-label for="nama_frame" value="Nama Frame" />
-               <x-text-input
-                  id="nama_frame"
-                  name="nama_frame"
-                  type="text"
-                  class="mt-1 block w-full"
-                  value="{{ old('nama_frame', $frame->nama_frame) }}"
-                  required />
-            </div>
-
             <!-- Merk -->
             <div>
                <x-input-label for="merk" value="Merk" />
@@ -110,26 +98,6 @@
                   value="{{ old('harga', $frame->harga) }}" />
             </div>
 
-         </div>
-
-         <!-- STATUS FRAME -->
-         <div class="flex items-center gap-3 pt-2">
-            <label class="relative inline-flex items-center cursor-pointer">
-               <input
-                  type="checkbox"
-                  name="aktif"
-                  value="1"
-                  class="sr-only peer"
-                  {{ old('aktif', $frame->aktif) ? 'checked' : '' }}>
-               <div class="w-11 h-6 bg-gray-200 rounded-full peer
-                  peer-checked:bg-indigo-600
-                  after:content-[''] after:absolute after:top-0.5 after:left-[2px]
-                  after:bg-white after:border after:rounded-full after:h-5 after:w-5
-                  after:transition-all peer-checked:after:translate-x-full">
-               </div>
-            </label>
-
-            <span class="text-sm text-gray-700">Status Frame</span>
          </div>
 
          <!-- TOMBOL -->

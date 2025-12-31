@@ -9,10 +9,6 @@
       <a href="{{ route('frame.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
          + Tambah Frame
       </a>
-      <a href="{{ route('frame.stok.create') }}"
-         class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 text-sm">
-         + Tambah Stok
-      </a>
    </x-slot>
 
    <div class="bg-white rounded-lg border p-6">
@@ -59,13 +55,10 @@
             <thead class="bg-gray-50">
                <tr class="text-left text-sm text-gray-600">
                   <th class="px-4 py-3 border">Kode</th>
-                  <th class="px-4 py-3 border">Nama Frame</th>
                   <th class="px-4 py-3 border">Merk</th>
                   <th class="px-4 py-3 border">Kategori</th>
                   <th class="px-4 py-3 border">Harga</th>
-                  <th class="px-4 py-3 border">Stok</th>
                   <th class="px-4 py-3 border text-center">Status</th>
-                  <th class="px-4 py-3 border text-center">Aksi</th>
                </tr>
             </thead>
             <tbody class="text-sm text-gray-700">
@@ -75,9 +68,6 @@
                      {{ $frame->kode_frame }}
                   </td>
                   <td class="px-4 py-2 border">
-                     {{ $frame->nama_frame }}
-                  </td>
-                  <td class="px-4 py-2 border">
                      {{ $frame->merk ?? '-' }}
                   </td>
                   <td class="px-4 py-2 border capitalize">
@@ -85,20 +75,6 @@
                   </td>
                   <td class="px-4 py-2 border">
                      Rp {{ number_format($frame->harga, 0, ',', '.') }}
-                  </td>
-                  <td class="px-4 py-2 border text-center">
-                     {{ $frame->stok }}
-                  </td>
-                  <td class="px-4 py-2 border text-center">
-                     @if ($frame->aktif)
-                     <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
-                        Aktif
-                     </span>
-                     @else
-                     <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
-                        Nonaktif
-                     </span>
-                     @endif
                   </td>
                   <td class="px-4 py-2 border text-center">
                      <div class="flex justify-center gap-2">
@@ -113,12 +89,6 @@
                            onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'delete-frame-{{ $frame->id }}' }))">
                            Hapus
                         </button>
-
-                        <a href="{{ route('frame.riwayat', $frame->id) }}"
-                           class="text-emerald-600 hover:underline text-sm">
-                           Riwayat
-                        </a>
-
                      </div>
                   </td>
                </tr>

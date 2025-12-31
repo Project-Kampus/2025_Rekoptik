@@ -34,17 +34,6 @@
                <x-input-error :messages="$errors->get('kode_frame')" class="mt-2" />
             </div>
 
-            <!-- Nama Frame -->
-            <div>
-               <x-input-label for="nama_frame" value="Nama Frame" />
-               <x-text-input
-                  id="nama_frame"
-                  name="nama_frame"
-                  type="text"
-                  class="mt-1 block w-full"
-                  required />
-            </div>
-
             <!-- Merk -->
             <div>
                <x-input-label for="merk" value="Merk" />
