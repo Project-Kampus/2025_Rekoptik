@@ -10,7 +10,7 @@
             </p>
         </header>
 
-        <form method="POST" action="{{ route('rekam-medis.store') }}" class="space-y-6">
+        <form method="POST" action="{{ route('rekam-medis.store') }}" class="space-y-6" enctype="multipart/form-data">
             @csrf
             <div class="bg-gray-50 border rounded-xl p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
@@ -115,6 +115,24 @@
                     <div>
                         <x-input-label value="Tanggal Pemeriksaan" />
                         <x-text-input type="date" name="tanggal_pemeriksaan" class="mt-1 block w-full" required />
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-3">
+                        <x-input-label value="Dokument Pemeriksaan" />
+                        <input
+                            type="file"
+                            name="dokument[]"
+                            multiple
+                            accept="image/*,.pdf"
+                            class="mt-1 block w-full text-sm text-gray-700
+                       file:mr-4 file:py-2 file:px-4
+                       file:rounded-md file:border-0
+                       file:text-sm file:font-semibold
+                       file:bg-indigo-50 file:text-indigo-700
+                       hover:file:bg-indigo-100">
+                        <p class="mt-1 text-xs text-gray-500">
+                            Format: JPG, PNG, atau PDF (maks. 2MB per file)
+                        </p>
                     </div>
                 </div>
             </div>
@@ -277,7 +295,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="flex items-center gap-3">
                 <x-primary-button>

@@ -9,24 +9,26 @@ class Pasien extends Model
 {
 
     protected $fillable = [
+        // data pasien
         'nama_pasien',
         'no_hp',
         'no_kartu',
         'alamat',
-
+        // riwayat
         'keluhan_utama',
         'riwayat_penyakit',
         'penyakit_sekarang',
         'penyakit_keluarga',
         'kebiasaan',
         'pengobatan',
-
+        // pemeriksaan
         'resep_dari',
         'no_sep',
         'tanggal_pemeriksaan',
         'diagnosa',
         'kategori',
-
+        'dokument',
+        // resep
         'od_sferis',
         'od_silindris',
         'od_axis',
@@ -35,18 +37,17 @@ class Pasien extends Model
         'os_silindris',
         'os_axis',
         'os_add_lensa',
-
+        // kacamata
         'frame_id',
-        // 'lensa',
         'lensa_id',
         'pd',
-
+        // biaya
         'biaya_kacamata',
         'dibayar_bpjs',
         'dibayar_asuransi',
         'dibayar_pasien',
         'sisa',
-
+        // tanggak
         'tanggal_dipesan',
         'tanggal_pengambilan',
     ];

@@ -56,8 +56,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ([
                 'Tanggal Pemeriksaan' => $pasien->tanggal_pemeriksaan?->format('d-m-Y'),
-                'Frame' => $pasien->frame?->nama_frame ?? '-',
-                'Lensa' => $pasien->lensa ?? '-',
+                'Frame' => $pasien->frame?->kode_frame ?? '-',
+                'Lensa' => $pasien->lensa->nama_lensa ?? '-',
                 'PD' => $pasien->pd ?? '-',
                 'Biaya Kacamata' => 'Rp ' . number_format($pasien->biaya_kacamata, 0, ',', '.'),
                 'Dibayar BPJS' => 'Rp ' . number_format($pasien->dibayar_bpjs, 0, ',', '.'),

@@ -67,6 +67,7 @@ class RekamMedisController extends Controller
             'resep_dari' => 'required|string',
             'diagnosa' => 'required|string',
             'tanggal_pemeriksaan' => 'required|date',
+            'dokument' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
 
             // Resep Mata
             'od_sferis' => 'nullable|numeric',
@@ -95,6 +96,12 @@ class RekamMedisController extends Controller
             'tanggal_pengambilan' => 'nullable|date|after_or_equal:tanggal_dipesan',
         ]);
 
+
+        if ($request->hasFile('dokument')) {
+            $data['dokumen'] = $request->file('dokument')
+                ->store('dokumen_pasien', 'public');
+        }
+
         // NORMALISASI PEMBAYARAN
         $data['dibayar_bpjs'] = $data['dibayar_bpjs'] ?? 0;
         $data['dibayar_asuransi'] = $data['dibayar_asuransi'] ?? 0;
@@ -117,6 +124,9 @@ class RekamMedisController extends Controller
                 $data['no_sep'] = null;
                 break;
         }
+
+
+
 
         $pasien = Pasien::create($data);
         $pasien->update(['sisa' => $pasien->hitungSisa()]);
