@@ -96,6 +96,13 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
                Data Frame
             </a>
          </li>
+         <li>
+            <a href="{{ route('lensa.index') }}"
+               class="block px-4 py-2 rounded-md transition
+               {{ request()->routeIs('lensa.index') ? $activeClass : $inactiveClass }}">
+               Data Lensa
+            </a>
+         </li>
 
          <li>
             <a href="{{ route('frame.riwayat.all') }}"

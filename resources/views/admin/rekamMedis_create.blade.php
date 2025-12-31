@@ -151,7 +151,7 @@
                      <option value="">-- Pilih Frame --</option>
                      @foreach($frames as $frame)
                      <option value="{{ $frame->id }}">
-                        {{ $frame->kode_frame }} - {{ $frame->nama_frame }}
+                        {{ $frame->merk }} - {{ $frame->kode_frame }}
                      </option>
                      @endforeach
                   </select>

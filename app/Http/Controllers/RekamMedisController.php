@@ -37,7 +37,7 @@ class RekamMedisController extends Controller
 
     public function create()
     {
-        $frames = Frame::aktif()->where('stok', '>', 0)->get();
+        $frames = Frame::all();
         return view('admin.rekamMedis_create', compact('frames'));
     }
 

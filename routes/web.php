@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrameController;
+use App\Http\Controllers\LensaController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
@@ -36,13 +37,10 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/{frame}/edit', [FrameController::class, 'edit'])->name('edit');
         Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
         Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
-        Route::get('/{frame}/riwayat', [FrameController::class, 'riwayat'])->name('riwayat');
         Route::get('/riwayatAll', [FrameController::class, 'riwayatAll'])->name('riwayat.all');
-
-
-        Route::get('/stok/create', [FrameController::class, 'createStok'])->name('stok.create');
-        Route::post('/stok/create', [FrameController::class, 'storeStok'])->name('stok.store');
     });
+
+    Route::resource('lensa', LensaController::class);
 
     // Pengaturan Sistem
     Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
