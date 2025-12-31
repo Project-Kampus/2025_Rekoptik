@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Tambah Rekam Medis
+        </h2>
+    </x-slot>
 
     <div class="bg-white rounded-lg border p-6">
         <header class="mb-6">
@@ -53,6 +58,36 @@
 
             <div class="bg-gray-50 border rounded-xl p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Pemeriksaan
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <x-input-label value="Pemberi Resep" />
+                        <x-text-input name="resep_dari" class="mt-1 block w-full" placeholder="Dokter / Optometris"
+                            required />
+                    </div>
+
+                    <div>
+                        <x-input-label value="Diagnosa" />
+                        <x-text-input name="diagnosa" class="mt-1 block w-full" placeholder="Diagnosa" required />
+                    </div>
+
+                    <div id="field_no_sep" class="hidden">
+                        <x-input-label value="No Rujukan / SEP" />
+                        <x-text-input name="no_sep" id="no_sep" class="mt-1 block w-full" />
+                    </div>
+
+
+                    <div>
+                        <x-input-label value="Tanggal Pemeriksaan" />
+                        <x-text-input type="date" name="tanggal_pemeriksaan" class="mt-1 block w-full" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
                     Riwayat Pasien
                 </h3>
 
@@ -88,48 +123,58 @@
                     </div>
                 </div>
             </div>
-
             <div class="bg-gray-50 border rounded-xl p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    Pemeriksaan
+                    Dokument
                 </h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <x-input-label value="Pemberi Resep" />
-                        <x-text-input name="resep_dari" class="mt-1 block w-full" placeholder="Dokter / Optometris"
-                            required />
-                    </div>
-
-                    <div>
-                        <x-input-label value="Diagnosa" />
-                        <x-text-input name="diagnosa" class="mt-1 block w-full" placeholder="Diagnosa" required />
-                    </div>
-
-                    <div id="field_no_sep" class="hidden">
-                        <x-input-label value="No Rujukan / SEP" />
-                        <x-text-input name="no_sep" id="no_sep" class="mt-1 block w-full" />
-                    </div>
-
-
-                    <div>
-                        <x-input-label value="Tanggal Pemeriksaan" />
-                        <x-text-input type="date" name="tanggal_pemeriksaan" class="mt-1 block w-full" required />
-                    </div>
-
-                    <div class="md:col-span-2 lg:col-span-3">
-                        <x-input-label value="Dokument Pemeriksaan" />
+                        <x-input-label value="Kartu Pasien" />
                         <input
                             type="file"
-                            name="dokument[]"
+                            name="doc_ktp"
                             multiple
                             accept="image/*,.pdf"
                             class="mt-1 block w-full text-sm text-gray-700
-                       file:mr-4 file:py-2 file:px-4
-                       file:rounded-md file:border-0
-                       file:text-sm file:font-semibold
-                       file:bg-indigo-50 file:text-indigo-700
-                       hover:file:bg-indigo-100">
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100">
+                        <p class="mt-1 text-xs text-gray-500">
+                            Format: JPG, PNG, atau PDF (maks. 2MB per file)
+                        </p>
+                    </div>
+                    <div>
+                        <x-input-label value="Surat Legalitas" />
+                        <input
+                            type="file"
+                            name="doc_legalitas"
+                            multiple
+                            accept="image/*,.pdf"
+                            class="mt-1 block w-full text-sm text-gray-700
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100">
+                        <p class="mt-1 text-xs text-gray-500">
+                            Format: JPG, PNG, atau PDF (maks. 2MB per file)
+                        </p>
+                    </div>
+                    <div>
+                        <x-input-label value="Surat Rujukan" />
+                        <input
+                            type="file"
+                            name="doc_rujukan"
+                            multiple
+                            accept="image/*,.pdf"
+                            class="mt-1 block w-full text-sm text-gray-700
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100">
                         <p class="mt-1 text-xs text-gray-500">
                             Format: JPG, PNG, atau PDF (maks. 2MB per file)
                         </p>
@@ -137,11 +182,7 @@
                 </div>
             </div>
 
-
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- OD -->
                 <div class="border bg-gray-50  rounded-lg p-4">
                     <h4 class="font-semibold mb-3 text-gray-700">Mata Kanan (OD)</h4>
                     <div class="grid grid-cols-2 gap-3">
@@ -243,7 +284,6 @@
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {{-- Biaya Kacamata --}}
                     <div>
                         <x-input-label value="Biaya Kacamata" />
                         <input type="text" class="mt-1 block w-full border-gray-300 rounded-md rupiah"
@@ -251,7 +291,6 @@
                         <input type="hidden" name="biaya_kacamata" id="biaya_kacamata" value="0">
                     </div>
 
-                    {{-- Dibayar BPJS --}}
                     <div id="field_bpjs">
                         <x-input-label value="Dibayar BPJS" />
                         <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
@@ -259,7 +298,6 @@
                         <input type="hidden" name="dibayar_bpjs" id="dibayar_bpjs" value="0">
                     </div>
 
-                    {{-- Dibayar Asuransi --}}
                     <div id="field_asuransi" class="hidden">
                         <x-input-label value="Dibayar Asuransi" />
                         <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
@@ -267,31 +305,15 @@
                         <input type="hidden" name="dibayar_asuransi" id="dibayar_asuransi" value="0">
                     </div>
 
-                    {{-- Dibayar Pasien --}}
                     <div id="field_umum">
                         <x-input-label value="Dibayar Pasien" />
                         <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
                             data-target="dibayar_pasien" placeholder="Rp 0">
                         <input type="hidden" name="dibayar_pasien" id="dibayar_pasien" value="0">
                     </div>
-                </div>
-            </div>
-
-            <div class="bg-gray-50 border rounded-xl p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    Tanggal
-                </h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
                     <div>
                         <x-input-label value="Tanggal Pemesanan" />
                         <x-text-input type="date" name="tanggal_dipesan" class="mt-1 block w-full" />
-                    </div>
-
-                    <div>
-                        <x-input-label value="Tanggal Pengambilan" />
-                        <x-text-input type="date" name="tanggal_pengambilan" class="mt-1 block w-full" />
                     </div>
                 </div>
             </div>
@@ -371,6 +393,7 @@
 
                 if (kategori.value === 'asuransi') {
                     fieldNoKartu.classList.remove('hidden');
+                    fieldNoSep.classList.remove('hidden');
                     fieldAsuransi.classList.remove('hidden');
                 }
 

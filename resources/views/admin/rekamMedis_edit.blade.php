@@ -6,58 +6,94 @@
     </x-slot>
 
     <div class="bg-white rounded-lg border p-6">
+        <header class="mb-6">
+            <h2 class="text-lg font-medium text-gray-900">
+                Data Pasien & Pemeriksaan
+            </h2>
+            <p class="mt-1 text-sm text-gray-600">
+                Lengkapi data rekam medis pasien dengan benar.
+            </p>
+        </header>
 
         <form method="POST" action="{{ route('rekam-medis.update', $pasien->id) }}" class="space-y-8">
             @csrf
             @method('PUT')
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Data Pasien
+                </h3>
 
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Data Pasien & Riwayat</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-                    <!-- DATA PASIEN -->
                     <div>
                         <x-input-label value="Nama Pasien" />
-                        <x-text-input name="nama_pasien" class="mt-1 block w-full"
-                            value="{{ old('nama_pasien', $pasien->nama_pasien) }}" required />
+                        <x-text-input name="nama_pasien" class="mt-1 block w-full" required value="{{ old('nama_pasien', $pasien->nama_pasien) }}" />
                     </div>
 
                     <div>
                         <x-input-label value="No HP" />
-                        <x-text-input name="no_hp" class="mt-1 block w-full"
-                            value="{{ old('no_hp', $pasien->no_hp) }}" />
+                        <x-text-input name="no_hp" class="mt-1 block w-full" value="{{ old('no_hp', $pasien->no_hp) }}" />
                     </div>
 
                     <div>
                         <x-input-label value="Kategori" />
-                        <select name="kategori" id="kategori"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <select name="kategori" id="kategori" required
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih --</option>
-                            <option value="bpjs" {{ old('kategori', $pasien->kategori) == 'bpjs' ? 'selected' : '' }}>
-                                BPJS</option>
-                            <option value="asuransi"
-                                {{ old('kategori', $pasien->kategori) == 'asuransi' ? 'selected' : '' }}>Asuransi
-                            </option>
-                            <option value="umum" {{ old('kategori', $pasien->kategori) == 'umum' ? 'selected' : '' }}>
-                                Umum</option>
+                            <option value="bpjs" {{ old('kategori',$pasien->kategori)=='bpjs'?'selected':'' }}>BPJS</option>
+                            <option value="asuransi" {{ old('kategori',$pasien->kategori)=='asuransi'?'selected':'' }}>Asuransi</option>
+                            <option value="umum" {{ old('kategori',$pasien->kategori)=='umum'?'selected':'' }}>Umum</option>
                         </select>
+
                     </div>
 
-                    <!-- No Kartu -->
-                    <div id="field_no_kartu"
-                        class="{{ in_array(old('kategori', $pasien->kategori), ['bpjs', 'asuransi']) ? '' : 'hidden' }}">
+                    <div id="field_no_kartu" class="hidden">
                         <x-input-label value="No Kartu BPJS / Asuransi" />
-                        <x-text-input name="no_kartu" class="mt-1 block w-full"
-                            value="{{ old('no_kartu', $pasien->no_kartu) }}" />
+                        <x-text-input name="no_kartu" id="no_kartu" class="mt-1 block w-full" value="{{ old('no_kartu', $pasien->no_kartu) }}" />
                     </div>
 
-                    <!-- Alamat -->
                     <div class="md:col-span-2 lg:col-span-3">
                         <x-input-label value="Alamat" />
                         <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2">{{ old('alamat', $pasien->alamat) }}</textarea>
                     </div>
+                </div>
+            </div>
 
-                    <!-- RIWAYAT PASIEN -->
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Pemeriksaan
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <x-input-label value="Pemberi Resep" />
+                        <x-text-input name="resep_dari" class="mt-1 block w-full" placeholder="Dokter / Optometris" value="{{ old('resep_dari', $pasien->resep_dari) }}"
+                            required />
+                    </div>
+
+                    <div>
+                        <x-input-label value="Diagnosa" />
+                        <x-text-input name="diagnosa" class="mt-1 block w-full" placeholder="Diagnosa" value="{{ old('diagnosa', $pasien->diagnosa) }}" required />
+                    </div>
+
+                    <div id="field_no_sep" class="hidden">
+                        <x-input-label value="No Rujukan / SEP" />
+                        <x-text-input name="no_sep" id="no_sep" class="mt-1 block w-full" value="{{ old('no_sep', $pasien->no_sep) }}" />
+                    </div>
+
+
+                    <div>
+                        <x-input-label value="Tanggal Pemeriksaan" />
+                        <x-text-input type="date" name="tanggal_pemeriksaan" class="mt-1 block w-full" value="{{ old('tanggal_pemeriksaan', optional($pasien->tanggal_pemeriksaan)->format('Y-m-d')) }}" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Riwayat Pasien
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="md:col-span-2 lg:col-span-1">
                         <x-input-label value="Keluhan Utama" />
                         <textarea name="keluhan_utama" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('keluhan_utama', $pasien->keluhan_utama) }}</textarea>
@@ -87,77 +123,151 @@
                         <x-input-label value="Pengobatan / Konsumsi Obat" />
                         <textarea name="pengobatan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('pengobatan', $pasien->pengobatan) }}</textarea>
                     </div>
-
                 </div>
             </div>
-
-            <!-- ================= DATA PEMERIKSAAN ================= -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Data Pemeriksaan</h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Dokument
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <x-input-label value="Pemberi Resep" />
-                        <x-text-input name="resep_dari" class="mt-1 block w-full"
-                            value="{{ old('resep_dari', $pasien->resep_dari) }}" required />
+                        <x-input-label value="Kartu Pasien" />
+                        <input
+                            type="file"
+                            name="doc_ktp"
+                            multiple
+                            accept="image/*,.pdf"
+                            class="mt-1 block w-full text-sm text-gray-700
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100">
+                        <p class="mt-1 text-xs text-gray-500">
+                            Format: JPG, PNG, atau PDF (maks. 2MB per file)
+                        </p>
                     </div>
-
                     <div>
-                        <x-input-label value="Diagnosa" />
-                        <x-text-input name="diagnosa" class="mt-1 block w-full"
-                            value="{{ old('diagnosa', $pasien->diagnosa) }}" required />
+                        <x-input-label value="Surat Legalitas" />
+                        <input
+                            type="file"
+                            name="doc_legalitas"
+                            multiple
+                            accept="image/*,.pdf"
+                            class="mt-1 block w-full text-sm text-gray-700
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100">
+                        <p class="mt-1 text-xs text-gray-500">
+                            Format: JPG, PNG, atau PDF (maks. 2MB per file)
+                        </p>
                     </div>
-
-                    <div id="field_no_sep">
-                        <x-input-label value="No Rujukan / SEP" />
-                        <x-text-input name="no_sep" class="mt-1 block w-full"
-                            value="{{ old('no_sep', $pasien->no_sep) }}" />
-                    </div>
-
                     <div>
-                        <x-input-label value="Tanggal Pemeriksaan" />
-                        <x-text-input type="date" name="tanggal_pemeriksaan" class="mt-1 block w-full"
-                            value="{{ old('tanggal_pemeriksaan', optional($pasien->tanggal_pemeriksaan)->format('Y-m-d')) }}"
-                            required />
+                        <x-input-label value="Surat Rujukan" />
+                        <input
+                            type="file"
+                            name="doc_rujukan"
+                            multiple
+                            accept="image/*,.pdf"
+                            class="mt-1 block w-full text-sm text-gray-700
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-indigo-50 file:text-indigo-700
+                                hover:file:bg-indigo-100">
+                        <p class="mt-1 text-xs text-gray-500">
+                            Format: JPG, PNG, atau PDF (maks. 2MB per file)
+                        </p>
                     </div>
-
                 </div>
             </div>
 
-            <!-- ================= RESEP OD ================= -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kanan (OD)</h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <x-text-input name="od_sferis" class="mt-1 block w-full" placeholder="SPH"
-                        value="{{ old('od_sferis', $pasien->od_sferis) }}" />
-                    <x-text-input name="od_silindris" class="mt-1 block w-full" placeholder="CYL"
-                        value="{{ old('od_silindris', $pasien->od_silindris) }}" />
-                    <x-text-input name="od_axis" class="mt-1 block w-full" placeholder="AX"
-                        value="{{ old('od_axis', $pasien->od_axis) }}" />
-                    <x-text-input name="od_add_lensa" class="mt-1 block w-full" placeholder="ADD"
-                        value="{{ old('od_add_lensa', $pasien->od_add_lensa) }}" />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- OD -->
+                <div class="border bg-gray-50 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">Mata Kanan (OD)</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <x-input-label value="Sferis (SPH)" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="od_sferis"
+                                :value="old('od_sferis', $pasien->od_sferis)" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Silindris (CYL)" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="od_silindris"
+                                :value="old('od_silindris', $pasien->od_silindris)" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Axis (AX)" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="od_axis"
+                                :value="old('od_axis', $pasien->od_axis)" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Add" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="od_add_lensa"
+                                :value="old('od_add_lensa', $pasien->od_add_lensa)" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OS -->
+                <div class="border bg-gray-50 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3 text-gray-700">Mata Kiri (OS)</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <x-input-label value="Sferis (SPH)" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="os_sferis"
+                                :value="old('os_sferis', $pasien->os_sferis)" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Silindris (CYL)" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="os_silindris"
+                                :value="old('os_silindris', $pasien->os_silindris)" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Axis (AX)" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="os_axis"
+                                :value="old('os_axis', $pasien->os_axis)" />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Add" />
+                            <x-text-input
+                                class="mt-1 block w-full"
+                                name="os_add_lensa"
+                                :value="old('os_add_lensa', $pasien->os_add_lensa)" />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ================= RESEP OS ================= -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Resep Mata Kiri (OS)</h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <x-text-input name="os_sferis" class="mt-1 block w-full" placeholder="SPH"
-                        value="{{ old('os_sferis', $pasien->os_sferis) }}" />
-                    <x-text-input name="os_silindris" class="mt-1 block w-full" placeholder="CYL"
-                        value="{{ old('os_silindris', $pasien->os_silindris) }}" />
-                    <x-text-input name="os_axis" class="mt-1 block w-full" placeholder="AX"
-                        value="{{ old('os_axis', $pasien->os_axis) }}" />
-                    <x-text-input name="os_add_lensa" class="mt-1 block w-full" placeholder="ADD"
-                        value="{{ old('os_add_lensa', $pasien->os_add_lensa) }}" />
-                </div>
-            </div>
 
-            <!-- ================= KACAMATA ================= -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Kacamata</h3>
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Kacamata
+                </h3>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Frame" />
@@ -166,8 +276,7 @@
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Frame --</option>
                             @foreach ($frames as $frame)
-                            <option value="{{ $frame->id }}"
-                                {{ old('frame_id', $pasien->frame_id) == $frame->id ? 'selected' : '' }}>
+                            <option value="{{ $frame->id }}" {{ old('frame_id',$pasien->frame_id)==$frame->id?'selected':'' }}>
                                 {{ $frame->merk }} - {{ $frame->kode_frame }}
                             </option>
                             @endforeach
@@ -181,8 +290,7 @@
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Lensa --</option>
                             @foreach ($lensas as $lensa)
-                            <option value="{{ $lensa->id }}"
-                                {{ old('lensa_id', $pasien->lensa_id) == $lensa->id ? 'selected' : '' }}>
+                            <option value="{{ $lensa->id }}" {{ old('lensa_id',$pasien->lensa_id)==$lensa->id?'selected':'' }}>
                                 {{ $lensa->nama_lensa }}
                                 ({{ $lensa->kategori }})
                             </option>
@@ -191,64 +299,99 @@
                     </div>
 
                     <div>
-                        <x-input-label value="pd" />
-                        <x-text-input name="pd" class="mt-1 block w-full" value="{{ old('pd', $pasien->pd) }}" />
+                        <x-input-label value="PD" />
+                        <x-text-input name="pd" class="mt-1 block w-full" value="{{ old('pd',$pasien->pd) }}" />
                     </div>
-
                 </div>
             </div>
 
-            <!-- ================= PEMBAYARAN ================= -->
-            <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Pembayaran</h3>
+            <div class="bg-gray-50 border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    Biaya & Pembayaran
+                </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-                    {{-- Biaya Kacamata --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Biaya Kacamata -->
                     <div>
                         <x-input-label value="Biaya Kacamata" />
-                        <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
-                            data-target="biaya_kacamata">
-                        <input type="hidden" name="biaya_kacamata" id="biaya_kacamata"
-                            value="{{ old('biaya_kacamata', $pasien->biaya_kacamata) }}">
+                        <input
+                            type="text"
+                            class="mt-1 block w-full border-gray-300 rounded-md rupiah"
+                            data-target="biaya_kacamata"
+                            value="Rp {{ number_format(old('biaya_kacamata', $pasien->biaya_kacamata ?? 0),0,',','.') }}">
+                        <input
+                            type="hidden"
+                            name="biaya_kacamata"
+                            id="biaya_kacamata"
+                            value="{{ old('biaya_kacamata', $pasien->biaya_kacamata ?? 0) }}">
                     </div>
 
+                    <!-- BPJS -->
                     <div id="field_bpjs">
                         <x-input-label value="Dibayar BPJS" />
-                        <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
-                            data-target="dibayar_bpjs">
-                        <input type="hidden" name="dibayar_bpjs" id="dibayar_bpjs"
-                            value="{{ old('dibayar_bpjs', $pasien->dibayar_bpjs) }}">
+                        <input
+                            type="text"
+                            class="rupiah mt-1 block w-full border-gray-300 rounded-md"
+                            data-target="dibayar_bpjs"
+                            value="Rp {{ number_format(old('dibayar_bpjs', $pasien->dibayar_bpjs ?? 0),0,',','.') }}">
+                        <input
+                            type="hidden"
+                            name="dibayar_bpjs"
+                            id="dibayar_bpjs"
+                            value="{{ old('dibayar_bpjs', $pasien->dibayar_bpjs ?? 0) }}">
                     </div>
 
-                    <div id="field_asuransi">
+                    <!-- Asuransi -->
+                    <div id="field_asuransi" class="hidden">
                         <x-input-label value="Dibayar Asuransi" />
-                        <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
-                            data-target="dibayar_asuransi">
-                        <input type="hidden" name="dibayar_asuransi" id="dibayar_asuransi"
-                            value="{{ old('dibayar_asuransi', $pasien->dibayar_asuransi) }}">
+                        <input
+                            type="text"
+                            class="rupiah mt-1 block w-full border-gray-300 rounded-md"
+                            data-target="dibayar_asuransi"
+                            value="Rp {{ number_format(old('dibayar_asuransi', $pasien->dibayar_asuransi ?? 0),0,',','.') }}">
+                        <input
+                            type="hidden"
+                            name="dibayar_asuransi"
+                            id="dibayar_asuransi"
+                            value="{{ old('dibayar_asuransi', $pasien->dibayar_asuransi ?? 0) }}">
                     </div>
 
+                    <!-- Umum -->
                     <div id="field_umum">
                         <x-input-label value="Dibayar Pasien" />
-                        <input type="text" class="rupiah mt-1 block w-full border-gray-300 rounded-md"
-                            data-target="dibayar_pasien">
-                        <input type="hidden" name="dibayar_pasien" id="dibayar_pasien"
-                            value="{{ old('dibayar_pasien', $pasien->dibayar_pasien) }}">
+                        <input
+                            type="text"
+                            class="rupiah mt-1 block w-full border-gray-300 rounded-md"
+                            data-target="dibayar_pasien"
+                            value="Rp {{ number_format(old('dibayar_pasien', $pasien->dibayar_pasien ?? 0),0,',','.') }}">
+                        <input
+                            type="hidden"
+                            name="dibayar_pasien"
+                            id="dibayar_pasien"
+                            value="{{ old('dibayar_pasien', $pasien->dibayar_pasien ?? 0) }}">
                     </div>
 
-                    <x-text-input type="date" name="tanggal_dipesan" class="mt-1 block w-full"
-                        value="{{ old('tanggal_dipesan', optional($pasien->tanggal_dipesan)->format('Y-m-d')) }}" />
-
-                    <x-text-input type="date" name="tanggal_pengambilan" class="mt-1 block w-full"
-                        value="{{ old('tanggal_pengambilan', optional($pasien->tanggal_pengambilan)->format('Y-m-d')) }}" />
+                    <!-- Tanggal Pemesanan -->
+                    <div>
+                        <x-input-label value="Tanggal Pemesanan" />
+                        <x-text-input
+                            type="date"
+                            name="tanggal_dipesan"
+                            class="mt-1 block w-full"
+                            :value="old('tanggal_dipesan', optional($pasien->tanggal_dipesan)->format('Y-m-d'))" />
+                    </div>
                 </div>
             </div>
 
-            <!-- ================= BUTTON ================= -->
-            <div class="flex gap-3">
-                <x-primary-button>Update Rekam Medis</x-primary-button>
-                <a href="{{ route('rekam-medis.index') }}" class="text-sm text-gray-600">Batal</a>
+
+            <div class="flex items-center gap-3">
+                <x-primary-button>
+                    Simpan Rekam Medis
+                </x-primary-button>
+
+                <a href="{{ route('rekam-medis.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+                    Batal
+                </a>
             </div>
 
         </form>
@@ -264,7 +407,7 @@
 
                 const fieldBpjs = document.getElementById('field_bpjs');
                 const fieldAsuransi = document.getElementById('field_asuransi');
-                const fieldUmum = document.getElementById('field_umum');
+                const fieldPasien = document.getElementById('field_umum');
 
                 /* ===============================
                     FORMAT RUPIAH
@@ -276,31 +419,52 @@
                 }
 
                 /* ===============================
-                    TOGGLE FIELD (TANPA RESET!)
+                    RESET NILAI (TEXT + HIDDEN)
+                =============================== */
+                function resetValue(id) {
+                    const hidden = document.getElementById(id);
+                    hidden.value = 0;
+
+                    const textInput = document.querySelector(`[data-target="${id}"]`);
+                    if (textInput) {
+                        textInput.value = formatRupiah('0');
+                    }
+                }
+
+                /* ===============================
+                    TOGGLE FIELD BERDASARKAN KATEGORI
                 =============================== */
                 function toggleFields() {
 
+                    // HIDE SEMUA
                     fieldNoKartu.classList.add('hidden');
                     fieldNoSep.classList.add('hidden');
                     fieldBpjs.classList.add('hidden');
                     fieldAsuransi.classList.add('hidden');
-                    fieldUmum.classList.add('hidden');
+
+                    // PASIEN SELALU TAMPIL
+                    fieldPasien.classList.remove('hidden');
+
+                    // RESET DEFAULT
+                    resetValue('dibayar_bpjs');
+                    resetValue('dibayar_asuransi');
 
                     if (kategori.value === 'bpjs') {
                         fieldNoKartu.classList.remove('hidden');
                         fieldNoSep.classList.remove('hidden');
                         fieldBpjs.classList.remove('hidden');
-                        fieldUmum.classList.remove('hidden');
                     }
 
                     if (kategori.value === 'asuransi') {
                         fieldNoKartu.classList.remove('hidden');
+                        fieldNoSep.classList.remove('hidden');
                         fieldAsuransi.classList.remove('hidden');
-                        fieldUmum.classList.remove('hidden');
                     }
 
                     if (kategori.value === 'umum') {
-                        fieldUmum.classList.remove('hidden');
+                        // BPJS & Asuransi tetap 0
+                        resetValue('dibayar_bpjs');
+                        resetValue('dibayar_asuransi');
                     }
                 }
 
@@ -308,18 +472,14 @@
                 toggleFields();
 
                 /* ===============================
-                    INIT + INPUT RUPIAH EDIT
+                    INPUT RUPIAH REALTIME
                 =============================== */
                 document.querySelectorAll('.rupiah').forEach(function(input) {
-
-                    const hidden = document.getElementById(input.dataset.target);
-
-                    // 🔥 INIT NILAI AWAL (INI PENTING!)
-                    input.value = formatRupiah(hidden.value || 0);
-
                     input.addEventListener('input', function() {
+                        const target = this.dataset.target;
                         let angka = this.value.replace(/[^0-9]/g, '');
-                        hidden.value = angka || 0;
+
+                        document.getElementById(target).value = angka || 0;
                         this.value = formatRupiah(angka);
                     });
                 });

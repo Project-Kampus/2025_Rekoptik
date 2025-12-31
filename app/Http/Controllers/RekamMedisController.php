@@ -46,16 +46,21 @@ class RekamMedisController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            // Data Pasien
+        $validated = $request->validate([
+            // pasien
             'nama_pasien' => 'required|string|max:255',
             'no_hp' => 'nullable|string|max:20',
             'kategori' => 'required|in:bpjs,asuransi,umum',
             'no_kartu' => 'nullable|required_if:kategori,bpjs,asuransi',
-            'no_sep' => 'nullable|required_if:kategori,bpjs',
             'alamat' => 'nullable|string',
 
-            // Riwayat Pasien
+            // pemeriksaan
+            'resep_dari' => 'required|string|max:255',
+            'diagnosa' => 'required|string|max:255',
+            'no_sep' => 'nullable|required_if:kategori,bpjs',
+            'tanggal_pemeriksaan' => 'required|date',
+
+            // riwayat
             'keluhan_utama' => 'nullable|string',
             'riwayat_penyakit' => 'nullable|string',
             'penyakit_sekarang' => 'nullable|string',
@@ -63,79 +68,73 @@ class RekamMedisController extends Controller
             'kebiasaan' => 'nullable|string',
             'pengobatan' => 'nullable|string',
 
-            // Pemeriksaan
-            'resep_dari' => 'required|string',
-            'diagnosa' => 'required|string',
-            'tanggal_pemeriksaan' => 'required|date',
-            'dokument' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            // dokumen
+            'doc_ktp' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'doc_legalitas' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'doc_rujukan' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
 
-            // Resep Mata
-            'od_sferis' => 'nullable|numeric',
-            'od_silindris' => 'nullable|numeric',
-            'od_axis' => 'nullable|numeric',
-            'od_add_lensa' => 'nullable|numeric',
+            // resep mata
+            'od_sferis' => 'nullable|string',
+            'od_silindris' => 'nullable|string',
+            'od_axis' => 'nullable|string',
+            'od_add_lensa' => 'nullable|string',
+            'os_sferis' => 'nullable|string',
+            'os_silindris' => 'nullable|string',
+            'os_axis' => 'nullable|string',
+            'os_add_lensa' => 'nullable|string',
 
-            'os_sferis' => 'nullable|numeric',
-            'os_silindris' => 'nullable|numeric',
-            'os_axis' => 'nullable|numeric',
-            'os_add_lensa' => 'nullable|numeric',
-
-            // Kacamata
+            // kacamata
             'frame_id' => 'nullable|exists:frames,id',
             'lensa_id' => 'nullable|exists:lensas,id',
-            'pd' => 'nullable|numeric|min:0',
+            'pd' => 'nullable|string',
 
-            // Biaya
-            'biaya_kacamata' => 'nullable|numeric|min:0',
-            'dibayar_bpjs' => 'nullable|numeric|min:0',
-            'dibayar_asuransi' => 'nullable|numeric|min:0',
-            'dibayar_pasien' => 'nullable|numeric|min:0',
-
-            // Tanggal
+            // biaya
+            'biaya_kacamata' => 'nullable|numeric',
+            'dibayar_bpjs' => 'nullable|numeric',
+            'dibayar_asuransi' => 'nullable|numeric',
+            'dibayar_pasien' => 'nullable|numeric',
             'tanggal_dipesan' => 'nullable|date',
-            'tanggal_pengambilan' => 'nullable|date|after_or_equal:tanggal_dipesan',
         ]);
 
 
-        if ($request->hasFile('dokument')) {
-            $data['dokumen'] = $request->file('dokument')
-                ->store('dokumen_pasien', 'public');
+
+        foreach (['doc_ktp', 'doc_legalitas', 'doc_rujukan'] as $doc) {
+            if ($request->hasFile($doc)) {
+                $validated[$doc] = $request->file($doc)
+                    ->store("rekam-medis/{$doc}", 'public');
+            }
         }
 
-        // NORMALISASI PEMBAYARAN
-        $data['dibayar_bpjs'] = $data['dibayar_bpjs'] ?? 0;
-        $data['dibayar_asuransi'] = $data['dibayar_asuransi'] ?? 0;
-        $data['dibayar_pasien'] = $data['dibayar_pasien'] ?? 0;
+        $validated['dibayar_bpjs'] = $validated['dibayar_bpjs'] ?? 0;
+        $validated['dibayar_asuransi'] = $validated['dibayar_asuransi'] ?? 0;
+        $validated['dibayar_pasien'] = $validated['dibayar_pasien'] ?? 0;
 
-        switch ($data['kategori']) {
+        switch ($validated['kategori']) {
             case 'bpjs':
-                $data['dibayar_asuransi'] = 0;
+                $validated['dibayar_asuransi'] = 0;
                 break;
 
             case 'asuransi':
-                $data['dibayar_bpjs'] = 0;
-                $data['no_sep'] = null;
+                $validated['dibayar_bpjs'] = 0;
+                $validated['no_sep'] = null;
                 break;
 
             case 'umum':
-                $data['dibayar_bpjs'] = 0;
-                $data['dibayar_asuransi'] = 0;
-                $data['no_kartu'] = null;
-                $data['no_sep'] = null;
+                $validated['dibayar_bpjs'] = 0;
+                $validated['dibayar_asuransi'] = 0;
+                $validated['no_kartu'] = null;
+                $validated['no_sep'] = null;
                 break;
         }
 
-
-
-
-        $pasien = Pasien::create($data);
-        $pasien->update(['sisa' => $pasien->hitungSisa()]);
+        $pasien = Pasien::create($validated);
+        $pasien->update([
+            'sisa' => $pasien->hitungSisa()
+        ]);
 
         return redirect()->route('rekam-medis.index')
             ->with('success', 'Rekam medis berhasil disimpan');
     }
-
-
 
     public function edit(Pasien $pasien)
     {
@@ -244,6 +243,10 @@ class RekamMedisController extends Controller
     {
         return view('admin.rekamMedis_struk', compact('pasien'));
     }
+    public function surat(Pasien $pasien)
+    {
+        return view('admin.rekamMedis_suratBalasan', compact('pasien'));
+    }
 
     public function rekap(Request $request)
     {
@@ -286,10 +289,28 @@ class RekamMedisController extends Controller
             $fileName
         );
     }
-    public function rekapPdf() {}
 
     public function show(Pasien $pasien)
     {
         return view('admin.rekamMedis_show', compact('pasien'));
+    }
+
+    public function pengambilan(Request $request, Pasien $pasien)
+    {
+        $data = $request->validate([
+            'tanggal_pengambilan' => 'required|date',
+            'nama_pengambil' => 'required|string|max:255',
+            'hub_pengambil' => 'required|string|max:100',
+            'bukti_pengambil' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $data['bukti_pengambil'] = $request->file('bukti_pengambil')
+            ->store('rekam-medis/pengambilan', 'public');
+
+        $pasien->update($data);
+
+        return redirect()
+            ->route('rekam-medis.show', $pasien->id)
+            ->with('success', 'Pengambilan berhasil disimpan');
     }
 }

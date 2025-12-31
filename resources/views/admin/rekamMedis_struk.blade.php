@@ -105,15 +105,15 @@
          </tr>
          <tr>
             <td>Gagang/Frame</td>
-            <td>: {{ $pasien->frame?->nama_frame ?? '-' }}</td>
+            <td>: {{ $pasien->frame?->kode_frame ?? '-' }}</td>
          </tr>
          <tr>
             <td>Lensa</td>
-            <td>: {{ $pasien->lensa ?? '-' }}</td>
+            <td>: {{ $pasien->lensa->nama_lensa ?? '-' }}</td>
          </tr>
          <tr>
             <td>Keterangan</td>
-            <td>: </td>
+            <td>: {{ $pasien->diagnosa ?? '-' }} </td>
          </tr>
       </table>
 

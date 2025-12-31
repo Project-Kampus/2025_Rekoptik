@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             SupplierSeeder::class,
             FrameSeeder::class,
             LensaSeeder::class,
-            PasienSeeder::class,
+            // PasienSeeder::class,
             PengaturanSeeder::class
         ]);
     }

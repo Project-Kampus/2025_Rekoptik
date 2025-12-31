@@ -26,9 +26,10 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::delete('/{pasien}', [RekamMedisController::class, 'destroy'])->name('destroy');
         Route::get('/{pasien}/struk', [RekamMedisController::class, 'struk'])->name('struk');
         Route::get('/rekap', [RekamMedisController::class, 'rekap'])->name('rekap');
-        // Route::get('/rekap/pdf', [RekamMedisController::class, 'rekapPdf'])->name('rekapPdf');
         Route::get('/rekap/excel', [RekamMedisController::class, 'rekapExcel'])->name('rekapExcel');
         Route::get('/{pasien}/detail', [RekamMedisController::class, 'show'])->name('show');
+        Route::post('/{pasien}/pengambilan', [RekamMedisController::class, 'pengambilan'])->name('pengambilan');
+        Route::get('/{pasien}/surat', [RekamMedisController::class, 'surat'])->name('surat');
     });
 
     // Manajemen Frame

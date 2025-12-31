@@ -9,47 +9,64 @@ class Pasien extends Model
 {
 
     protected $fillable = [
-        // data pasien
+        // Data Pasien
         'nama_pasien',
         'no_hp',
         'no_kartu',
         'alamat',
-        // riwayat
+
+        // Riwayat
         'keluhan_utama',
         'riwayat_penyakit',
         'penyakit_sekarang',
         'penyakit_keluarga',
         'kebiasaan',
         'pengobatan',
-        // pemeriksaan
+
+        // Pemeriksaan
         'resep_dari',
         'no_sep',
         'tanggal_pemeriksaan',
         'diagnosa',
         'kategori',
-        'dokument',
-        // resep
+
+        // Resep OD
         'od_sferis',
         'od_silindris',
         'od_axis',
         'od_add_lensa',
+
+        // Resep OS
         'os_sferis',
         'os_silindris',
         'os_axis',
         'os_add_lensa',
-        // kacamata
+
+        // Kacamata
         'frame_id',
         'lensa_id',
         'pd',
-        // biaya
+
+        // Pembayaran
         'biaya_kacamata',
         'dibayar_bpjs',
         'dibayar_asuransi',
         'dibayar_pasien',
         'sisa',
-        // tanggak
+
+        // Dokumen
+        'doc_ktp',
+        'doc_legalitas',
+        'doc_rujukan',
+
+        // Status & Tanggal
+        'status',
         'tanggal_dipesan',
+        
         'tanggal_pengambilan',
+        'nama_pengambil',
+        'hub_pengambil',
+        'bukti_pengambil',
     ];
 
     protected $casts = [
