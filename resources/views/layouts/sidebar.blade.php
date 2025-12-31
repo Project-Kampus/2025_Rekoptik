@@ -130,6 +130,13 @@ $isMasterActive = request()->routeIs('frame.*')
 
    <!-- Pengaturan -->
    <li>
+      <a href="{{ route('admin.index') }}"
+         class="flex items-center px-4 py-2.5 rounded-lg transition
+           {{ request()->routeIs('admin.*') ? $activeClass : $inactiveClass }}">
+         Manajemen Akun
+      </a>
+   </li>
+   <li>
       <a href="{{ route('pengaturan.index') }}"
          class="flex items-center px-4 py-2.5 rounded-lg transition
            {{ request()->routeIs('pengaturan.*') ? $activeClass : $inactiveClass }}">

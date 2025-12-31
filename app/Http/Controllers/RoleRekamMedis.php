@@ -12,6 +12,7 @@ class RoleRekamMedis extends Controller
     public function rekapMedisBpjs(Request $request)
     {
         $rekamMedis = Pasien::with('frame')
+            ->where('kategori', 'bpjs')
             ->when($request->q, function ($q) use ($request) {
                 $q->where(function ($qq) use ($request) {
                     $qq->where('nama_pasien', 'like', "%{$request->q}%")
@@ -34,4 +35,16 @@ class RoleRekamMedis extends Controller
     }
 
     public function rekapMedisDimkes() {}
+    public function rekapMedisDetail(Pasien $pasien)
+    {
+        return view('RoleLuar.rekapMedis_detail', compact('pasien'));
+    }
+    public function rekapMedisStruk(Pasien $pasien)
+    {
+        return view('admin.rekamMedis_struk', compact('pasien'));
+    }
+    public function rekapMedisSurat(Pasien $pasien)
+    {
+        return view('admin.rekamMedis_suratBalasan', compact('pasien'));
+    }
 }

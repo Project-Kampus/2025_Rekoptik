@@ -16,7 +16,7 @@ class PengaturanSeeder extends Seeder
     {
         pengaturan::create(
             [
-                'nama_aplikasi' => 'Rekoptik',
+                'nama_aplikasi' => 'OPTIMA',
                 'alamat'        => 'Jl. Rd. Mattaher No. 83 Pasar Jambi',
                 'no_hp'       => '(0741) 20483',
                 'email'         => '0852 6452 4577',

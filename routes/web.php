@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrameController;
 use App\Http\Controllers\LensaController;
@@ -73,11 +74,19 @@ Route::middleware('auth', 'verified')->group(function () {
             Route::get('/', [PengaturanController::class, 'index'])->name('index');
             Route::put('/storage', [PengaturanController::class, 'update'])->name('update');
         });
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('/', [AdminController::class, 'index'])->name('index');
+            Route::get('/create', [AdminController::class, 'create'])->name('create');
+            Route::post('/', [AdminController::class, 'store'])->name('store');
+            Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
+            Route::put('/{admin}', [AdminController::class, 'update'])->name('update');
+            Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
+        });
     });
 
     Route::middleware('role:bpjs')->group(function () {
         Route::get('/rekapMedis', [RoleRekamMedis::class, 'rekapMedisBpjs'])->name('rekapMedis.Bpjs');
-        Route::get('/rekapMedis/{pasien}/detail', [RoleRekamMedis::class, 'rekapMedisDetail'])->name('rekapMedis.Bpjs');
+        Route::get('/rekapMedis/{pasien}/detail', [RoleRekamMedis::class, 'rekapMedisDetail'])->name('rekapMedis.show');
         Route::get('/rekapMedis/{pasien}/struk', [RoleRekamMedis::class, 'rekapMedisStruk'])->name('rekapMedis.Struk');
         Route::get('/rekapMedis/{pasien}/suratBalasan', [RoleRekamMedis::class, 'rekapMedisSurat'])->name('rekapMedis.surat');
     });
