@@ -41,70 +41,76 @@ class RekamMedisController extends Controller
         return view('admin.rekamMedis_create', compact('frames'));
     }
 
-     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nama_pasien' => 'required',
-            'no_hp' => 'nullable',
-            'kategori' => 'required|in:bpjs,asuransi,umum',
-            'no_kartu' => 'nullable|required_if:kategori,bpjs,asuransi',
-            'no_sep' => 'nullable|required_if:kategori,bpjs',
-            'alamat' => 'nullable',
+    public function store(Request $request)
+{
+    $data = $request->validate([
+        'nama_pasien' => 'required',
+        'no_hp' => 'nullable',
+        'kategori' => 'required|in:bpjs,asuransi,umum',
+        'no_kartu' => 'nullable|required_if:kategori,bpjs,asuransi',
+        'no_sep' => 'nullable|required_if:kategori,bpjs',
+        'alamat' => 'nullable',
+        
+        // Riwayat pasien
+        'keluhan_utama' => 'nullable',
+        'riwayat_penyakit' => 'nullable',
+        'penyakit_sekarang' => 'nullable',
+        'penyakit_keluarga' => 'nullable',
+        'kebiasaan' => 'nullable',
+        'pengobatan' => 'nullable',
 
-            'resep_dari' => 'required',
-            'diagnosa' => 'required',
-            'tanggal_pemeriksaan' => 'required|date',
+        'resep_dari' => 'required',
+        'diagnosa' => 'required',
+        'tanggal_pemeriksaan' => 'required|date',
 
-            'od_sferis' => 'nullable',
-            'od_silindris' => 'nullable',
-            'od_axis' => 'nullable',
-            'od_add_lensa' => 'nullable',
+        'od_sferis' => 'nullable',
+        'od_silindris' => 'nullable',
+        'od_axis' => 'nullable',
+        'od_add_lensa' => 'nullable',
 
-            'os_sferis' => 'nullable',
-            'os_silindris' => 'nullable',
-            'os_axis' => 'nullable',
-            'os_add_lensa' => 'nullable',
+        'os_sferis' => 'nullable',
+        'os_silindris' => 'nullable',
+        'os_axis' => 'nullable',
+        'os_add_lensa' => 'nullable',
 
-            'frame_id' => 'nullable',
-            'lensa' => 'nullable',
-            'pd' => 'nullable',
+        'frame_id' => 'nullable',
+        'lensa' => 'nullable',
+        'pd' => 'nullable',
 
-            'biaya_kacamata' => 'nullable|numeric|min:0',
-            'dibayar_bpjs' => 'nullable|numeric|min:0',
-            'dibayar_asuransi' => 'nullable|numeric|min:0',
-            'dibayar_pasien' => 'nullable|numeric|min:0',
+        'biaya_kacamata' => 'nullable|numeric|min:0',
+        'dibayar_bpjs' => 'nullable|numeric|min:0',
+        'dibayar_asuransi' => 'nullable|numeric|min:0',
+        'dibayar_pasien' => 'nullable|numeric|min:0',
 
-            'tanggal_dipesan' => 'nullable|date',
-            'tanggal_pengambilan' => 'nullable|date',
-        ]);
+        'tanggal_dipesan' => 'nullable|date',
+        'tanggal_pengambilan' => 'nullable|date',
+    ]);
 
-        // NORMALISASI PEMBAYARAN
-        $data['dibayar_bpjs'] = $data['dibayar_bpjs'] ?? 0;
-        $data['dibayar_asuransi'] = $data['dibayar_asuransi'] ?? 0;
-        $data['dibayar_pasien'] = $data['dibayar_pasien'] ?? 0;
+    // NORMALISASI PEMBAYARAN
+    $data['dibayar_bpjs'] = $data['dibayar_bpjs'] ?? 0;
+    $data['dibayar_asuransi'] = $data['dibayar_asuransi'] ?? 0;
+    $data['dibayar_pasien'] = $data['dibayar_pasien'] ?? 0;
 
-        if ($data['kategori'] === 'bpjs') {
-            $data['dibayar_asuransi'] = 0;
-        }
-
-        if ($data['kategori'] === 'asuransi') {
-            $data['dibayar_bpjs'] = 0;
-            $data['no_sep'] = null;
-        }
-
-        if ($data['kategori'] === 'umum') {
-            $data['dibayar_bpjs'] = 0;
-            $data['dibayar_asuransi'] = 0;
-            $data['no_kartu'] = null;
-            $data['no_sep'] = null;
-        }
-
-        $pasien = Pasien::create($data);
-        $pasien->update(['sisa' => $pasien->hitungSisa()]);
-
-        return redirect()->route('rekam-medis.index')
-            ->with('success', 'Rekam medis berhasil disimpan');
+    if ($data['kategori'] === 'bpjs') {
+        $data['dibayar_asuransi'] = 0;
     }
+    if ($data['kategori'] === 'asuransi') {
+        $data['dibayar_bpjs'] = 0;
+        $data['no_sep'] = null;
+    }
+    if ($data['kategori'] === 'umum') {
+        $data['dibayar_bpjs'] = 0;
+        $data['dibayar_asuransi'] = 0;
+        $data['no_kartu'] = null;
+        $data['no_sep'] = null;
+    }
+
+    $pasien = Pasien::create($data);
+    $pasien->update(['sisa' => $pasien->hitungSisa()]);
+
+    return redirect()->route('rekam-medis.index')
+        ->with('success', 'Rekam medis berhasil disimpan');
+}
 
 
 
@@ -115,8 +121,8 @@ class RekamMedisController extends Controller
     }
 
     public function update(Request $request, Pasien $pasien)
-    {
-        $data = $request->validate([
+{
+    $data = $request->validate([
         'nama_pasien' => 'required|string',
         'kategori' => 'required|in:bpjs,asuransi,umum',
 
@@ -125,6 +131,14 @@ class RekamMedisController extends Controller
 
         'no_hp' => 'nullable',
         'alamat' => 'nullable',
+
+        // Riwayat pasien
+        'keluhan_utama' => 'nullable',
+        'riwayat_penyakit' => 'nullable',
+        'penyakit_sekarang' => 'nullable',
+        'penyakit_keluarga' => 'nullable',
+        'kebiasaan' => 'nullable',
+        'pengobatan' => 'nullable',
 
         'resep_dari' => 'required|string',
         'tanggal_pemeriksaan' => 'required|date',
@@ -136,16 +150,14 @@ class RekamMedisController extends Controller
 
         'biaya_kacamata' => 'required|numeric|min:0',
         'dibayar_bpjs' => 'nullable|numeric|min:0',
-        'dibayar_asuransi' => 'nullable|numeric|min:0', // 🔥 WAJIB
+        'dibayar_asuransi' => 'nullable|numeric|min:0',
         'dibayar_pasien' => 'nullable|numeric|min:0',
 
         'tanggal_dipesan' => 'nullable|date',
         'tanggal_pengambilan' => 'nullable|date',
     ]);
 
-    // ===============================
     // NORMALISASI PEMBAYARAN
-    // ===============================
     $data['dibayar_bpjs'] = $data['dibayar_bpjs'] ?? 0;
     $data['dibayar_asuransi'] = $data['dibayar_asuransi'] ?? 0;
     $data['dibayar_pasien'] = $data['dibayar_pasien'] ?? 0;
@@ -153,12 +165,10 @@ class RekamMedisController extends Controller
     if ($data['kategori'] === 'bpjs') {
         $data['dibayar_asuransi'] = 0;
     }
-
     if ($data['kategori'] === 'asuransi') {
         $data['dibayar_bpjs'] = 0;
         $data['no_sep'] = null;
     }
-
     if ($data['kategori'] === 'umum') {
         $data['dibayar_bpjs'] = 0;
         $data['dibayar_asuransi'] = 0;
@@ -166,41 +176,26 @@ class RekamMedisController extends Controller
         $data['no_sep'] = null;
     }
 
-    // ===============================
-    // VALIDASI TOTAL BAYAR (FIX!)
-    // ===============================
-    $totalBayar =
-        $data['dibayar_bpjs'] +
-        $data['dibayar_asuransi'] +
-        $data['dibayar_pasien'];
-
+    // VALIDASI TOTAL BAYAR
+    $totalBayar = $data['dibayar_bpjs'] + $data['dibayar_asuransi'] + $data['dibayar_pasien'];
     if ($totalBayar > $data['biaya_kacamata']) {
         return back()
             ->withErrors(['dibayar_pasien' => 'Total pembayaran melebihi biaya kacamata'])
             ->withInput();
     }
 
-    // ===============================
     // KELOLA STOK FRAME
-    // ===============================
     if ($pasien->frame_id != $request->frame_id) {
-        if ($pasien->frame_id) {
-            Frame::where('id', $pasien->frame_id)->increment('stok');
-        }
-        if ($request->frame_id) {
-            Frame::where('id', $request->frame_id)->decrement('stok');
-        }
+        if ($pasien->frame_id) Frame::where('id', $pasien->frame_id)->increment('stok');
+        if ($request->frame_id) Frame::where('id', $request->frame_id)->decrement('stok');
     }
 
     $pasien->update($data);
     $pasien->update(['sisa' => $pasien->hitungSisa()]);
 
-    return redirect()
-        ->route('rekam-medis.index')
+    return redirect()->route('rekam-medis.index')
         ->with('success', 'Rekam medis berhasil diperbarui');
 }
-
-
 
     public function destroy(Pasien $pasien)
     {
@@ -261,4 +256,10 @@ class RekamMedisController extends Controller
         );
     }
     public function rekapPdf() {}
+
+    public function show(Pasien $pasien)
+{
+    return view('admin.rekamMedis_show', compact('pasien'));
+}
+
 }

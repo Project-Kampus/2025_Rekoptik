@@ -11,12 +11,11 @@
             @csrf
             @method('PUT')
 
-            <!-- ================= DATA PASIEN ================= -->
             <div>
-                <h3 class="font-semibold text-gray-800 mb-3">Data Pasien</h3>
-
+                <h3 class="font-semibold text-gray-800 mb-3">Data Pasien & Riwayat</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
+                    <!-- DATA PASIEN -->
                     <div>
                         <x-input-label value="Nama Pasien" />
                         <x-text-input name="nama_pasien" class="mt-1 block w-full"
@@ -44,15 +43,49 @@
                         </select>
                     </div>
 
-                    <div id="field_no_kartu">
+                    <!-- No Kartu -->
+                    <div id="field_no_kartu"
+                        class="{{ in_array(old('kategori', $pasien->kategori), ['bpjs', 'asuransi']) ? '' : 'hidden' }}">
                         <x-input-label value="No Kartu BPJS / Asuransi" />
                         <x-text-input name="no_kartu" class="mt-1 block w-full"
                             value="{{ old('no_kartu', $pasien->no_kartu) }}" />
                     </div>
 
+                    <!-- Alamat -->
                     <div class="md:col-span-2 lg:col-span-3">
                         <x-input-label value="Alamat" />
                         <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2">{{ old('alamat', $pasien->alamat) }}</textarea>
+                    </div>
+
+                    <!-- RIWAYAT PASIEN -->
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <x-input-label value="Keluhan Utama" />
+                        <textarea name="keluhan_utama" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('keluhan_utama', $pasien->keluhan_utama) }}</textarea>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <x-input-label value="Riwayat Penyakit" />
+                        <textarea name="riwayat_penyakit" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('riwayat_penyakit', $pasien->riwayat_penyakit) }}</textarea>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <x-input-label value="Penyakit Sekarang" />
+                        <textarea name="penyakit_sekarang" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('penyakit_sekarang', $pasien->penyakit_sekarang) }}</textarea>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <x-input-label value="Penyakit Keluarga" />
+                        <textarea name="penyakit_keluarga" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('penyakit_keluarga', $pasien->penyakit_keluarga) }}</textarea>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <x-input-label value="Kebiasaan" />
+                        <textarea name="kebiasaan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('kebiasaan', $pasien->kebiasaan) }}</textarea>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <x-input-label value="Pengobatan / Konsumsi Obat" />
+                        <textarea name="pengobatan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="3">{{ old('pengobatan', $pasien->pengobatan) }}</textarea>
                     </div>
 
                 </div>

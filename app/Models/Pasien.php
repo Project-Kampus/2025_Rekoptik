@@ -14,6 +14,14 @@ class Pasien extends Model
         'no_hp',
         'no_kartu',
         'alamat',
+        
+        'keluhan_utama',
+        'riwayat_penyakit',
+        'penyakit_sekarang',
+        'penyakit_keluarga',
+        'kebiasaan',
+        'pengobatan',
+        
         'resep_dari',
         'no_sep',
         'tanggal_pemeriksaan',

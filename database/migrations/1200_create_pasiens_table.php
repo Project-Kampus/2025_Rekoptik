@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,13 @@ return new class extends Migration {
             $table->string('no_hp')->nullable();
             $table->string('no_kartu')->nullable();
             $table->text('alamat')->nullable();
+
+            $table->text('keluhan_utama')->nullable();
+$table->text('riwayat_penyakit')->nullable();
+$table->text('penyakit_sekarang')->nullable();
+$table->text('penyakit_keluarga')->nullable();
+$table->text('kebiasaan')->nullable();
+$table->text('pengobatan')->nullable();
 
             // Pemeriksaan
             $table->string('resep_dari');
