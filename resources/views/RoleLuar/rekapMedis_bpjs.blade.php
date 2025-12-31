@@ -55,7 +55,9 @@
                @forelse($rekamMedis as $index => $rm)
                <tr class="even:bg-gray-50">
                   <td class="border px-2 py-1">{{ $index + 1 }}</td>
-                  <td class="border px-2 py-1">{{ $rm->tanggal_pengambilan->format('d-m-Y') }}</td>
+                  <td class="border px-2 py-1">
+                     {{ optional($rm->tanggal_pengambilan)->format('d-m-Y') ?? '-' }}
+                  </td>
                   <td class="border px-2 py-1">{{ $rm->nama_pasien }}</td>
                   <td class="border px-2 py-1">{{ $rm->umur }}</td>
                   <td class="border px-2 py-1">{{ $rm->no_kartu }}</td>
