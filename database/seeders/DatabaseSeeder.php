@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
     {
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $bpjsRole  = Role::firstOrCreate(['name' => 'bpjs']);
+        $dimkesRole  = Role::firstOrCreate(['name' => 'dimkes']);
+        $superRole = Role::firstOrCreate(['name' => 'superadmin']);
 
         $admin = User::firstOrCreate(
             [
@@ -29,7 +31,7 @@ class DatabaseSeeder extends Seeder
         );
         $admin->roles()->syncWithoutDetaching([$adminRole->id]);
 
-
+        // Buat user BPJS
         $bpjs = User::firstOrCreate(
             [
                 'email' => 'bpjs@gmail.com',
@@ -37,8 +39,27 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-
         $bpjs->roles()->syncWithoutDetaching([$bpjsRole->id]);
+
+        // Buat user DIMKES
+        $dimkes = User::firstOrCreate(
+            [
+                'email' => 'dimkes@gmail.com',
+                'name'     => 'Petugas DIMKES',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $dimkes->roles()->syncWithoutDetaching([$dimkesRole->id]);
+
+        // Buat user SUPERADMIN
+        $superadmin = User::firstOrCreate(
+            [
+                'email' => 'super@gmail.com',
+                'name'     => 'Super Admin',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $superadmin->roles()->syncWithoutDetaching([$superRole->id]);
 
         // frame
         $this->call([
