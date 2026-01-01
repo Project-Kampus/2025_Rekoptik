@@ -85,7 +85,7 @@ class Pasien extends Model
 
     public function lensa()
     {
-        return $this->belongsTo(Lensa::class);
+        return $this->belongsTo(lensa::class);
     }
 
 
