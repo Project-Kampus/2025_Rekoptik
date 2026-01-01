@@ -71,7 +71,7 @@ class LensaSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            Lensa::create($item);
+            lensa::create($item);
         }
     }
 }
