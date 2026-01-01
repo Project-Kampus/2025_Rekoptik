@@ -134,10 +134,10 @@ class RekamMedisController extends Controller
                 break;
         }
 
+        $validated['user_id'] = Auth::id();
         $pasien = Pasien::create($validated);
         $pasien->update([
             'sisa' => $pasien->hitungSisa(),
-            'user_id ' => Auth::id()
         ]);
 
         return redirect()->route('rekam-medis.index')
