@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\RekapMedisExport;
+use App\Mail\PengambilanStrukMail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Frame;
 use App\Models\lensa;
 use App\Models\Pasien;
@@ -56,6 +58,7 @@ class RekamMedisController extends Controller
             'kelas' => 'nullable|required_if:kategori,bpjs|in:1,2,3',
             'alamat' => 'nullable|string',
             'umur' => 'nullable|integer|min:0',
+            'email' => 'required|email|max:255',
 
             // pemeriksaan
             'resep_dari' => 'required|string|max:255',
@@ -157,6 +160,7 @@ class RekamMedisController extends Controller
             'no_sep' => 'nullable|required_if:kategori,bpjs',
             'alamat' => 'nullable|string',
             'umur' => 'nullable|integer|min:0',
+            'email' => 'required|email|max:255',
 
             // Riwayat Pasien
             'keluhan_utama' => 'nullable|string',
@@ -311,10 +315,13 @@ class RekamMedisController extends Controller
         $data['bukti_pengambil'] = $request->file('bukti_pengambil')
             ->store('rekam-medis/pengambilan', 'public');
 
-        // 🔥 INI YANG KURANG
         $data['status'] = 'diambil';
 
         $pasien->update($data);
+
+        if ($pasien->email) {
+        Mail::send(new PengambilanStrukMail($pasien));
+    }
 
         return redirect()
             ->route('rekam-medis.show', $pasien->id)

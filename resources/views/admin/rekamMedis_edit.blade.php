@@ -41,11 +41,14 @@
                         <select name="kategori" id="kategori" required
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih --</option>
-                            <option value="bpjs" {{ old('kategori', $pasien->kategori) == 'bpjs' ? 'selected' : '' }}>BPJS
+                            <option value="bpjs" {{ old('kategori', $pasien->kategori) == 'bpjs' ? 'selected' : '' }}>
+                                BPJS
                             </option>
-                            <option value="asuransi" {{ old('kategori', $pasien->kategori) == 'asuransi' ? 'selected' : '' }}>
+                            <option value="asuransi"
+                                {{ old('kategori', $pasien->kategori) == 'asuransi' ? 'selected' : '' }}>
                                 Asuransi</option>
-                            <option value="umum" {{ old('kategori', $pasien->kategori) == 'umum' ? 'selected' : '' }}>Umum
+                            <option value="umum" {{ old('kategori', $pasien->kategori) == 'umum' ? 'selected' : '' }}>
+                                Umum
                             </option>
                         </select>
 
@@ -77,6 +80,14 @@
                         <x-input-label value="Umur" />
                         <x-text-input type="number" name="umur" class="mt-1 block w-full"
                             value="{{ old('umur', $pasien->umur) }}" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                            value="{{ old('email', $pasien->email ?? '') }}" required>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -265,10 +276,10 @@
                         <select name="frame_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Frame --</option>
                             @foreach ($frames as $frame)
-                            <option value="{{ $frame->id }}"
-                                {{ old('frame_id', $pasien->frame_id) == $frame->id ? 'selected' : '' }}>
-                                {{ $frame->merk }} - {{ $frame->kode_frame }}
-                            </option>
+                                <option value="{{ $frame->id }}"
+                                    {{ old('frame_id', $pasien->frame_id) == $frame->id ? 'selected' : '' }}>
+                                    {{ $frame->merk }} - {{ $frame->kode_frame }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -278,11 +289,11 @@
                         <select name="lensa_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Lensa --</option>
                             @foreach ($lensas as $lensa)
-                            <option value="{{ $lensa->id }}"
-                                {{ old('lensa_id', $pasien->lensa_id) == $lensa->id ? 'selected' : '' }}>
-                                {{ $lensa->nama_lensa }}
-                                ({{ $lensa->kategori }})
-                            </option>
+                                <option value="{{ $lensa->id }}"
+                                    {{ old('lensa_id', $pasien->lensa_id) == $lensa->id ? 'selected' : '' }}>
+                                    {{ $lensa->nama_lensa }}
+                                    ({{ $lensa->kategori }})
+                                </option>
                             @endforeach
                         </select>
                     </div>

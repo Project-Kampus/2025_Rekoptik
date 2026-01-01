@@ -15,6 +15,7 @@ class Pasien extends Model
         'no_kartu',
         'alamat',
         'umur',
+        'email',
 
         // Riwayat
         'keluhan_utama',

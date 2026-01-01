@@ -69,6 +69,14 @@
                         <x-text-input type="number" name="umur" min="0" class="mt-1 block w-full"
                             placeholder="Contoh: 25" value="{{ old('umur') }}" />
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                            value="{{ old('email', $pasien->email ?? '') }}" required>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                 </div>
             </div>
