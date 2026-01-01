@@ -37,6 +37,15 @@
                     </div>
 
                     <div>
+                        <x-input-label value="Email" />
+                        <x-text-input type="email" name="email" value="{{ old('email', $pasien->email ?? '') }}"
+                            class="mt-1 block w-full" required />
+                        @error('email')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
                         <x-input-label value="Kategori" />
                         <select name="kategori" id="kategori" required
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
@@ -64,10 +73,11 @@
                         <x-input-label value="Kelas BPJS" />
                         <select name="kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Kelas --</option>
-                            @foreach(['1','2','3'] as $kelas)
-                            <option value="{{ $kelas }}" {{ old('kelas', $pasien->kelas) == $kelas ? 'selected' : '' }}>
-                                Kelas {{ $kelas }}
-                            </option>
+                            @foreach (['1', '2', '3'] as $kelas)
+                                <option value="{{ $kelas }}"
+                                    {{ old('kelas', $pasien->kelas) == $kelas ? 'selected' : '' }}>
+                                    Kelas {{ $kelas }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -81,14 +91,7 @@
                         <x-text-input type="number" name="umur" class="mt-1 block w-full"
                             value="{{ old('umur', $pasien->umur) }}" />
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('email', $pasien->email ?? '') }}" required>
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+
                 </div>
             </div>
 

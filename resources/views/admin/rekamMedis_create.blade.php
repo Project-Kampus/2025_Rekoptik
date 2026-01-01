@@ -22,17 +22,30 @@
                     Data Pasien
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Nama Pasien -->
                     <div>
                         <x-input-label value="Nama Pasien" />
                         <x-text-input name="nama_pasien" class="mt-1 block w-full" required />
                     </div>
 
+                    <!-- No HP -->
                     <div>
                         <x-input-label value="No HP" />
                         <x-text-input name="no_hp" class="mt-1 block w-full" />
                     </div>
 
+                    <!-- Email -->
+                    <div>
+                        <x-input-label value="Email" />
+                        <x-text-input type="email" name="email" value="{{ old('email', $pasien->email ?? '') }}"
+                            class="mt-1 block w-full" required />
+                        @error('email')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Kategori -->
                     <div>
                         <x-input-label value="Kategori" />
                         <select name="kategori" id="kategori"
@@ -44,14 +57,17 @@
                         </select>
                     </div>
 
+                    <!-- No Kartu -->
                     <div id="field_no_kartu" class="hidden">
                         <x-input-label value="No Kartu BPJS / Asuransi" />
                         <x-text-input name="no_kartu" id="no_kartu" class="mt-1 block w-full" />
                     </div>
 
+                    <!-- Kelas BPJS -->
                     <div id="field_kelas" class="hidden">
                         <x-input-label value="Kelas BPJS" />
-                        <select name="kelas" id="kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <select name="kelas" id="kelas"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Kelas --</option>
                             <option value="1">Kelas 1</option>
                             <option value="2">Kelas 2</option>
@@ -59,26 +75,20 @@
                         </select>
                     </div>
 
-
-                    <div class="md:col-span-2 lg:col-span-3">
-                        <x-input-label value="Alamat" />
-                        <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2"></textarea>
-                    </div>
+                    <!-- Umur -->
                     <div>
                         <x-input-label value="Umur (Tahun)" />
                         <x-text-input type="number" name="umur" min="0" class="mt-1 block w-full"
                             placeholder="Contoh: 25" value="{{ old('umur') }}" />
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('email', $pasien->email ?? '') }}" required>
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
 
+                    <!-- Alamat (Full-width) -->
+                    <div class="md:col-span-3">
+                        <x-input-label value="Alamat" />
+                        <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2"></textarea>
+                    </div>
                 </div>
+
             </div>
 
             <div class="bg-gray-50 border rounded-xl p-6">
@@ -262,9 +272,9 @@
                         <select name="frame_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Frame --</option>
                             @foreach ($frames as $frame)
-                            <option value="{{ $frame->id }}">
-                                {{ $frame->merk }} - {{ $frame->kode_frame }}
-                            </option>
+                                <option value="{{ $frame->id }}">
+                                    {{ $frame->merk }} - {{ $frame->kode_frame }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -274,10 +284,10 @@
                         <select name="lensa_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Lensa --</option>
                             @foreach ($lensas as $lensa)
-                            <option value="{{ $lensa->id }}">
-                                {{ $lensa->nama_lensa }}
-                                ({{ $lensa->kategori }})
-                            </option>
+                                <option value="{{ $lensa->id }}">
+                                    {{ $lensa->nama_lensa }}
+                                    ({{ $lensa->kategori }})
+                                </option>
                             @endforeach
                         </select>
                     </div>
