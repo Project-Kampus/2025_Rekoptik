@@ -31,6 +31,7 @@ return new class extends Migration {
             $table->date('tanggal_pemeriksaan');
             $table->string('diagnosa');
             $table->enum('kategori', ['bpjs', 'asuransi', 'umum']);
+            $table->enum('kelas', [1, 2, 3])->nullable();
 
             // Resep OD
             $table->decimal('od_sferis', 6, 2)->nullable();
@@ -60,7 +61,7 @@ return new class extends Migration {
             $table->string('doc_ktp')->nullable();
             $table->string('doc_legalitas')->nullable();
             $table->string('doc_rujukan')->nullable();
-            
+
             // Status Pesanan
             $table->enum('status', ['dipesan', 'diambil'])->default('dipesan');
             $table->date('tanggal_dipesan')->nullable();

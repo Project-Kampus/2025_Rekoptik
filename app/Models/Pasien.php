@@ -30,6 +30,7 @@ class Pasien extends Model
         'tanggal_pemeriksaan',
         'diagnosa',
         'kategori',
+        'kelas',
 
         // Resep OD
         'od_sferis',
@@ -63,7 +64,7 @@ class Pasien extends Model
         // Status & Tanggal
         'status',
         'tanggal_dipesan',
-        
+
         'tanggal_pengambilan',
         'nama_pengambil',
         'hub_pengambil',

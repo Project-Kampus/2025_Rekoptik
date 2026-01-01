@@ -49,6 +49,17 @@
                         <x-text-input name="no_kartu" id="no_kartu" class="mt-1 block w-full" />
                     </div>
 
+                    <div id="field_kelas" class="hidden">
+                        <x-input-label value="Kelas BPJS" />
+                        <select name="kelas" id="kelas" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="1">Kelas 1</option>
+                            <option value="2">Kelas 2</option>
+                            <option value="3">Kelas 3</option>
+                        </select>
+                    </div>
+
+
                     <div class="md:col-span-2 lg:col-span-3">
                         <x-input-label value="Alamat" />
                         <textarea name="alamat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows="2"></textarea>
@@ -243,9 +254,9 @@
                         <select name="frame_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Frame --</option>
                             @foreach ($frames as $frame)
-                                <option value="{{ $frame->id }}">
-                                    {{ $frame->merk }} - {{ $frame->kode_frame }}
-                                </option>
+                            <option value="{{ $frame->id }}">
+                                {{ $frame->merk }} - {{ $frame->kode_frame }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -255,10 +266,10 @@
                         <select name="lensa_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">-- Pilih Lensa --</option>
                             @foreach ($lensas as $lensa)
-                                <option value="{{ $lensa->id }}">
-                                    {{ $lensa->nama_lensa }}
-                                    ({{ $lensa->kategori }})
-                                </option>
+                            <option value="{{ $lensa->id }}">
+                                {{ $lensa->nama_lensa }}
+                                ({{ $lensa->kategori }})
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -336,6 +347,7 @@
             const fieldBpjs = document.getElementById('field_bpjs');
             const fieldAsuransi = document.getElementById('field_asuransi');
             const fieldPasien = document.getElementById('field_umum');
+            const fieldKelas = document.getElementById('field_kelas');
 
             /* ===============================
                 FORMAT RUPIAH
@@ -369,6 +381,7 @@
                 fieldNoSep.classList.add('hidden');
                 fieldBpjs.classList.add('hidden');
                 fieldAsuransi.classList.add('hidden');
+                fieldKelas.classList.add('hidden');
 
                 // PASIEN SELALU TAMPIL
                 fieldPasien.classList.remove('hidden');
@@ -381,6 +394,7 @@
                     fieldNoKartu.classList.remove('hidden');
                     fieldNoSep.classList.remove('hidden');
                     fieldBpjs.classList.remove('hidden');
+                    fieldKelas.classList.remove('hidden');
                 }
 
                 if (kategori.value === 'asuransi') {
@@ -406,6 +420,8 @@
                 input.addEventListener('input', function() {
                     const target = this.dataset.target;
                     let angka = this.value.replace(/[^0-9]/g, '');
+                    angka = angka.replace(/^0+/, '');
+                    angka = angka === '' ? '0' : angka;
 
                     document.getElementById(target).value = angka || 0;
                     this.value = formatRupiah(angka);

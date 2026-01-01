@@ -53,6 +53,7 @@ class RekamMedisController extends Controller
             'no_hp' => 'nullable|string|max:20',
             'kategori' => 'required|in:bpjs,asuransi,umum',
             'no_kartu' => 'nullable|required_if:kategori,bpjs,asuransi',
+            'kelas' => 'nullable|required_if:kategori,bpjs|in:1,2,3',
             'alamat' => 'nullable|string',
             'umur' => 'nullable|integer|min:0',
 
@@ -118,7 +119,7 @@ class RekamMedisController extends Controller
 
             case 'asuransi':
                 $validated['dibayar_bpjs'] = 0;
-                $validated['no_sep'] = null;
+                $validated['kelas'] = null;
                 break;
 
             case 'umum':
