@@ -12,7 +12,7 @@
         }
 
         .container {
-            width: 380px;
+            width: 400px;
             margin: auto;
         }
 
@@ -23,20 +23,41 @@
             margin-bottom: 20px;
         }
 
-        .kop h2 {
+        .kop-row {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .kop-logo {
+            width: 60px;
+        }
+
+        .kop-logo img {
+            width: 50px;
+            height: auto;
+        }
+
+        .kop-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        .kop-text h2 {
             margin: 0;
             font-size: 18px;
             font-weight: bold;
         }
 
-        .kop p {
+        .kop-text p {
             margin: 2px 0;
             font-size: 12px;
         }
 
-        .nomor {
+        .kop-nomor {
+            font-size: 12px;
+            white-space: nowrap;
             text-align: right;
-            margin-bottom: 10px;
+            padding-left: 10px;
         }
 
         .judul {
@@ -87,16 +108,27 @@
 
 <body>
     <div class="container">
-        <!-- KOP -->
-        <div class="kop">
-            <h2>CV. OPTIK UTAMA</h2>
-            <p>Jl. Rd. Mattaher No. 83 Pasar Jambi</p>
-            <p>Telp. (0741) 20483 | HP. 0852 6452 4577</p>
-        </div>
 
-        <!-- NOMOR -->
-        <div class="nomor">
-            No. {{ str_pad($pasien->id, 6, '0', STR_PAD_LEFT) }}
+        <!-- KOP + NOMOR -->
+        <div class="kop">
+            <div class="kop-row">
+                <!-- LOGO KIRI -->
+                <div class="kop-logo">
+                    <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="Logo Optik">
+                </div>
+
+                <!-- TEKS TENGAH -->
+                <div class="kop-text">
+                    <h2>CV. OPTIK UTAMA</h2>
+                    <p> {{ $pengaturan['alamat'] ?? '-' }}</p>
+                    <p>Telp. (0741) 20483 | HP. {{ $pengaturan['no_hp'] }}</p>
+                </div>
+
+                <!-- NOMOR KANAN -->
+                <div class="kop-nomor">
+                    No. {{ str_pad($pasien->id, 6, '0', STR_PAD_LEFT) }}
+                </div>
+            </div>
         </div>
 
         <!-- JUDUL -->
@@ -172,7 +204,9 @@
             <div class="kanan">
                 <p>Jambi, {{ $pasien->created_at->format('d F Y') }}</p>
                 <br><br><br>
-                <p><strong>OPTIK UTAMA</strong></p>
+                <p><strong>
+                        {{ $pasien->user?->name ?? 'OPTIK UTAMA' }}
+                    </strong></p>
             </div>
         </div>
 

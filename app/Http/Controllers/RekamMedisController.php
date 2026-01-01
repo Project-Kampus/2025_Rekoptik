@@ -9,6 +9,7 @@ use App\Models\Frame;
 use App\Models\lensa;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RekamMedisController extends Controller
@@ -135,7 +136,8 @@ class RekamMedisController extends Controller
 
         $pasien = Pasien::create($validated);
         $pasien->update([
-            'sisa' => $pasien->hitungSisa()
+            'sisa' => $pasien->hitungSisa(),
+            'user_id ' => Auth::id()
         ]);
 
         return redirect()->route('rekam-medis.index')
@@ -320,8 +322,8 @@ class RekamMedisController extends Controller
         $pasien->update($data);
 
         if ($pasien->email) {
-        Mail::send(new PengambilanStrukMail($pasien));
-    }
+            Mail::send(new PengambilanStrukMail($pasien));
+        }
 
         return redirect()
             ->route('rekam-medis.show', $pasien->id)

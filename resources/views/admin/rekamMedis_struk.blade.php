@@ -11,9 +11,40 @@
          color: #000;
       }
 
+      .header {
+         display: flex;
+         align-items: center;
+         margin-bottom: 6px;
+      }
+
+      .header-logo {
+         width: 50px;
+      }
+
+      .header-logo img {
+         width: 100%;
+         height: auto;
+      }
+
+      .header-text {
+         flex: 1;
+         text-align: center;
+      }
+
+
       .container {
          width: 380px;
          margin: auto;
+      }
+
+      .judul1 {
+         font-size: large;
+         font-weight: bold;
+      }
+
+      .judul2 {
+         font-size: medium;
+         font-weight: bold;
       }
 
       .center {
@@ -25,7 +56,7 @@
       }
 
       .line {
-         border-bottom: 1px dashed #000;
+         border-bottom: 2px solid #000;
          margin: 6px 0;
       }
 
@@ -61,25 +92,33 @@
    <div class="container">
 
       <!-- HEADER -->
-      <div class="center">
-         <div class="bold">OPTIK UTAMA</div>
-         <div class="small">PERIKSA MATA GRATIS</div>
-         <div class="small">
-            {{ $pengaturan['alamat'] ?? '-' }}
+      <div class="header">
+         <div class="header-logo">
+            <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="Logo Optik">
          </div>
 
-         <div class="small">
-            @if(!empty($pengaturan['no_hp']))
-            Telp/WA. {{ $pengaturan['no_hp'] }}
-            @endif
+         <div class="header-text">
+            <div class="judul1">OPTIK UTAMA</div>
+            <div class="bold">PERIKSA MATA GRATIS</div>
 
-            @if(!empty($pengaturan['email']))
-            | {{ $pengaturan['email'] }}
-            @endif
+            <div class="small">
+               {{ $pengaturan['alamat'] ?? '-' }}
+            </div>
+
+            <div class="small">
+               @if(!empty($pengaturan['no_hp']))
+               Telp/WA. {{ $pengaturan['no_hp'] }}
+               @endif
+
+               @if(!empty($pengaturan['email']))
+               | {{ $pengaturan['email'] }}
+               @endif
+            </div>
+         </div>
+         <div>
          </div>
       </div>
 
-      <div class="line"></div>
 
       <!-- NOTA -->
       <table>
@@ -182,7 +221,9 @@
       <div class="mt center">
          <div>Hormat dan Terima kasih kami,</div>
          <div id="ttd-online"></div>
-         <div style="margin-top:60px;" class="bold mt">OPTIK UTAMA</div>
+         <div style="margin-top:60px;" class="bold mt">
+            {{ $pasien->user?->name ?? 'OPTIK UTAMA' }}
+         </div>
       </div>
 
    </div>

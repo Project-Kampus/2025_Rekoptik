@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->roles()->where('name', $role)->exists();
     }
+
+    public function pasiens()
+    {
+        return $this->hasMany(Pasien::class);
+    }
 }

@@ -70,6 +70,9 @@ class Pasien extends Model
         'nama_pengambil',
         'hub_pengambil',
         'bukti_pengambil',
+
+        // validator
+        'user_id'
     ];
 
     protected $casts = [
@@ -100,5 +103,10 @@ class Pasien extends Model
                     + ($this->dibayar_pasien ?? 0)
                 )
         );
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
