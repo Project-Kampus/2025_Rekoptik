@@ -22,10 +22,12 @@ class PengaturanController extends Controller
     {
         $request->validate([
             'nama_aplikasi' => 'required|string|max:255',
+            'nama_toko'     => 'nullable|string|max:255',
             'alamat'        => 'nullable|string',
             'no_hp'         => 'nullable|string|max:20',
-            'email'         => 'nullable|email',
-            'logo'          => 'nullable|file|mimes:png,jpg,jpeg,ico|max:2048',
+            'telp'          => 'nullable|string|max:20',
+            'email'         => 'nullable|email|max:255',
+            'logo'          => 'nullable|image|mimes:png,jpg,jpeg,ico|max:2048',
         ]);
 
         $pengaturan = Pengaturan::firstOrCreate([]);
@@ -45,8 +47,10 @@ class PengaturanController extends Controller
 
         $pengaturan->update([
             'nama_aplikasi' => $request->nama_aplikasi,
+            'nama_toko'     => $request->nama_toko,
             'alamat'        => $request->alamat,
             'no_hp'         => $request->no_hp,
+            'telp'          => $request->telp,
             'email'         => $request->email,
         ]);
 

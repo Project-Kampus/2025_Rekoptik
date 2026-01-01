@@ -5,7 +5,7 @@
       </h2>
    </x-slot>
 
-   <div class="bg-white border rounded-lg p-6 ">
+   <div class="bg-white border rounded-lg p-6">
 
       <form method="POST"
          action="{{ route('pengaturan.update') }}"
@@ -16,12 +16,27 @@
 
          <!-- NAMA APLIKASI -->
          <div>
-            <x-input-label value="Nama Klinik / Aplikasi" />
+            <x-input-label value="Nama Aplikasi (Internal)" />
             <x-text-input
                name="nama_aplikasi"
                class="mt-1 block w-full"
                value="{{ old('nama_aplikasi', $pengaturan->nama_aplikasi ?? '') }}"
                required />
+            <p class="text-xs text-gray-500 mt-1">
+               Digunakan untuk judul sistem
+            </p>
+         </div>
+
+         <!-- NAMA TOKO -->
+         <div>
+            <x-input-label value="Nama Toko / Klinik" />
+            <x-text-input
+               name="nama_toko"
+               class="mt-1 block w-full"
+               value="{{ old('nama_toko', $pengaturan->nama_toko ?? '') }}" />
+            <p class="text-xs text-gray-500 mt-1">
+               Ditampilkan di kop surat & struk
+            </p>
          </div>
 
          <!-- LOGO -->
@@ -34,7 +49,7 @@
                   alt="Logo"
                   class="h-16 rounded border">
                @else
-               <div class="h-16 w-16 flex items-center justify-center border rounded text-gray-400">
+               <div class="h-16 w-16 flex items-center justify-center border rounded text-gray-400 text-xs">
                   No Logo
                </div>
                @endif
@@ -46,14 +61,14 @@
             </div>
 
             <p class="text-xs text-gray-500 mt-1">
-               Format JPG / PNG, maksimal 2MB
+               Format JPG / PNG / ICO, maksimal 2MB
             </p>
          </div>
 
          <!-- KONTAK -->
          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-               <x-input-label value="No. Telepon" />
+               <x-input-label value="No. HP / WhatsApp" />
                <x-text-input
                   name="no_hp"
                   class="mt-1 block w-full"
@@ -61,13 +76,22 @@
             </div>
 
             <div>
-               <x-input-label value="Email" />
+               <x-input-label value="Telepon (Telp)" />
                <x-text-input
-                  type="email"
-                  name="email"
+                  name="telp"
                   class="mt-1 block w-full"
-                  value="{{ old('email', $pengaturan->email ?? '') }}" />
+                  value="{{ old('telp', $pengaturan->telp ?? '') }}" />
             </div>
+         </div>
+
+         <!-- EMAIL -->
+         <div>
+            <x-input-label value="Email" />
+            <x-text-input
+               type="email"
+               name="email"
+               class="mt-1 block w-full"
+               value="{{ old('email', $pengaturan->email ?? '') }}" />
          </div>
 
          <!-- ALAMAT -->
@@ -78,7 +102,6 @@
                rows="3"
                class="mt-1 block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ old('alamat', $pengaturan->alamat ?? '') }}</textarea>
          </div>
-
 
          <!-- ACTION -->
          <div class="flex justify-end gap-3 pt-4 border-t">

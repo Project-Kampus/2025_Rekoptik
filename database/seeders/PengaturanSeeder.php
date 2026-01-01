@@ -16,10 +16,12 @@ class PengaturanSeeder extends Seeder
     {
         pengaturan::create(
             [
+                'nama_toko'     => 'CV. OPTIK UTAMA',
                 'nama_aplikasi' => 'OPTIMA',
                 'alamat'        => 'Jl. Rd. Mattaher No. 83 Pasar Jambi',
-                'no_hp'       => '(0741) 20483',
-                'email'         => '0852 6452 4577',
+                'telp'          => '(0741) 20483',
+                'no_hp'         => '0852 6452 4577',
+                'email'         => 'utamajambioptima.com',
                 'logo'          => null, // isi manual lewat menu pengaturan
             ]
         );

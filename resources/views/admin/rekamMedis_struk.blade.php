@@ -98,7 +98,7 @@
          </div>
 
          <div class="header-text">
-            <div class="judul1">OPTIK UTAMA</div>
+            <div class="judul1">{{ $pengaturan['nama_toko'] ?? 'OPTIK' }}</div>
             <div class="bold">PERIKSA MATA GRATIS</div>
 
             <div class="small">
@@ -106,8 +106,8 @@
             </div>
 
             <div class="small">
-               @if(!empty($pengaturan['no_hp']))
-               Telp/WA. {{ $pengaturan['no_hp'] }}
+               @if(!empty($pengaturan['telp']))
+               Telp/WA. {{ $pengaturan['telp'] }}
                @endif
 
                @if(!empty($pengaturan['email']))

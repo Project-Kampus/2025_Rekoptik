@@ -119,9 +119,9 @@
 
                 <!-- TEKS TENGAH -->
                 <div class="kop-text">
-                    <h2>CV. OPTIK UTAMA</h2>
+                    <h2>{{ $pengaturan['nama_toko'] ?? '-' }}</h2>
                     <p> {{ $pengaturan['alamat'] ?? '-' }}</p>
-                    <p>Telp. (0741) 20483 | HP. {{ $pengaturan['no_hp'] }}</p>
+                    <p>Telp. {{ $pengaturan['telp'] }} | HP. {{ $pengaturan['no_hp'] }}</p>
                 </div>
 
                 <!-- NOMOR KANAN -->
