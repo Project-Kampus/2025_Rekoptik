@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Lensa;
+use App\Models\lensa;
 use Illuminate\Database\Seeder;
 
 class LensaSeeder extends Seeder
