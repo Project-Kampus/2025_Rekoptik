@@ -7,9 +7,7 @@ $isMasterActive = request()->routeIs('frame.*')
 || request()->routeIs('lensa.*')
 || request()->routeIs('supplier.*');
 @endphp
-
 <ul class="px-3 py-4 space-y-2 text-sm">
-
    <!-- Dashboard -->
    <li>
       <a href="{{ route('dashboard') }}"

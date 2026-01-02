@@ -13,6 +13,7 @@ use App\Http\Controllers\RoleRekamMedis;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('welcome');
+Route::get('/test', fn() => view('test'))->name('test');
 
 
 Route::middleware('auth', 'verified')->group(function () {
