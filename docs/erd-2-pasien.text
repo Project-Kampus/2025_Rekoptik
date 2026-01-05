@@ -64,6 +64,7 @@ pengambilans
 dokumens
 -id: BigInt
 -nama: String
+-keterangan: String
 
 dokumentPelengkap
 -id: BigInt

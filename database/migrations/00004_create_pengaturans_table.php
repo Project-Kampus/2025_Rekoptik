@@ -19,7 +19,16 @@ return new class extends Migration
             $table->string('no_hp', 20)->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
+            $table->string('nama_toko')->nullable();
+            $table->string('telp')->nullable();
 
+            $table->timestamps();
+        });
+
+        Schema::create('dokumens', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
@@ -29,6 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('dokumens');
         Schema::dropIfExists('pengaturans');
     }
 };

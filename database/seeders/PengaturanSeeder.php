@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Dokumen;
 use App\Models\pengaturan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,5 +26,16 @@ class PengaturanSeeder extends Seeder
                 'logo'          => null, // isi manual lewat menu pengaturan
             ]
         );
+
+        Dokumen::insert([
+            [
+                'nama' => 'Surat Eligibilitas Peserta (SEP)',
+                'keterangan' => 'Dokumen resmi BPJS sebagai bukti eligibilitas layanan kesehatan',
+            ],
+            [
+                'nama' => 'Resep Kacamata',
+                'keterangan' => 'Salinan resep kacamata berdasarkan hasil pemeriksaan mata',
+            ],
+        ]);
     }
 }
