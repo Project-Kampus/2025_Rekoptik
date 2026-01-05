@@ -1,0 +1,97 @@
+User
+-id: BigInt
+-name: String
+-email: String
+-email_verified_at: Timestamp
+-password: String
+-remember_token: String
+
+Role
+-id: BigInt
+-name: String
+
+RoleUser
+-user_id: BigInt
+-role_id: BigInt
+
+Pengaturan
+-id: BigInt
+-nama_aplikasi: String
+-nama_toko: String
+-alamat: Text
+-no_hp: String
+-telp: String
+-email: String
+-logo: String
+
+Supplier
+-id: BigInt
+-nama: String
+-kontak: String
+-alamat: String
+
+Lensa
+
+-id: BigInt
+-nama_lensa: String
+-kategori: String
+-material: String
+-coating: String
+-od: String
+-os: String
+-supplier_id: BigInt
+
+Frame
+-id: BigInt
+-kode_frame: String
+-merk: String
+-warna: String
+-bahan: String
+-supplier_id: BigInt
+
+Pasien
+-id: BigInt
+-user_id: BigInt
+-nama_pasien: String
+-no_hp: String
+-no_kartu: String
+-alamat: Text
+-umur: Integer
+-email: String
+-keluhan_utama: Text
+-riwayat_penyakit: Text
+-penyakit_sekarang: Text
+-penyakit_keluarga: Text
+-kebiasaan: Text
+-pengobatan: Text
+-resep_dari: String
+-no_sep: String
+-tanggal_pemeriksaan: Date
+-diagnosa: String
+-kategori: Enum(bpjs, asuransi, umum)
+-kelas: Enum(1, 2, 3)
+-od_sferis: Decimal
+-od_silindris: Decimal
+-od_axis: Integer
+-od_add_lensa: Decimal
+-os_sferis: Decimal
+-os_silindris: Decimal
+-os_axis: Integer
+-os_add_lensa: Decimal
+-frame_id: BigInt
+-lensa_id: BigInt
+-pd: String
+-biaya_kacamata: BigInt
+-dibayar_bpjs: BigInt
+-dibayar_asuransi: BigInt
+-dibayar_pasien: BigInt
+-sisa: BigInt
+-doc_ktp: String
+-doc_legalitas: String
+-doc_rujukan: String
+-status: Enum(dipesan, diambil)
+-tanggal_dipesan: Date
+-tanggal_pengambilan: Date
+-nama_pengambil: String
+-hub_pengambil: String
+-bukti_pengambil: String
