@@ -1,75 +1,64 @@
-Struktur Sidebar Utama (Direkomendasikan)
-🔹 SEMUA ROLE
-Dashboard
+# Struktur Sidebar Utama (Direkomendasikan)
 
-👑 SUPER ADMIN
-Dashboard
-Manajemen Pengguna
-├── Data Pengguna
-├── Role & Hak Akses
+## 🔹 SEMUA ROLE
+- Dashboard
 
-Master Data
-├── Supplier
-├── Frame
-├── Lensa
+## 👑 SUPER ADMIN
+- Dashboard
 
-Pasien
-├── Data Pasien
-├── Dokumen Pasien
+- Manajemen Pengguna
+  - Data Pengguna
+  - Role & Hak Akses
 
-Pemeriksaan
-├── Pemeriksaan Pasien
-├── Riwayat Pemeriksaan
+- Master Data
+  - Supplier
+  - Frame
+  - Lensa
 
-Transaksi
-├── Pesanan Kacamata
-├── Pembayaran
+- Transaksi
+  - Transaksi Baru
+  - Data Pemesanan
+  - Riwayat Pembayaran
 
-Laporan
-├── Rekap Pemeriksaan
-├── Rekap Transaksi
-├── Rekap BPJS
-├── Export Excel
+- Rekam Medis
+  - Data Pasien
+  - Pemeriksaan
+  - Resep Kacamata
+  - Riwayat Kunjungan
 
-Pengaturan
-├── Profil Optik
-├── Pengaturan Aplikasi
+- Laporan
+  - Rekap Kacamata
+  - Rekap Pemeriksaan
+  - Rekap Transaksi
+  - Rekap BPJS
 
-🧑‍⚕️ ADMIN / STAF
-Dashboard
+- Pengaturan
 
-Pasien
-├── Data Pasien
-├── Tambah Pasien
+## 🧑‍⚕️ ADMIN / STAF
+- Dashboard
+- Pasien
+  - Data Pasien
+  - Tambah Pasien
+- Pemeriksaan
+  - Pemeriksaan Baru
+  - Riwayat Pemeriksaan
+- Transaksi
+  - Pesanan Kacamata
+  - Pembayaran
+- Laporan
+  - Rekap Harian
+  - Rekap Bulanan
 
-Pemeriksaan
-├── Pemeriksaan Baru
-├── Riwayat Pemeriksaan
+## ❌ Tidak ada:
+- Manajemen user
+- Pengaturan
+- Master data sensitif (opsional)
 
-Transaksi
-├── Pesanan Kacamata
-├── Pembayaran
+## 🏥 BPJS (READ ONLY)
+- Dashboard
+- Laporan
+  - Rekap BPJS
+  - Detail Pemeriksaan
+  - Export Data
 
-Laporan
-├── Rekap Harian
-├── Rekap Bulanan
-
-
-❌ Tidak ada:
-
-Manajemen user
-
-Pengaturan
-
-Master data sensitif (opsional)
-
-🏥 BPJS (READ ONLY)
-Dashboard
-
-Laporan
-├── Rekap BPJS
-├── Detail Pemeriksaan
-├── Export Data
-
-
-🔒 Semua menu read-only
+## 🔒 Semua menu read-only

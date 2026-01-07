@@ -2,60 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pasien;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-
     public function index()
     {
-        // TOTAL DATA
-        $totalPasien = Pasien::count();
+        $totalPasien    = 128;
+        $totalBpjs      = 62;
+        $totalUmum      = 41;
+        $totalAsuransi  = 25;
+        $hariIni = 7;
+        $belumDiambil = 12;
+        $aktivitas = collect([
+            (object) [
+                'id' => 1,
+                'tanggal_pemeriksaan' => Carbon::now()->subDays(1),
+                'nama_pasien' => 'Ahmad Fauzi',
+                'kategori' => 'bpjs',
+            ],
+            (object) [
+                'id' => 2,
+                'tanggal_pemeriksaan' => Carbon::now()->subDays(2),
+                'nama_pasien' => 'Siti Aminah',
+                'kategori' => 'umum',
+            ],
+            (object) [
+                'id' => 3,
+                'tanggal_pemeriksaan' => Carbon::now()->subDays(3),
+                'nama_pasien' => 'Budi Santoso',
+                'kategori' => 'asuransi',
+            ],
+        ]);
+        $bulan = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
 
-        $totalBpjs = Pasien::where('kategori', 'bpjs')->count();
-        $totalUmum = Pasien::where('kategori', 'umum')->count();
-        $totalAsuransi = Pasien::where('kategori', 'asuransi')->count();
-
-        $hariIni = Pasien::whereDate('tanggal_pemeriksaan', Carbon::today())->count();
-
-        // PASIEN BELUM DIAMBIL
-        $belumDiambil = Pasien::where('status', 'dipesan')->count();
-
-
-        // AKTIVITAS TERBARU (5 DATA)
-        $aktivitas = Pasien::orderBy('tanggal_pemeriksaan', 'desc')
-            ->limit(5)
-            ->get();
-
-        // GRAFIK PASIEN BULANAN (12 BULAN TERAKHIR)
-        $grafik = Pasien::select(
-            DB::raw('MONTH(tanggal_pemeriksaan) as bulan'),
-            DB::raw('COUNT(*) as total')
-        )
-            ->whereYear('tanggal_pemeriksaan', date('Y'))
-            ->groupBy(DB::raw('MONTH(tanggal_pemeriksaan)'))
-            ->orderBy(DB::raw('MONTH(tanggal_pemeriksaan)'))
-            ->get();
-
-        // FORMAT BULAN
-        $bulan = [];
-        $jumlahPasien = [];
-
-        foreach ($grafik as $row) {
-            $bulan[] = Carbon::create()->month($row->bulan)->translatedFormat('F');
-            $jumlahPasien[] = $row->total;
-        }
+        $jumlahPasien = [
+            5,
+            8,
+            12,
+            9,
+            14,
+            18,
+            22,
+            20,
+            17,
+            15,
+            10,
+            7
+        ];
 
         return view('dashboard', compact(
             'totalPasien',
             'totalBpjs',
             'totalAsuransi',
             'totalUmum',
-            'belumDiambil',
             'hariIni',
+            'belumDiambil',
             'aktivitas',
             'bulan',
             'jumlahPasien'

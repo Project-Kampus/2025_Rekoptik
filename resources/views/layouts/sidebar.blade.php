@@ -6,6 +6,9 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
 $isMasterActive = request()->routeIs('frame.*')
 || request()->routeIs('lensa.*')
 || request()->routeIs('supplier.*');
+
+$isAdminActive = request()->routeIs('admin.*');
+$isPengaturanActive = request()->routeIs('pengaturan.*');
 @endphp
 <ul class="px-3 py-4 space-y-2 text-sm">
    <!-- Dashboard -->
@@ -19,13 +22,12 @@ $isMasterActive = request()->routeIs('frame.*')
 
    <li class="my-3 border-t border-gray-200"></li>
 
-   @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
-   <!-- Rekam Medis -->
-   <li x-data="{ open: {{ $isRekamMedisActive ? 'true' : 'false' }} }">
+   <!-- Manajemen Pengguna -->
+   <li x-data="{ open: {{ $isAdminActive ? 'true' : 'false' }} }">
       <button @click="open = !open"
          class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition
-            {{ $isRekamMedisActive ? $activeClass : $inactiveClass }}">
-         <span>Rekam Medis</span>
+            {{ $isAdminActive ? $activeClass : $inactiveClass }}">
+         <span>Manajemen Pengguna</span>
          <svg class="w-4 h-4 transition-transform"
             :class="open ? 'rotate-180' : ''"
             fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,24 +38,16 @@ $isMasterActive = request()->routeIs('frame.*')
 
       <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
          <li>
-            <a href="{{ route('rekam-medis.create') }}"
+            <a href="{{ route('admin.index') }}"
                class="block px-4 py-2 rounded-md transition
-                   {{ request()->routeIs('rekam-medis.create') ? $activeClass : $inactiveClass }}">
-               Rekam Medis Baru
+                   {{ request()->routeIs('admin.index') ? $activeClass : $inactiveClass }}">
+               Data Pengguna
             </a>
          </li>
          <li>
-            <a href="{{ route('rekam-medis.index') }}"
-               class="block px-4 py-2 rounded-md transition
-                   {{ request()->routeIs('rekam-medis.index') ? $activeClass : $inactiveClass }}">
-               Data Rekam Medis
-            </a>
-         </li>
-         <li>
-            <a href="{{ route('rekam-medis.rekap') }}"
-               class="block px-4 py-2 rounded-md transition
-                   {{ request()->routeIs('rekam-medis.rekap') ? $activeClass : $inactiveClass }}">
-               Rekap Rekam Medis
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Role & Hak Akses
             </a>
          </li>
       </ul>
@@ -74,72 +68,182 @@ $isMasterActive = request()->routeIs('frame.*')
       </button>
 
       <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
-
-         <li>
-            <a href="{{ route('frame.index') }}"
-               class="block px-4 py-2 rounded-md transition
-                   {{ request()->routeIs('frame.*') ? $activeClass : $inactiveClass }}">
-               Kelola Frame
-            </a>
-         </li>
-
-         <li>
-            <a href="{{ route('lensa.index') }}"
-               class="block px-4 py-2 rounded-md transition
-                   {{ request()->routeIs('lensa.*') ? $activeClass : $inactiveClass }}">
-               Kelola Lensa
-            </a>
-         </li>
-
          <li>
             <a href="{{ route('supplier.index') }}"
                class="block px-4 py-2 rounded-md transition
                    {{ request()->routeIs('supplier.*') ? $activeClass : $inactiveClass }}">
-               Kelola Supplier
+               Supplier
             </a>
          </li>
-
+         <li>
+            <a href="{{ route('frame.index') }}"
+               class="block px-4 py-2 rounded-md transition
+                   {{ request()->routeIs('frame.*') ? $activeClass : $inactiveClass }}">
+               Frame
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('lensa.index') }}"
+               class="block px-4 py-2 rounded-md transition
+                   {{ request()->routeIs('lensa.*') ? $activeClass : $inactiveClass }}">
+               Lensa
+            </a>
+         </li>
       </ul>
    </li>
 
-   <!-- Riwayat -->
-   <li>
-      <a href="{{ route('riwayat.all') }}"
-         class="flex items-center px-4 py-2.5 rounded-lg transition
-           {{ request()->routeIs('riwayat.*') ? $activeClass : $inactiveClass }}">
-         Riwayat Frame & Lensa
-      </a>
+   <!-- Rekam Medis -->
+   <li x-data="{ open: false }">
+      <button @click="open = !open"
+         class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition {{ $inactiveClass }}">
+         <span>Rekam Medis</span>
+         <svg class="w-4 h-4 transition-transform"
+            :class="open ? 'rotate-180' : ''"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M19 9l-7 7-7-7" />
+         </svg>
+      </button>
+
+      <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Data Pasien
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Data Pemeriksaan
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Data Resep Kacamata
+            </a>
+         </li>
+      </ul>
    </li>
-   @endif
 
-   @if(auth()->user()->hasRole('bpjs'))
-   <li>
-      <a href="{{ route('rekapMedis.Bpjs') }}"
-         class="flex items-center px-4 py-2.5 rounded-lg transition
-           {{ request()->routeIs('rekapMedis.Bpjs') ? $activeClass : $inactiveClass }}">
-         Rekap Medis
-      </a>
+
+
+   <!-- Transaksi -->
+   <li x-data="{ open: false }">
+      <button @click="open = !open"
+         class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition {{ $inactiveClass }}">
+         <span>Transaksi</span>
+         <svg class="w-4 h-4 transition-transform"
+            :class="open ? 'rotate-180' : ''"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M19 9l-7 7-7-7" />
+         </svg>
+      </button>
+      <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Pesan Kacamata
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Data Pemesanan
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Riwayat Pembayaran
+            </a>
+         </li>
+      </ul>
    </li>
-   @endif
 
+   <!-- Laporan -->
+   <li x-data="{ open: false }">
+      <button @click="open = !open"
+         class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition {{ $inactiveClass }}">
+         <span>Laporan</span>
+         <svg class="w-4 h-4 transition-transform"
+            :class="open ? 'rotate-180' : ''"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M19 9l-7 7-7-7" />
+         </svg>
+      </button>
 
-   @if(auth()->user()->hasRole('superadmin'))
-   <li class="my-3 border-t border-gray-200"></li>
+      <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
+         <li>
+            <a href="{{ route('rekam-medis.rekap') }}"
+               class="block px-4 py-2 rounded-md transition
+                   {{ request()->routeIs('rekam-medis.rekap') ? $activeClass : $inactiveClass }}">
+               Rekap Pemeriksaan
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Rekap Transaksi
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Rekap Rekam Medis
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Export Excel
+            </a>
+         </li>
+      </ul>
+   </li>
 
    <!-- Pengaturan -->
+   <li class="my-3 border-t border-gray-200"></li>
    <li>
-      <a href="{{ route('admin.index') }}"
+      <a href="{{ route('dashboard') }}"
          class="flex items-center px-4 py-2.5 rounded-lg transition
-           {{ request()->routeIs('admin.*') ? $activeClass : $inactiveClass }}">
-         Manajemen Akun
+           {{ request()->routeIs('dashboard') ? $activeClass : $inactiveClass }}">
+         Pengaturan
       </a>
    </li>
-   <li>
-      <a href="{{ route('pengaturan.index') }}"
-         class="flex items-center px-4 py-2.5 rounded-lg transition
-           {{ request()->routeIs('pengaturan.*') ? $activeClass : $inactiveClass }}">
-         Pengaturan Sistem
-      </a>
+
+
+
+   <li x-data="{ open: {{ $isPengaturanActive ? 'true' : 'false' }} }">
+      <button @click="open = !open"
+         class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition
+            {{ $isPengaturanActive ? $activeClass : $inactiveClass }}">
+         <span>Pengaturan</span>
+         <svg class="w-4 h-4 transition-transform"
+            :class="open ? 'rotate-180' : ''"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+               d="M19 9l-7 7-7-7" />
+         </svg>
+      </button>
+
+      <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
+         <li>
+            <a href="#"
+               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+               Profil Optik
+            </a>
+         </li>
+         <li>
+            <a href="{{ route('pengaturan.index') }}"
+               class="block px-4 py-2 rounded-md transition
+                   {{ request()->routeIs('pengaturan.index') ? $activeClass : $inactiveClass }}">
+               Pengaturan Aplikasi
+            </a>
+         </li>
+      </ul>
    </li>
-   @endif
 </ul>

@@ -87,46 +87,64 @@
                 </thead>
                 <tbody>
                     @forelse($aktivitas as $item)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-3 py-2 border">
-                                {{ $item->tanggal_pemeriksaan?->format('d-m-Y') }}
-                            </td>
-                            <td class="px-3 py-2 border">
-                                {{ $item->nama_pasien }}
-                            </td>
-                            <td class="px-3 py-2 border capitalize">
-                                {{ $item->kategori }}
-                            </td>
-                            <td class="px-3 py-2 border text-center">
-                                <a href="{{ route('rekam-medis.show', $item) }}"
-                                    class="text-blue-600 hover:underline text-xs">
-                                    Detail
-                                </a>
-                            </td>
-                        </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-3 py-2 border">
+                            {{ $item->tanggal_pemeriksaan?->format('d-m-Y') }}
+                        </td>
+                        <td class="px-3 py-2 border">
+                            {{ $item->nama_pasien }}
+                        </td>
+                        <td class="px-3 py-2 border capitalize">
+                            {{ $item->kategori }}
+                        </td>
+                        <td class="px-3 py-2 border text-center">
+                            <a href=""
+                                class="text-blue-600 hover:underline text-xs">
+                                Detail
+                            </a>
+                        </td>
+                    </tr>
                     @empty
-                        <tr>
-                            <td colspan="4" class="text-center py-4 text-gray-500">
-                                Belum ada aktivitas
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-gray-500">
+                            Belum ada aktivitas
+                        </td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 
+    @php
+    $dashboardData = [
+    'bulan' => $bulan ?? [],
+    'jumlahPasien' => $jumlahPasien ?? [],
+    'totalBpjs' => $totalBpjs ?? 0,
+    'totalUmum' => $totalUmum ?? 0,
+    'totalAsuransi' => $totalAsuransi ?? 0,
+    ];
+    @endphp
+
     <!-- CHART JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
+        const dashboardData = @json($dashboardData);
+        const {
+            bulan,
+            jumlahPasien,
+            totalBpjs,
+            totalUmum,
+            totalAsuransi
+        } = dashboardData;
+
         new Chart(document.getElementById('grafikPasien'), {
             type: 'line',
             data: {
-                labels: {!! json_encode($bulan ?? []) !!},
+                labels: bulan,
                 datasets: [{
                     label: 'Jumlah Pasien',
-                    data: {!! json_encode($jumlahPasien ?? []) !!},
+                    data: jumlahPasien,
                     borderWidth: 2,
                     tension: 0.4,
                     fill: false
@@ -144,14 +162,14 @@
                 labels: ['BPJS', 'Umum', 'Asuransi'],
                 datasets: [{
                     data: [
-                        {{ $totalBpjs ?? 0 }},
-                        {{ $totalUmum ?? 0 }},
-                        {{ $totalAsuransi ?? 0 }}
+                        totalBpjs,
+                        totalUmum,
+                        totalAsuransi
                     ],
                     backgroundColor: [
-                        '#10b981', // BPJS
-                        '#3b82f6', // Umum
-                        '#f97316' // Asuransi
+                        '#10b981',
+                        '#3b82f6',
+                        '#f97316'
                     ]
                 }]
             },
@@ -161,4 +179,5 @@
             }
         });
     </script>
+
 </x-app-layout>

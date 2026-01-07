@@ -41,20 +41,11 @@ class DatabaseSeeder extends Seeder
         );
         $bpjs->roles()->syncWithoutDetaching([$bpjsRole->id]);
 
-        // Buat user DIMKES
-        // $dimkes = User::firstOrCreate(
-        //     [
-        //         'email' => 'dimkes@gmail.com',
-        //         'name'     => 'Petugas DIMKES',
-        //         'password' => Hash::make('password'),
-        //     ]
-        // );
-        // $dimkes->roles()->syncWithoutDetaching([$dimkesRole->id]);
-
         // Buat user SUPERADMIN
         $superadmin = User::firstOrCreate(
             [
-                'email' => 'utamajambioptima@gmail.com',
+                // 'email' => 'utamajambioptima@gmail.com',
+                'email' => 'super@gmail.com',
                 'name'     => 'Super Admin',
                 'password' => Hash::make('password'),
             ]

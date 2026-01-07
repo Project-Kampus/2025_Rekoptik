@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Master;
 
+use App\Http\Controllers\Controller;
 use App\Models\Frame;
-use App\Models\frame_stoks;
 use App\Models\supplier;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Return_;
 
 class FrameController extends Controller
 {
@@ -45,7 +43,7 @@ class FrameController extends Controller
             'warna' => 'nullable|string',
             'bahan' => 'nullable|string',
         ]);
-        
+
         Frame::create($request->all());
 
         return redirect()->route('frame.index')

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Master;
 
+use App\Http\Controllers\Controller;
 use App\Models\lensa;
 use App\Models\supplier;
 use Illuminate\Http\Request;
