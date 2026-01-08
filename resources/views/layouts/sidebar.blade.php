@@ -157,6 +157,13 @@ $isPengaturanActive = request()->routeIs('pengaturan.*');
             </a>
          </li>
          <li>
+            <a href="{{ route('aksesoris.index') }}"
+               class="block px-4 py-2 rounded-md transition
+                   {{ request()->routeIs('aksesoris.*') ? $activeClass : $inactiveClass }}">
+               Aksesoris
+            </a>
+         </li>
+         <li>
             <a href="{{ route('lensa.index') }}"
                class="block px-4 py-2 rounded-md transition
                    {{ request()->routeIs('lensa.*') ? $activeClass : $inactiveClass }}">

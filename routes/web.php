@@ -8,6 +8,7 @@ use App\Http\Controllers\Super\AdminController;
 use App\Http\Controllers\Super\PengaturanController;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\ProfileController;
 
@@ -29,6 +30,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('lensa', LensaController::class);
         Route::resource('supplier', SupplierController::class);
         Route::resource('document', DocumentController::class);
+        Route::resource('aksesoris', AksesorisController::class);
     });
 
     Route::middleware('role:superadmin')->group(function () {

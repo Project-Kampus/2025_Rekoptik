@@ -12,14 +12,10 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $bpjsRole  = Role::firstOrCreate(['name' => 'bpjs']);
-        // $dimkesRole  = Role::firstOrCreate(['name' => 'dimkes']);
         $superRole = Role::firstOrCreate(['name' => 'superadmin']);
 
         $admin = User::firstOrCreate(
@@ -31,7 +27,6 @@ class DatabaseSeeder extends Seeder
         );
         $admin->roles()->syncWithoutDetaching([$adminRole->id]);
 
-        // Buat user BPJS
         $bpjs = User::firstOrCreate(
             [
                 'email' => 'bpjs@gmail.com',
@@ -41,7 +36,6 @@ class DatabaseSeeder extends Seeder
         );
         $bpjs->roles()->syncWithoutDetaching([$bpjsRole->id]);
 
-        // Buat user SUPERADMIN
         $superadmin = User::firstOrCreate(
             [
                 // 'email' => 'utamajambioptima@gmail.com',
@@ -52,12 +46,12 @@ class DatabaseSeeder extends Seeder
         );
         $superadmin->roles()->syncWithoutDetaching([$superRole->id]);
 
-        // frame
         $this->call([
             SupplierSeeder::class,
             FrameSeeder::class,
             LensaSeeder::class,
-            PengaturanSeeder::class
+            PengaturanSeeder::class,
+            AksesorisSeeder::class
         ]);
     }
 }
