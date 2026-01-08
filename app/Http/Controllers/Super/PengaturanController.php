@@ -13,7 +13,7 @@ class PengaturanController extends Controller
     {
         $pengaturan = pengaturan::first();
 
-        return view('admin.pengaturan_index', compact('pengaturan'));
+        return view('admin.super.pengaturan_index', compact('pengaturan'));
     }
 
     /**

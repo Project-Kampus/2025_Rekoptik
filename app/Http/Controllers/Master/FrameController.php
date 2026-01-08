@@ -25,13 +25,13 @@ class FrameController extends Controller
             ->paginate(50)
             ->withQueryString();
 
-        return view('admin.frames_index', compact('frames'));
+        return view('admin.master.frames_index', compact('frames'));
     }
 
     public function create()
     {
         $suppliers = supplier::orderBy('nama')->get();
-        return view('admin.frames_create', compact('suppliers'));
+        return view('admin.master.frames_create', compact('suppliers'));
     }
 
     public function store(Request $request)
@@ -53,7 +53,7 @@ class FrameController extends Controller
     public function edit(Frame $frame)
     {
         $suppliers = supplier::orderBy('nama')->get();
-        return view('admin.frames_edit', compact('frame', 'suppliers'));
+        return view('admin.master.frames_edit', compact('frame', 'suppliers'));
     }
 
     public function update(Request $request, Frame $frame)

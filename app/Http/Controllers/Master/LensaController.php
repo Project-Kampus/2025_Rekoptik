@@ -21,13 +21,13 @@ class LensaController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.lensa_index', compact('lensas'));
+        return view('admin.master.lensa_index', compact('lensas'));
     }
 
     public function create()
     {
         $suppliers = supplier::orderBy('nama')->get();
-        return view('admin.lensa_create', compact('suppliers'));
+        return view('admin.master.lensa_create', compact('suppliers'));
     }
 
     public function store(Request $request)
@@ -52,7 +52,7 @@ class LensaController extends Controller
     public function edit(Lensa $lensa)
     {
         $suppliers = supplier::orderBy('nama')->get();
-        return view('admin.lensa_edit', compact('lensa', 'suppliers'));
+        return view('admin.master.lensa_edit', compact('lensa', 'suppliers'));
     }
 
     public function update(Request $request, Lensa $lensa)

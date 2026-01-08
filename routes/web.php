@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FrameController;
-use App\Http\Controllers\LensaController;
-use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\Master\FrameController;
+use App\Http\Controllers\Master\LensaController;
+use App\Http\Controllers\Master\SupplierController;
+use App\Http\Controllers\Super\AdminController;
+use App\Http\Controllers\Super\PengaturanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\RiwayatFrameController;
 use App\Http\Controllers\RoleRekamMedis;
 use Illuminate\Support\Facades\Route;

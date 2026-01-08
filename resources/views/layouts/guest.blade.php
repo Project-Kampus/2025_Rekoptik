@@ -47,7 +47,7 @@
                     @endif
 
                     <span class="text-xl font-bold tracking-wide text-blue-600">
-                        {{ config('app.name') }}
+                        {{ $pengaturan->nama_aplikasi ?? config('app.name') }}
                     </span>
                 </a>
             </div>
@@ -59,7 +59,7 @@
 
             <!-- Footer -->
             <p class="mt-6 text-center text-xs text-gray-500">
-                © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+                © {{ date('Y') }} {{ $pengaturan->nama_aplikasi ?? config('app.name') }}. All rights reserved.
             </p>
 
         </div>

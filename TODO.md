@@ -1,5 +1,0 @@
-- [ ] Perbaiki sidebar.blade.php sesuai struktur di perbaikan sidebar.md
-  - [ ] Tambahkan menu untuk Super Admin dengan submenus
-  - [ ] Tambahkan menu untuk Admin/Staf
-  - [ ] Tambahkan menu untuk BPJS
-  - [ ] Gunakan route yang ada, untuk yang kosong gunakan url '#'

@@ -18,7 +18,7 @@ class PengaturanSeeder extends Seeder
         pengaturan::create(
             [
                 'nama_toko'     => 'CV. OPTIK UTAMA',
-                'nama_aplikasi' => 'OPTIMA',
+                'nama_aplikasi' => 'OMS OPTIMA',
                 'alamat'        => 'Jl. Rd. Mattaher No. 83 Pasar Jambi',
                 'telp'          => '(0741) 20483',
                 'no_hp'         => '0852 6452 4577',

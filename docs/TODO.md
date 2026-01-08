@@ -1,0 +1,12 @@
+- [ ] Perbaiki Readme.md
+   - [ ] Ganti nama aplikasi menjadi OMS (Optical Management System) OPTIMA
+- [ ] Perbaiki Rekam Medis
+   - [ ] kelola data kunjungan, pemeriksaan, pemesanan
+   - [ ] pesanan baru
+      - [ ] identias pasien (cari nama/nik atau isi identitas baru)
+      - [ ] form fisus, resep kacamata
+      - [ ] pesan kacamata
+      - [ ] pembayaran
+      - [ ] pengambilan
+   - [ ] daftar identitas pasien
+

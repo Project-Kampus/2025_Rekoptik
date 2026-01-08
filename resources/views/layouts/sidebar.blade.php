@@ -44,12 +44,6 @@ $isPengaturanActive = request()->routeIs('pengaturan.*');
                Data Pengguna
             </a>
          </li>
-         <li>
-            <a href="#"
-               class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
-               Role & Hak Akses
-            </a>
-         </li>
       </ul>
    </li>
 

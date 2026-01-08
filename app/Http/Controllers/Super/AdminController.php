@@ -28,7 +28,7 @@ class AdminController extends Controller
             $q->whereIn('name', $rolesToManage);
         })->paginate(20)->withQueryString();
 
-        return view('admin.admin_index', compact('admins'));
+        return view('admin.super.admin_index', compact('admins'));
     }
 
     /**
@@ -36,7 +36,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.admin_create');
+        return view('admin.super.admin_create');
     }
 
     /**
@@ -71,7 +71,7 @@ class AdminController extends Controller
      */
     public function edit(User $admin)
     {
-        return view('admin.admin_edit', compact('admin'));
+        return view('admin.super.admin_edit', compact('admin'));
     }
 
     /**

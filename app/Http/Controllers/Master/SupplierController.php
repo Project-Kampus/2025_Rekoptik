@@ -18,12 +18,12 @@ class SupplierController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.supplier_index', compact('suppliers'));
+        return view('admin.master.supplier_index', compact('suppliers'));
     }
 
     public function create()
     {
-        return view('admin.supplier_create');
+        return view('admin.master.supplier_create');
     }
 
     public function store(Request $request)
@@ -46,7 +46,7 @@ class SupplierController extends Controller
      */
     public function show(supplier $supplier)
     {
-        return view('admin.supplier_show', compact('supplier'));
+        return view('admin.master.supplier_show', compact('supplier'));
     }
 
     /**
@@ -54,7 +54,7 @@ class SupplierController extends Controller
      */
     public function edit(supplier $supplier)
     {
-        return view('admin.supplier_edit', compact('supplier'));
+        return view('admin.master.supplier_edit', compact('supplier'));
     }
 
     /**
