@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class lensa extends Model
+class Lensa extends Model
 {
     protected $table = 'lensas';
 

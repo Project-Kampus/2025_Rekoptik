@@ -34,7 +34,7 @@ class SupplierController extends Controller
             'alamat'        => 'required|string',
         ]);
 
-        supplier::create($validated);
+        Supplier::create($validated);
 
         return redirect()
             ->route('supplier.index')
@@ -44,7 +44,7 @@ class SupplierController extends Controller
     /**
      * Detail supplier
      */
-    public function show(supplier $supplier)
+    public function show(Supplier $supplier)
     {
         return view('admin.master.supplier_show', compact('supplier'));
     }
@@ -52,7 +52,7 @@ class SupplierController extends Controller
     /**
      * Form edit supplier
      */
-    public function edit(supplier $supplier)
+    public function edit(Supplier $supplier)
     {
         return view('admin.master.supplier_edit', compact('supplier'));
     }
@@ -60,7 +60,7 @@ class SupplierController extends Controller
     /**
      * Update data supplier
      */
-    public function update(Request $request, supplier $supplier)
+    public function update(Request $request, Supplier $supplier)
     {
         $validated = $request->validate([
             'nama_supplier' => 'required|string|max:255',

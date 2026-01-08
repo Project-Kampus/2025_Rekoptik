@@ -26,7 +26,7 @@ class LensaController extends Controller
 
     public function create()
     {
-        $suppliers = supplier::orderBy('nama')->get();
+        $suppliers = Supplier::orderBy('nama')->get();
         return view('admin.master.lensa_create', compact('suppliers'));
     }
 
@@ -51,7 +51,7 @@ class LensaController extends Controller
 
     public function edit(Lensa $lensa)
     {
-        $suppliers = supplier::orderBy('nama')->get();
+        $suppliers = Supplier::orderBy('nama')->get();
         return view('admin.master.lensa_edit', compact('lensa', 'suppliers'));
     }
 

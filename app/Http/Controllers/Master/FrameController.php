@@ -30,15 +30,15 @@ class FrameController extends Controller
 
     public function create()
     {
-        $suppliers = supplier::orderBy('nama')->get();
+        $suppliers = Supplier::orderBy('nama')->get();
         return view('admin.master.frames_create', compact('suppliers'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'supplier_id' => 'required|exists:suppliers,id',
-            'kode_frame' => 'required|unique:frames,kode_frame',
+            'supplier_id' => 'required|exists:Suppliers,id',
+            'kode_frame' => 'required|unique:Frames,kode_frame',
             'merk' => 'nullable|string',
             'warna' => 'nullable|string',
             'bahan' => 'nullable|string',
@@ -52,15 +52,15 @@ class FrameController extends Controller
 
     public function edit(Frame $frame)
     {
-        $suppliers = supplier::orderBy('nama')->get();
+        $suppliers = Supplier::orderBy('nama')->get();
         return view('admin.master.frames_edit', compact('frame', 'suppliers'));
     }
 
     public function update(Request $request, Frame $frame)
     {
         $request->validate([
-            'supplier_id' => 'required|exists:suppliers,id',
-            'kode_frame'  => 'required|unique:frames,kode_frame,' . $frame->id,
+            'supplier_id' => 'required|exists:Suppliers,id',
+            'kode_frame'  => 'required|unique:Frames,kode_frame,' . $frame->id,
             'merk'        => 'nullable|string|max:100',
             'warna'       => 'nullable|string|max:100',
             'bahan'       => 'nullable|string|max:100',
