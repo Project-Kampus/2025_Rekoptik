@@ -6,7 +6,8 @@ $isRekamMedisActive = request()->routeIs('rekam-medis.*');
 $isMasterActive =request()->routeIs('frame.*')
 || request()->routeIs('lensa.*')
 || request()->routeIs('supplier.*')
-|| request()->routeIs('dokumen.*');
+|| request()->routeIs('document.*')
+|| request()->routeIs('aksesoris.*');
 
 $isAdminActive = request()->routeIs('admin.*');
 $isPengaturanActive = request()->routeIs('pengaturan.*');

@@ -18,7 +18,7 @@ class LensaController extends Controller
                 ->orWhere('coating', 'like', "%{$request->q}%");
         })
             ->latest()
-            ->paginate(10)
+            ->paginate(20)
             ->withQueryString();
 
         return view('admin.master.lensa_index', compact('lensas'));

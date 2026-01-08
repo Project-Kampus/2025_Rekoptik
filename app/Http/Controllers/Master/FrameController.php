@@ -22,7 +22,7 @@ class FrameController extends Controller
 
         $frames = $query
             ->orderBy('kode_frame')
-            ->paginate(50)
+            ->paginate(20)
             ->withQueryString();
 
         return view('admin.master.frames_index', compact('frames'));

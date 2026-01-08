@@ -34,7 +34,7 @@
 
             <button
                type="submit"
-               class="px-4 py-2 bg-gray-800 text-white rounded-md text-sm hover:bg-gray-900">
+               class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
                Cari
             </button>
 
@@ -89,13 +89,13 @@
                   <td class="px-4 py-2 border text-center">
                      <div class="flex justify-center gap-3">
                         <a href="{{ route('lensa.edit', $lensa->id) }}"
-                           class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700 hover:bg-blue-200">
+                           class="px-2 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">
                            Edit
                         </a>
 
                         <button
                            type="button"
-                           class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 hover:bg-red-200"
+                           class="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
                            onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'delete-lensa-{{ $lensa->id }}' }))">
                            Hapus
                         </button>

@@ -11,11 +11,11 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $suppliers = Supplier::when($request->q, function ($query) use ($request) {
-            $query->where('nama_supplier', 'like', '%' . $request->q . '%')
+            $query->where('nama', 'like', '%' . $request->q . '%')
                 ->orWhere('kontak', 'like', '%' . $request->q . '%');
         })
             ->latest()
-            ->paginate(10)
+            ->paginate(20)
             ->withQueryString();
 
         return view('admin.master.supplier_index', compact('suppliers'));

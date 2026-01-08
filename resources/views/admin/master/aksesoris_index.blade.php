@@ -22,6 +22,27 @@
                Kelola data aksesoris dan keterangannya.
             </p>
          </div>
+         <form method="GET" action="{{ route('aksesoris.index') }}" class="flex gap-2">
+            <input
+               type="text"
+               name="q"
+               value="{{ request('q') }}"
+               placeholder="Cari nama"
+               class="w-64 rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+
+            <button
+               type="submit"
+               class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
+               Cari
+            </button>
+
+            @if(request('q'))
+            <a href="{{ route('aksesoris.index') }}"
+               class="px-4 py-2 border rounded-md text-sm text-gray-600 hover:bg-gray-100">
+               Reset
+            </a>
+            @endif
+         </form>
       </div>
 
       <div class="overflow-x-auto">
@@ -121,7 +142,10 @@
          </table>
       </div>
 
-      {{-- Pagination --}}
+      <p class="text-sm text-gray-500 mt-1">
+         Menampilkan {{ $aksesoris->count() }} dari {{ $aksesoris->total() }} frame
+      </p>
+
       <div class="mt-4">
          {{ $aksesoris->links() }}
       </div>

@@ -109,7 +109,10 @@
          </table>
       </div>
 
-      {{-- Pagination --}}
+      <p class="text-sm text-gray-500 mt-1">
+         Menampilkan {{ $documents->count() }} dari {{ $documents->total() }} frame
+      </p>
+
       <div class="mt-4">
          {{ $documents->links() }}
       </div>

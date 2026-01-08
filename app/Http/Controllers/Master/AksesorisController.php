@@ -9,11 +9,15 @@ use Illuminate\Http\Request;
 
 class AksesorisController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $aksesoris = Aksesoris::with('supplier')
+        $aksesoris = Aksesoris::with('supplier')->when($request->q, function ($query) use ($request) {
+            $query->where('nama', 'like', '%' . $request->q . '%');
+        })
             ->latest()
-            ->paginate(20);
+            ->paginate(20)
+            ->withQueryString();
+
 
         return view('admin.master.aksesoris_index', compact('aksesoris'));
     }

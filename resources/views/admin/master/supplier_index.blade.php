@@ -14,7 +14,6 @@
 
    <div class="bg-white rounded-lg border p-6">
 
-      {{-- Header --}}
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
          <div>
             <h2 class="text-lg font-medium text-gray-900">
@@ -25,7 +24,6 @@
             </p>
          </div>
 
-         <!-- Search -->
          <form method="GET" action="{{ route('supplier.index') }}" class="flex gap-2">
             <input
                type="text"
@@ -36,7 +34,7 @@
 
             <button
                type="submit"
-               class="px-4 py-2 bg-gray-800 text-white rounded-md text-sm hover:bg-gray-900">
+               class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
                Cari
             </button>
 
@@ -49,7 +47,6 @@
          </form>
       </div>
 
-      {{-- Table --}}
       <div class="overflow-x-auto">
          <table class="min-w-full border border-gray-200 rounded-md">
             <thead class="bg-gray-50">
@@ -76,22 +73,19 @@
                   <td class="px-4 py-2 border text-center">
                      <div class="flex justify-center gap-2">
 
-                        {{-- Edit --}}
                         <a href="{{ route('supplier.edit', $supplier->id) }}"
-                           class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700 hover:bg-blue-200">
+                           class="px-2 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">
                            Edit
                         </a>
 
-                        {{-- Detail --}}
                         <a href="{{ route('supplier.show', $supplier->id) }}"
-                           class="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700 hover:bg-gray-200">
+                           class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
                            Detail
                         </a>
 
-                        {{-- Hapus --}}
                         <button
                            type="button"
-                           class="px-2 py-1 text-xs rounded bg-red-100 text-red-700 hover:bg-red-200"
+                           class="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
                            onclick="window.dispatchEvent(
                               new CustomEvent('open-modal', {
                                  detail: 'delete-supplier-{{ $supplier->id }}'
