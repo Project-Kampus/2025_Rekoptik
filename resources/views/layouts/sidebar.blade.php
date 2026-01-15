@@ -45,9 +45,9 @@ $isPengaturanActive = request()->routeIs('pengaturan.*');
             </a>
          </li>
          <li>
-            <a href="#"
+            <a href="{{ route('datamedis.index')}}"
                class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
-               Data Pemeriksaan
+               Data Medis
             </a>
          </li>
          <li>

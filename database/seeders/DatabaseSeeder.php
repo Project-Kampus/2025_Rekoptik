@@ -51,7 +51,9 @@ class DatabaseSeeder extends Seeder
             FrameSeeder::class,
             LensaSeeder::class,
             PengaturanSeeder::class,
-            AksesorisSeeder::class
+            AksesorisSeeder::class,
+
+            RekamMedisSeeder::class
         ]);
     }
 }

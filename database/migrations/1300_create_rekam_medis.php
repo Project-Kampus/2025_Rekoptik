@@ -47,6 +47,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pemeriksaan_id');
             $table->string('resep_dari');
+            $table->date('tanggal')->default(now());
 
             $table->decimal('od_sferis', 6, 2)->nullable();
             $table->decimal('od_silindris', 6, 2)->nullable();

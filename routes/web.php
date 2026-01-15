@@ -11,7 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\RekamMedis\DataMedisController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('welcome');
@@ -46,6 +46,10 @@ Route::middleware('auth', 'verified')->group(function () {
             Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
             Route::put('/{admin}', [AdminController::class, 'update'])->name('update');
             Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('datamedis')->name('datamedis.')->group(function () {
+            Route::get('/', [DataMedisController::class, 'index'])->name('index');
+            Route::get('/{RmPemeriksaan}show', [DataMedisController::class, 'show'])->name('show');
         });
     });
 

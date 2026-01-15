@@ -19,7 +19,7 @@ class RmDokument extends Model
 
     public function dokumen()
     {
-        return $this->belongsTo(Dokumen::class, 'dokumens_id');
+        return $this->belongsTo(Document::class, 'dokumens_id');
     }
 
     public function pemeriksaan()

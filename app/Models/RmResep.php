@@ -14,6 +14,7 @@ class RmResep extends Model
     protected $fillable = [
         'pemeriksaan_id',
         'resep_dari',
+        'tanggal',
 
         'od_sferis',
         'od_silindris',
