@@ -15,7 +15,7 @@ class RmPemeriksaan extends Model
         'pasien_id',
         'user_id',
         'no_sep',
-        
+
         'keluhan_utama',
         'riwayat_penyakit',
         'penyakit_sekarang',

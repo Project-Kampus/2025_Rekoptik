@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('welcome'))->name('welcome');
 Route::get('/test', fn() => view('test'))->name('test');
 
-
 Route::middleware('auth', 'verified')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -35,22 +34,33 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::middleware('role:superadmin')->group(function () {
         // Pengaturan Sistem
-        Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
-            Route::get('/', [PengaturanController::class, 'index'])->name('index');
-            Route::put('/storage', [PengaturanController::class, 'update'])->name('update');
-        });
-        Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/', [AdminController::class, 'index'])->name('index');
-            Route::get('/create', [AdminController::class, 'create'])->name('create');
-            Route::post('/', [AdminController::class, 'store'])->name('store');
-            Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
-            Route::put('/{admin}', [AdminController::class, 'update'])->name('update');
-            Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
-        });
-        Route::prefix('datamedis')->name('datamedis.')->group(function () {
-            Route::get('/', [DataMedisController::class, 'index'])->name('index');
-            Route::get('/{RmPemeriksaan}show', [DataMedisController::class, 'show'])->name('show');
-        });
+        Route::prefix('pengaturan')
+            ->name('pengaturan.')
+            ->group(function () {
+                Route::get('/', [PengaturanController::class, 'index'])->name('index');
+                Route::put('/storage', [PengaturanController::class, 'update'])->name('update');
+            });
+        Route::prefix('admin')
+            ->name('admin.')
+            ->group(function () {
+                Route::get('/', [AdminController::class, 'index'])->name('index');
+                Route::get('/create', [AdminController::class, 'create'])->name('create');
+                Route::post('/', [AdminController::class, 'store'])->name('store');
+                Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
+                Route::put('/{admin}', [AdminController::class, 'update'])->name('update');
+                Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
+            });
+        Route::prefix('datamedis')
+            ->name('datamedis.')
+            ->group(function () {
+                Route::get('/', [DataMedisController::class, 'index'])->name('index');
+                Route::get('/{RmPemeriksaan}show', [DataMedisController::class, 'show'])->name('show');
+
+                Route::get('/create/step1', [DataMedisController::class, 'createStep1'])->name('create.step1');
+                Route::post('/create/step1', [DataMedisController::class, 'storeStep1'])->name('store.step1');
+                Route::get('/create/step2/{pasien}', [DataMedisController::class, 'createStep2'])->name('create.step2');
+                Route::post('/create/step2', [DataMedisController::class, 'storeStep2'])->name('store.step2');
+            });
     });
 
     // Profile

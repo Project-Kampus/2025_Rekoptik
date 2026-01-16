@@ -19,7 +19,7 @@ class RmPasien extends Model
         'umur',
         'kategori',
         'no_kartu',
-        'kelas',
+        'kelas'
     ];
 
     public function pemeriksaans()

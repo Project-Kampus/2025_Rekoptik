@@ -14,27 +14,25 @@ class RekamMedisSeeder extends Seeder
 {
     public function run(): void
     {
-        RmPasien::insert([
-            [
-                'nama_pasien' => 'Ahmad Fauzi',
-                'no_hp' => '081234567890',
-                'email' => 'ahmad@example.com',
-                'alamat' => 'Jl. Merdeka No. 10',
-                'umur' => 35,
-                'kategori' => 'umum',
-                'no_kartu' => null,
-                'kelas' => null,
-            ],
-            [
-                'nama_pasien' => 'Siti Aminah',
-                'no_hp' => '082345678901',
-                'email' => 'siti@example.com',
-                'alamat' => 'Jl. Sudirman No. 22',
-                'umur' => 52,
-                'kategori' => 'bpjs',
-                'no_kartu' => '0001234567890',
-                'kelas' => '2',
-            ],
+        RmPasien::create([
+            'nama_pasien' => 'Ahmad Fauzi',
+            'no_hp' => '081234567890',
+            'email' => 'ahmad@example.com',
+            'alamat' => 'Jl. Merdeka No. 10',
+            'umur' => 35,
+            'kategori' => 'umum',
+            'no_kartu' => null,
+            'kelas' => null,
+        ]);
+        RmPasien::create([
+            'nama_pasien' => 'Siti Aminah',
+            'no_hp' => '082345678901',
+            'email' => 'siti@example.com',
+            'alamat' => 'Jl. Sudirman No. 22',
+            'umur' => 52,
+            'kategori' => 'bpjs',
+            'no_kartu' => '0001234567890',
+            'kelas' => '2',
         ]);
 
         RmPemeriksaan::create([
