@@ -42,7 +42,7 @@
             <form method="get" action="{{ route('datamedis.create.step1') }}" class="space-y-4">
                 <div>
                     <x-input-label for="nama_pasien" value="Nama Pasien" />
-                    <x-text-input id="nama_pasien" name="nama_pasien" class="mt-1 w-full"
+                    <x-form-input id="nama_pasien" name="nama_pasien" class="mt-1 w-full"
                         placeholder="Masukkan nama pasien" value="{{ $nama_pasien }}" />
                 </div>
 
@@ -106,26 +106,26 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <x-input-label value="Nama Pasien" />
-                        <x-text-input name="nama_pasien" class="mt-1 w-full" required />
+                        <x-form-input name="nama_pasien" class="mt-1 w-full" required />
                     </div>
 
                     <div>
                         <x-input-label value="No HP" />
-                        <x-text-input name="no_hp" class="mt-1 w-full" />
+                        <x-form-input name="no_hp" class="mt-1 w-full" />
                     </div>
 
                     <div>
                         <x-input-label value="Email" />
-                        <x-text-input name="email" type="email" class="mt-1 w-full" />
+                        <x-form-input name="email" type="email" class="mt-1 w-full" />
                     </div>
 
                     <div>
                         <x-input-label value="Alamat" />
-                        <x-text-input name="alamat" class="mt-1 w-full" />
+                        <x-form-input name="alamat" class="mt-1 w-full" />
                     </div>
                     <div>
                         <x-input-label value="Umur" />
-                        <x-text-input name="umur" type="number" class="mt-1 w-full" />
+                        <x-form-input name="umur" type="number" class="mt-1 w-full" />
                     </div>
                     <div>
                         <x-input-label value="Kategori" />
@@ -138,7 +138,7 @@
 
                     <div>
                         <x-input-label value="No Kartu" />
-                        <x-text-input name="no_kartu" type="number" class="mt-1 w-full" />
+                        <x-form-input name="no_kartu" type="number" class="mt-1 w-full" />
                     </div>
 
                     <div>

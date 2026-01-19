@@ -70,8 +70,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pemeriksaan_id');
             $table->unsignedBigInteger('resep_id');
-            $table->unsignedBigInteger('frame_id');
+            $table->unsignedBigInteger('frame_id')->nullable();
             $table->unsignedBigInteger('lensa_id');
+            $table->unsignedBigInteger('aksesoris_id')->nullable();
             $table->bigInteger('biaya_kacamata');
             $table->enum('status', ['dipesan', 'diambil']);
             $table->date('tanggal_dipesan')->default(now());
@@ -82,6 +83,7 @@ return new class extends Migration
             $table->foreign('resep_id')->references('id')->on('rm_resep')->onDelete('cascade');
             $table->foreign('frame_id')->references('id')->on('frames')->onDelete('cascade');
             $table->foreign('lensa_id')->references('id')->on('lensas')->onDelete('cascade');
+            $table->foreign('aksesoris_id')->references('id')->on('aksesoris')->onDelete('cascade');
         });
 
         Schema::create('rm_pembayarans', function (Blueprint $table) {

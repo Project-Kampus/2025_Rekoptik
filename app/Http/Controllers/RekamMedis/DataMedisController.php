@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\RekamMedis;
 
 use App\Http\Controllers\Controller;
+use App\Models\Aksesoris;
+use App\Models\Frame;
+use App\Models\Lensa;
 use App\Models\RmPasien;
 use App\Models\RmPemeriksaan;
 use Illuminate\Http\Request;
@@ -68,8 +71,14 @@ class DataMedisController extends Controller
 
     public function createStep2(RmPasien $pasien)
     {
-        return view('admin.rekammedis.datamedis_create_step2', compact('pasien'));
+        $frame = Frame::all();
+        $lensa = Lensa::all();
+        $aksesoris = Aksesoris::all();
+        return view('admin.rekammedis.datamedis_create_step2', compact('pasien', 'frame', 'lensa', 'aksesoris'));
     }
 
-    public function storeStep2(Request $request) {}
+    public function storeStep2(Request $request, RmPasien $pasien)
+    {
+        return $request;
+    }
 }

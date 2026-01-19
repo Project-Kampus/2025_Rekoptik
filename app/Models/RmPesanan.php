@@ -16,6 +16,8 @@ class RmPesanan extends Model
         'resep_id',
         'frame_id',
         'lensa_id',
+        'aksesoris_id',
+
         'biaya_kacamata',
         'status',
         'tanggal_dipesan',
@@ -45,6 +47,10 @@ class RmPesanan extends Model
     public function lensa()
     {
         return $this->belongsTo(Lensa::class);
+    }
+    public function aksesoris()
+    {
+        return $this->belongsTo(Aksesoris::class);
     }
 
     public function pembayarans()

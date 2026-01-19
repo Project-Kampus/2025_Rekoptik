@@ -14,13 +14,13 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     @php
-    $logo = $pengaturan->logo ?? null;
+        $logo = $pengaturan->logo ?? null;
     @endphp
 
-    @if($logo )
-    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $logo) }}">
+    @if ($logo)
+        <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $logo) }}">
     @else
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     @endif
 
     <!-- Alpine -->
@@ -43,17 +43,15 @@
             <button @click="sidebarOpen = !sidebarOpen"
                 class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
                 </svg>
             </button>
 
             <!-- LOGO & NAMA -->
             <a href="{{ route('welcome') }}" class="hidden md:flex items-center gap-3">
-                @if(!empty($pengaturan?->logo))
-                <img
-                    src="{{ asset('storage/' . $pengaturan->logo) }}"
-                    class="h-9 w-auto"
-                    alt="Logo">
+                @if (!empty($pengaturan?->logo))
+                    <img src="{{ asset('storage/' . $pengaturan->logo) }}" class="h-9 w-auto" alt="Logo">
                 @endif
 
                 <span class="text-xl font-bold text-blue-600">
@@ -66,7 +64,8 @@
             <div class="flex items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}"
                                 class="ms-2 w-8 h-8 rounded-full" alt="avatar">
@@ -96,10 +95,10 @@
 
     <!-- Sidebar -->
     <aside
-        class="top-16 fixed left-0 w-64 h-[calc(100vh-3.5rem)] 
-        bg-white border-r border-gray-200 
-        transform 
-        md:translate-x-0 
+        class="top-16 fixed left-0 w-64 h-[calc(100vh-3.5rem)]
+        bg-white border-r border-gray-200
+        transform
+        md:translate-x-0
         duration-200 ease-in-out z-40"
         :class="{ '-translate-x-full': !sidebarOpen }">
         @include('layouts.sidebar')
@@ -107,10 +106,8 @@
 
 
     <!-- Overlay for mobile -->
-    <div
-        class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-        x-show="sidebarOpen"
-        @click="sidebarOpen = false"></div>
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden" x-show="sidebarOpen" @click="sidebarOpen = false">
+    </div>
 
     <!-- Main Content -->
     <main class="md:ml-64 pt-20 px-6 bg-gray-100 min-h-screen">
@@ -120,17 +117,17 @@
 
             <!-- Header -->
             @if (isset($header))
-            <header class="bg-white border border-gray-200 rounded-lg mb-4">
-                <div class="px-6 py-4 flex items-center justify-between">
-                    {{ $header }}
+                <header class="bg-white border border-gray-200 rounded-lg mb-4">
+                    <div class="px-6 py-4 flex items-center justify-between">
+                        {{ $header }}
 
-                    @isset($headerAction)
-                    <div class="flex items-center gap-2">
-                        {{ $headerAction }}
+                        @isset($headerAction)
+                            <div class="flex items-center gap-2">
+                                {{ $headerAction }}
+                            </div>
+                        @endisset
                     </div>
-                    @endisset
-                </div>
-            </header>
+                </header>
             @endif
 
             <!-- Content -->
@@ -161,5 +158,10 @@
 
     <!-- Notification -->
     @include('layouts.notification')
+
+    <!-- Componen Select Search -->
+    <script></script>
+
+
 
 </html>
