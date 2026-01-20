@@ -89,7 +89,7 @@ return new class extends Migration
         Schema::create('rm_pembayarans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pesanan_id');
-            $table->enum('metode', ['bpjs', 'asuransi', 'tunai']);
+            $table->enum('metode', ['bpjs', 'asuransi', 'tunai', 'non-tunai']);
             $table->bigInteger('jumlah');
             $table->date('tanggal_bayar')->default(now());
             $table->timestamps();

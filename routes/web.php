@@ -54,12 +54,13 @@ Route::middleware('auth', 'verified')->group(function () {
             ->name('datamedis.')
             ->group(function () {
                 Route::get('/', [DataMedisController::class, 'index'])->name('index');
-                Route::get('/{RmPemeriksaan}show', [DataMedisController::class, 'show'])->name('show');
-
                 Route::get('/create/step1', [DataMedisController::class, 'createStep1'])->name('create.step1');
                 Route::post('/create/step1', [DataMedisController::class, 'storeStep1'])->name('store.step1');
                 Route::get('/create/step2/{pasien}', [DataMedisController::class, 'createStep2'])->name('create.step2');
-                Route::post('/create/step2', [DataMedisController::class, 'storeStep2'])->name('store.step2');
+                Route::post('/create/step2/{pasien}', [DataMedisController::class, 'storeStep2'])->name('store.step2');
+                Route::get('/{RmPemeriksaan}/show', [DataMedisController::class, 'show'])->name('show');
+                Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
+                Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
             });
     });
 
