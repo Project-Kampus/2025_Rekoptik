@@ -63,6 +63,7 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
                 Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
                 Route::get('/{RmPembayaran}/cetatakStruk', [DataMedisController::class, 'cetatakStruk'])->name('cetatakStruk');
+                Route::get('/{RmPemeriksaan}/cetakSuratBalasan', [DataMedisController::class, 'cetakSuratBalasan'])->name('cetakSuratBalasan');
             });
     });
 

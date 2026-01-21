@@ -22,7 +22,7 @@
                 Lihat Struk
             </a>
 
-            <a href="" target="_blank"
+            <a href="{{ route('datamedis.cetakSuratBalasan', $RmPemeriksaan->id) }}" target="_blank"
                 class="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm hover:bg-teal-700 transition">
                 Surat Balasan
             </a>

@@ -126,7 +126,7 @@
 
                 <!-- NOMOR KANAN -->
                 <div class="kop-nomor">
-                    No. {{ str_pad($pasien->id, 6, '0', STR_PAD_LEFT) }}
+                    No. {{ str_pad($RmPemeriksaan->id, 6, '0', STR_PAD_LEFT) }}
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
 
         <!-- ISI -->
         <div class="content">
-            <p>Yth. dr. {{ $pasien->resep_dari }}</p>
+            <p>Yth. dr. {{ $RmPemeriksaan->resep->resep_dari }}</p>
             <p>PKM / KP / Dokter Praktek Perorangan</p>
             <p>di tempat</p>
 
@@ -148,9 +148,9 @@
                 Berdasarkan hasil pemeriksaan Refraksi dan Optisi peserta atas nama:
             </p>
 
-            <p>Nama : <strong>{{ $pasien->nama_pasien }}</strong></p>
-            <p>No. Kartu JKN : {{ $pasien->no_kartu ?? '-' }}</p>
-            <p>Umur : {{ $pasien->umur ?? '-' }} Tahun</p>
+            <p>Nama : <strong>{{ $RmPemeriksaan->pasien->nama_pasien }}</strong></p>
+            <p>No. Kartu JKN : {{ $RmPemeriksaan->no_kartu ?? '-' }}</p>
+            <p>Umur : {{ $RmPemeriksaan->pasien->umur ?? '-' }} Tahun</p>
 
             <br>
 
@@ -180,14 +180,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $pasien->od_sferis ?? '-' }}</td>
-                        <td>{{ $pasien->od_silindris ?? '-' }}</td>
-                        <td>{{ $pasien->od_axis ?? '-' }}</td>
-                        <td>{{ $pasien->os_sferis ?? '-' }}</td>
-                        <td>{{ $pasien->os_silindris ?? '-' }}</td>
-                        <td>{{ $pasien->os_axis ?? '-' }}</td>
-                        <td>{{ $pasien->od_add_lensa ?? '-' }}</td>
-                        <td>{{ $pasien->pd ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_sferis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_silindris ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_axis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_sferis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_silindris ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_axis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_add_lensa ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->pd_od ?? '-' }}/{{ $RmPemeriksaan->resep->pd_os ?? '-' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -202,10 +202,10 @@
         <!-- TTD -->
         <div class="ttd">
             <div class="kanan">
-                <p>Jambi, {{ $pasien->created_at->format('d F Y') }}</p>
+                <p>Jambi, {{ $RmPemeriksaan->created_at->format('d F Y') }}</p>
                 <br><br><br>
                 <p><strong>
-                        {{ $pasien->user?->name ?? 'OPTIK UTAMA' }}
+                        {{ $RmPemeriksaan->user?->name ?? 'OPTIK UTAMA' }}
                     </strong></p>
             </div>
         </div>
