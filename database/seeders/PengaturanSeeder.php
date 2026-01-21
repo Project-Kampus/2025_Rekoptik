@@ -22,7 +22,7 @@ class PengaturanSeeder extends Seeder
                 'alamat'        => 'Jl. Rd. Mattaher No. 83 Pasar Jambi',
                 'telp'          => '(0741) 20483',
                 'no_hp'         => '0852 6452 4577',
-                'email'         => 'utamajambioptima.com',
+                'email'         => 'utamajambioptima@gmail.com',
                 'logo'          => null, // isi manual lewat menu pengaturan
             ]
         );
