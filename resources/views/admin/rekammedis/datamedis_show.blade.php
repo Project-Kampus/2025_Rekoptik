@@ -16,7 +16,8 @@
                 Edit Data
             </a>
 
-            <a href="" target="_blank"
+            <a href="{{ route('datamedis.cetatakStruk', $RmPemeriksaan->pesanan->pembayarans->last()->id) }}"
+                target="_blank"
                 class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition">
                 Lihat Struk
             </a>
@@ -270,7 +271,7 @@
                             <th class="px-4 py-3 text-left font-semibold text-gray-700">Tanggal Bayar</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-700">Metode</th>
                             <th class="px-4 py-3 text-right font-semibold text-gray-700">Jumlah</th>
-                            <th class="px-4 py-3 text-right font-semibold text-gray-700">Aksi</th>
+                            <th class="px-4 py-3 w-1/6 text-center font-semibold text-gray-700"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -305,15 +306,22 @@
                                 <td class="px-4 py-3 text-right font-bold text-green-600">Rp
                                     {{ number_format($pembayaran->jumlah, 0, ',', '.') }}</td>
                                 <td class="px-4 py-3 text-center font-bold">
-                                    <button type="button"
-                                        class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
-                                        onclick="window.dispatchEvent(
+                                    <div class="flex justify-center gap-2">
+                                        <a href="{{ route('datamedis.cetatakStruk', $pembayaran->id) }}"
+                                            target="_blank"
+                                            class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
+                                            Struk
+                                        </a>
+                                        <button type="button"
+                                            class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
+                                            onclick="window.dispatchEvent(
                                         new CustomEvent('open-modal', {
                                             detail: 'delete-pembayaran-{{ $pembayaran->id }}'
                                         })
                                         )">
-                                        Hapus
-                                    </button>
+                                            Hapus
+                                        </button>
+                                    </div>
 
                                     <x-danger-modal id="delete-pembayaran-{{ $pembayaran->id }}"
                                         title="Hapus Dokumen">

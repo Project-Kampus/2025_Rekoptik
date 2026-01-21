@@ -12,26 +12,26 @@ Pengembangan aplikasi Rekoptik mulai dilakukan pada tahun 2025 sebagai bagian da
 
 ## Teknologi yang Digunakan
 
-* **Framework**: Laravel 12
-* **Bahasa Pemrograman**: PHP
-* **Database**: MySQL / MariaDB (dapat disesuaikan)
-* **Frontend**: Blade Template Engine
-* **Authentication Package**: Laravel Breeze
+- **Framework**: Laravel 12
+- **Bahasa Pemrograman**: PHP
+- **Database**: MySQL / MariaDB (dapat disesuaikan)
+- **Frontend**: Blade Template Engine
+- **Authentication Package**: Laravel Breeze
 
 ## Package Utama
 
-* **Laravel Breeze** - Laravel Breeze
-* **maatwebsite/excel** - Export dan import data ke format Excel
-
+- **Laravel Breeze** - Laravel Breeze
+- **maatwebsite/excel** - Export dan import data ke format Excel
+- **barryvdh/laravel-dompdf** - Export pdf
 
 ## Fitur Utama Aplikasi
 
-* Autentikasi pengguna (Admin / Petugas)
-* Manajemen data pasien optik
-* Rekap data pemeriksaan medis mata
-* Penyimpanan riwayat pemeriksaan
-* Pengelolaan data secara terpusat dan terdokumentasi
-* Antarmuka sederhana dan mudah dipahami
+- Autentikasi pengguna (Admin / Petugas)
+- Manajemen data pasien optik
+- Rekap data pemeriksaan medis mata
+- Penyimpanan riwayat pemeriksaan
+- Pengelolaan data secara terpusat dan terdokumentasi
+- Antarmuka sederhana dan mudah dipahami
 
 ## Tujuan Pengembangan
 
@@ -44,56 +44,64 @@ Pengembangan aplikasi Rekoptik bertujuan untuk:
 
 ## Instalasi Singkat
 
-1. Clone repository proyek
-2. Jalankan perintah instalasi dependency:
+1.  Clone repository proyek
+2.  Jalankan perintah instalasi dependency:
 
-   ```bash
-   composer install
-   ```
-3. Salin file environment:
+    ```bash
+    composer install
+    ```
 
-   ```bash
-   cp .env.example .env
-   ```
-4. Generate application key:
+3.  Salin file environment:
 
-   ```bash
-   php artisan key:generate
-   ```
-5. Konfigurasi database pada file `.env`
-6. Jalankan migrasi database:
+    ```bash
+    cp .env.example .env
+    ```
 
-   ```bash
-   php artisan migrate
-   ```
-7. Jalankan seeder
+4.  Generate application key:
 
-   ```bash
-   php artisan db:seed
-   ```
-8. Buat symbolic link storage:
+    ```bash
+    php artisan key:generate
+    ```
 
-   ```bash
-   php artisan storage:link
-   ```
-9. Install Dependency Frontend (NPM)
+5.  Konfigurasi database pada file `.env`
+6.  Jalankan migrasi database:
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    php artisan migrate
+    ```
+
+7.  Jalankan seeder
+
+    ```bash
+    php artisan db:seed
+    ```
+
+8.  Buat symbolic link storage:
+
+    ```bash
+    php artisan storage:link
+    ```
+
+9.  Install Dependency Frontend (NPM)
+
+    ```bash
+    npm install
+    ```
+
 10. Jalankan Build Asset Frontend
 
-      ```bash
-      npm run dev
-      ```
+    ```bash
+    npm run dev
+    ```
+
 11. Jalankan server aplikasi:
 
-      ```bash
-      php artisan serve
-      ```
-Aplikasi dapat diakses melalui browser di:
+          ```bash
+          php artisan serve
+          ```
+
+    Aplikasi dapat diakses melalui browser di:
+
 ```bash
 http://localhost:8000
 ```
-
-

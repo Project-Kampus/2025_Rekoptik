@@ -13,6 +13,7 @@ use App\Models\RmPembayaran;
 use App\Models\RmPemeriksaan;
 use App\Models\RmPesanan;
 use App\Models\RmResep;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -93,6 +94,14 @@ class DataMedisController extends Controller
         return redirect()
             ->route('datamedis.show', [$RmPembayaran->pesanan->pemeriksaan])
             ->with('success', 'Pembayaran berhasil dihapus');
+    }
+
+    public function cetatakStruk(RmPembayaran $RmPembayaran)
+    {
+        $RmPemeriksaan = $RmPembayaran->pesanan->pemeriksaan;
+        // return view('pdf.strukPembayaran', compact('RmPemeriksaan', 'RmPembayaran'));
+        $pdf = Pdf::loadView('pdf.strukPembayaran', compact('RmPemeriksaan', 'RmPembayaran'));
+        return $pdf->download('Struk-' . str_pad($RmPembayaran->id, 6, '0', STR_PAD_LEFT) . '.pdf');
     }
 
     public function createStep1(Request $request)
