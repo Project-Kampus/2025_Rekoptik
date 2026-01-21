@@ -270,6 +270,7 @@
                             <th class="px-4 py-3 text-left font-semibold text-gray-700">Tanggal Bayar</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-700">Metode</th>
                             <th class="px-4 py-3 text-right font-semibold text-gray-700">Jumlah</th>
+                            <th class="px-4 py-3 text-right font-semibold text-gray-700">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -277,11 +278,68 @@
                             <tr class="hover:bg-green-50 transition">
                                 <td class="px-4 py-3 text-gray-900">
                                     {{ $pembayaran->tanggal_bayar->format('d/m/Y') }}</td>
-                                <td class="px-4 py-3"><span
-                                        class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded">{{ $pembayaran->metode }}</span>
+                                <td class="px-4 py-3">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 font-semibold rounded">
+                                        @switch($pembayaran->metode)
+                                            @case('bpjs')
+                                                Dibayar dengan BPJS
+                                            @break
+
+                                            @case('asuransi')
+                                                Dibayar dengan Asuransi
+                                            @break
+
+                                            @case('non-tunai')
+                                                Dibayar dengan Non Tunai
+                                            @break
+
+                                            @case('tunai')
+                                                Dibayar dengan Tunai
+                                            @break
+
+                                            @default
+                                                -
+                                        @endswitch
+                                    </span>
                                 </td>
                                 <td class="px-4 py-3 text-right font-bold text-green-600">Rp
                                     {{ number_format($pembayaran->jumlah, 0, ',', '.') }}</td>
+                                <td class="px-4 py-3 text-center font-bold">
+                                    <button type="button"
+                                        class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
+                                        onclick="window.dispatchEvent(
+                                        new CustomEvent('open-modal', {
+                                            detail: 'delete-pembayaran-{{ $pembayaran->id }}'
+                                        })
+                                        )">
+                                        Hapus
+                                    </button>
+
+                                    <x-danger-modal id="delete-pembayaran-{{ $pembayaran->id }}"
+                                        title="Hapus Dokumen">
+                                        <p class="text-sm text-gray-600">
+                                            Apakah Anda yakin ingin menghapus pembayaran seharga
+                                            {{ number_format($pembayaran->jumlah, 0, ',', '.') }}
+                                            <strong class="text-gray-900">{{ $pembayaran->nama }}</strong>?
+                                            <br>
+                                            Tindakan ini tidak dapat dibatalkan.
+                                        </p>
+
+                                        <x-slot name="actions">
+                                            <form action="{{ route('datamedis.destroyPembayaran', $pembayaran->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
+                                                    Ya, Hapus
+                                                </button>
+                                            </form>
+                                        </x-slot>
+                                    </x-danger-modal>
+
+                                </td>
                             </tr>
                         @endforeach
                         <tr class="bg-gray-50 font-bold">
@@ -289,6 +347,7 @@
                             <td class="px-4 py-3 text-right text-green-600">Rp
                                 {{ number_format($RmPemeriksaan->pesanan->pembayarans->sum('jumlah'), 0, ',', '.') }}
                             </td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>

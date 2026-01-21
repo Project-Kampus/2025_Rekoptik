@@ -9,10 +9,12 @@ use App\Models\Frame;
 use App\Models\Lensa;
 use App\Models\RmDokument;
 use App\Models\RmPasien;
+use App\Models\RmPembayaran;
 use App\Models\RmPemeriksaan;
 use App\Models\RmPesanan;
 use App\Models\RmResep;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DataMedisController extends Controller
 {
@@ -58,9 +60,39 @@ class DataMedisController extends Controller
             ->with('success', 'Dokumen pendukung berhasil diunggah');
     }
 
-    public function storePembayaran(Request $request, RmPemeriksaan $rmPemeriksaan)
+    public function storePembayaran(Request $request, RmPemeriksaan $RmPemeriksaan)
     {
-        return $request->all();
+        $validated = $request->validate([
+            'tanggal_bayar' => ['required', 'date'],
+            'metode' => [
+                'required',
+                Rule::in([
+                    'bpjs',
+                    'asuransi',
+                    'tunai',
+                    'non-tunai',
+                ]),
+            ],
+            'jumlah' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        RmPembayaran::create([
+            'pesanan_id' => $RmPemeriksaan->pesanan->id,
+            'metode' => $validated['metode'],
+            'jumlah' => $validated['jumlah'],
+            'tanggal_bayar' => $validated['tanggal_bayar'],
+        ]);
+        return redirect()
+            ->route('datamedis.show', [$RmPemeriksaan])
+            ->with('success', 'Pembayaran berhasil dicatat');
+    }
+
+    public function destroyPembayaran(RmPembayaran $RmPembayaran)
+    {
+        $RmPembayaran->delete();
+        return redirect()
+            ->route('datamedis.show', [$RmPembayaran->pesanan->pemeriksaan])
+            ->with('success', 'Pembayaran berhasil dihapus');
     }
 
     public function createStep1(Request $request)

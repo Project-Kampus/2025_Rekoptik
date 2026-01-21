@@ -61,6 +61,7 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/{RmPemeriksaan}/show', [DataMedisController::class, 'show'])->name('show');
                 Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
                 Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
+                Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
             });
     });
 
