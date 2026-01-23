@@ -21,7 +21,22 @@
                     Kelola data medis
                 </p>
             </div>
+            <form method="GET" action="{{ route('datamedis.index') }}" class="flex gap-2">
+                <input type="text" name="search" placeholder="Cari nama pasien, nomor kartu, diagnosa..."
+                    value="{{ $search }}"
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+                    Cari
+                </button>
+                @if ($search)
+                    <a href="{{ route('datamedis.index') }}"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 text-sm rounded-md hover:bg-gray-400">
+                        Reset
+                    </a>
+                @endif
+            </form>
         </div>
+
         <div class="overflow-x-auto">
             <table class="min-w-full border border-gray-200 rounded-lg">
                 <thead class="bg-gray-50">
@@ -140,6 +155,11 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $data->links() }}
         </div>
     </div>
 </x-app-layout>

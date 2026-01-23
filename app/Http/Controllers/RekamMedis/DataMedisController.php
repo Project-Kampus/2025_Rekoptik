@@ -23,9 +23,21 @@ class DataMedisController extends Controller
 {
     public function index(Request $request)
     {
-        $data = RmPemeriksaan::with('pasien', 'pesanan', 'resep')->latest()->get();
-        // return $data;
-        return view('admin.rekammedis.datamedis_index', compact('data'));
+        $search = $request->query('search');
+
+        $query = RmPemeriksaan::with('pasien', 'pesanan', 'resep');
+
+        if ($search) {
+            $query->whereHas('pasien', function ($q) use ($search) {
+                $q->where('nama_pasien', 'like', "%{$search}%")
+                    ->orWhere('no_kartu', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })->orWhere('diagnosa', 'like', "%{$search}%");
+        }
+
+        $data = $query->latest()->paginate(20);
+
+        return view('admin.rekammedis.datamedis_index', compact('data', 'search'));
     }
 
     public function show(RmPemeriksaan $RmPemeriksaan)
