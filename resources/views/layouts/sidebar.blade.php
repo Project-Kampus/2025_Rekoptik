@@ -50,7 +50,8 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+                <a href="{{ route('identitaspasien.index') }}"
+                    class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
                     Data Identitas Pasien
                 </a>
             </li>

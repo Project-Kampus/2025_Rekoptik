@@ -12,7 +12,8 @@
                 Kembali
             </a>
 
-            <a href="" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition">
+            <a href="{{ route('datamedis.edit', $RmPemeriksaan->id) }}"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition">
                 Edit Data
             </a>
 
@@ -66,6 +67,11 @@
                                     <td class="px-3 py-2 font-medium text-gray-600">Lensa</td>
                                     <td class="px-3 py-2 text-gray-900 font-semibold">
                                         {{ $RmPemeriksaan->pesanan->lensa->nama_lensa }}</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50">
+                                    <td class="px-3 py-2 font-medium text-gray-600">Aksesoris</td>
+                                    <td class="px-3 py-2 text-gray-900 font-semibold">
+                                        {{ $RmPemeriksaan->pesanan->aksesoris->nama }}</td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Biaya</td>

@@ -23,7 +23,7 @@ class DataMedisController extends Controller
 {
     public function index(Request $request)
     {
-        $data = RmPemeriksaan::with('pasien', 'pesanan', 'resep')->get();
+        $data = RmPemeriksaan::with('pasien', 'pesanan', 'resep')->latest()->get();
         // return $data;
         return view('admin.rekammedis.datamedis_index', compact('data'));
     }
@@ -43,6 +43,93 @@ class DataMedisController extends Controller
         $allDokumens = Document::all();
 
         return view('admin.rekammedis.datamedis_show', compact('RmPemeriksaan', 'uploadedDokumens', 'allDokumens'));
+    }
+
+    public function edit(RmPemeriksaan $RmPemeriksaan)
+    {
+        $RmPemeriksaan->load('pasien', 'resep', 'pesanan');
+        $frames = Frame::all();
+        $lensas = Lensa::all();
+        $aksesoris = Aksesoris::all();
+
+        return view('admin.rekammedis.datamedis_edit', compact('RmPemeriksaan', 'frames', 'lensas', 'aksesoris'));
+    }
+
+    public function update(Request $request, RmPemeriksaan $RmPemeriksaan)
+    {
+        $validated = $request->validate([
+            'no_sep' => 'required|string',
+            'diagnosa' => 'required|string',
+
+            'keluhan_utama' => 'required|string',
+            'riwayat_penyakit' => 'required|string',
+            'penyakit_sekarang' => 'required|string',
+            'penyakit_keluarga' => 'required|string',
+            'kebiasaan' => 'required|string',
+            'pengobatan' => 'required|string',
+
+            'resep_dari' => 'required|string',
+            'resep_tanggal' => 'required|date',
+
+            'resep.kanan.sph' => 'numeric|required',
+            'resep.kanan.cyl' => 'numeric|required',
+            'resep.kanan.axis' => 'numeric|required',
+            'resep.kanan.add' => 'numeric|required',
+            'resep.kanan.pd' => 'numeric|required',
+
+            'resep.kiri.sph' => 'numeric|required',
+            'resep.kiri.cyl' => 'numeric|required',
+            'resep.kiri.axis' => 'numeric|required',
+            'resep.kiri.add' => 'numeric|required',
+            'resep.kiri.pd' => 'numeric|required',
+
+            'frame_id' => 'required|exists:frames,id',
+            'lensa_id' => 'required|exists:lensas,id',
+            'aksesoris_id' => 'required|exists:aksesoris,id',
+            'biaya_kacamata' => 'required|numeric',
+        ]);
+
+        // Update pemeriksaan
+        $RmPemeriksaan->update([
+            'no_sep' => $validated['no_sep'],
+            'keluhan_utama' => $validated['keluhan_utama'],
+            'riwayat_penyakit' => $validated['riwayat_penyakit'],
+            'penyakit_sekarang' => $validated['penyakit_sekarang'],
+            'penyakit_keluarga' => $validated['penyakit_keluarga'],
+            'kebiasaan' => $validated['kebiasaan'],
+            'pengobatan' => $validated['pengobatan'],
+            'diagnosa' => $validated['diagnosa']
+        ]);
+
+        // Update resep
+        $RmPemeriksaan->resep->update([
+            'resep_dari' => $validated['resep_dari'],
+            'tanggal' => $validated['resep_tanggal'],
+
+            'od_sferis' => $validated['resep']['kanan']['sph'],
+            'od_silindris' => $validated['resep']['kanan']['cyl'],
+            'od_axis' => $validated['resep']['kanan']['axis'],
+            'od_add_lensa' => $validated['resep']['kanan']['add'],
+            'pd_od' => $validated['resep']['kanan']['pd'],
+
+            'os_sferis' => $validated['resep']['kiri']['sph'],
+            'os_silindris' => $validated['resep']['kiri']['cyl'],
+            'os_axis' => $validated['resep']['kiri']['axis'],
+            'os_add_lensa' => $validated['resep']['kiri']['add'],
+            'pd_os' => $validated['resep']['kiri']['pd'],
+        ]);
+
+        // Update pesanan
+        $RmPemeriksaan->pesanan->update([
+            'frame_id' => $validated['frame_id'],
+            'lensa_id' => $validated['lensa_id'],
+            'aksesoris_id' => $validated['aksesoris_id'],
+            'biaya_kacamata' => $validated['biaya_kacamata'],
+        ]);
+
+        return redirect()
+            ->route('datamedis.show', [$RmPemeriksaan])
+            ->with('success', 'Data medis berhasil diperbarui');
     }
 
     public function storeDokumnet(Request $request, RmPemeriksaan $RmPemeriksaan)

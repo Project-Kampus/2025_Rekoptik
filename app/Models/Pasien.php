@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pasien extends Model
 {
-
+    // kadarluarsa
+    use HasFactory;
     protected $fillable = [
         // Data Pasien
         'nama_pasien',

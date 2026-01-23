@@ -12,6 +12,7 @@ use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedis\DataMedisController;
+use App\Http\Controllers\RekamMedis\IdentitasPasienController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('welcome');
@@ -59,12 +60,26 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/create/step2/{pasien}', [DataMedisController::class, 'createStep2'])->name('create.step2');
                 Route::post('/create/step2/{pasien}', [DataMedisController::class, 'storeStep2'])->name('store.step2');
                 Route::get('/{RmPemeriksaan}/show', [DataMedisController::class, 'show'])->name('show');
+                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
+                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
+                Route::put('/{RmPemeriksaan}/update', [DataMedisController::class, 'update'])->name('update');
                 Route::post('/{RmPemeriksaan}/storePengambilan', [DataMedisController::class, 'storePengambilan'])->name('storePengambilan');
                 Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
                 Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
                 Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
                 Route::get('/{RmPembayaran}/cetatakStruk', [DataMedisController::class, 'cetatakStruk'])->name('cetatakStruk');
                 Route::get('/{RmPemeriksaan}/cetakSuratBalasan', [DataMedisController::class, 'cetakSuratBalasan'])->name('cetakSuratBalasan');
+            });
+
+        Route::prefix('identitaspasien')
+            ->name('identitaspasien.')
+            ->group(function () {
+                Route::get('/', [IdentitasPasienController::class, 'index'])->name('index');
+                Route::get('/create', [IdentitasPasienController::class, 'create'])->name('create');
+                Route::post('/', [IdentitasPasienController::class, 'store'])->name('store');
+                Route::get('/{identitaspasien}/edit', [IdentitasPasienController::class, 'edit'])->name('edit');
+                Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
+                Route::get('/{identitaspasien}/show', [IdentitasPasienController::class, 'show'])->name('show');
             });
     });
 
