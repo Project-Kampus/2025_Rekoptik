@@ -13,9 +13,11 @@ use App\Models\RmPembayaran;
 use App\Models\RmPemeriksaan;
 use App\Models\RmPesanan;
 use App\Models\RmResep;
+use App\Models\RmPengambilan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class DataMedisController extends Controller
 {
@@ -109,6 +111,43 @@ class DataMedisController extends Controller
         return view('pdf.suratBalasan', compact('RmPemeriksaan')); // for debug
         $pdf = Pdf::loadView('pdf.suratBalasan', compact('RmPemeriksaan'));
         return $pdf->download('SuratBalasan-' . str_pad($RmPemeriksaan->id, 6, '0', STR_PAD_LEFT) . '.pdf');
+    }
+
+    public function storePengambilan(Request $request, RmPemeriksaan $RmPemeriksaan)
+    {
+        $validated = $request->validate([
+            'nama_pengambil' => 'required|string|max:255',
+            'hub_pengambil' => 'required|string|max:255',
+            'bukti_pengambil' => 'required|string', // base64 canvas data
+        ]);
+
+        // Decode base64 image and save to storage
+        if (strpos($validated['bukti_pengambil'], 'data:image') === 0) {
+            $imageData = explode(',', $validated['bukti_pengambil']);
+            $imageBinary = base64_decode($imageData[1]);
+            $filename = 'pengambilan_' . $RmPemeriksaan->pesanan->id . '_' . time() . '.png';
+            $filePath = 'pengambilan/' . $filename;
+
+            Storage::disk('public')->put($filePath, $imageBinary);
+            $validated['bukti_pengambil'] = 'storage/' . $filePath;
+        }
+
+        RmPengambilan::create([
+            'pesanan_id' => $RmPemeriksaan->pesanan->id,
+            'nama_pengambil' => $validated['nama_pengambil'],
+            'hub_pengambil' => $validated['hub_pengambil'],
+            'bukti_pengambil' => $validated['bukti_pengambil'],
+        ]);
+
+        // Update status pesanan
+        $RmPemeriksaan->pesanan->update([
+            'status' => 'diambil',
+            'tanggal_pengambilan' => now(),
+        ]);
+
+        return redirect()
+            ->route('datamedis.show', [$RmPemeriksaan])
+            ->with('success', 'Pengambilan pesanan berhasil dicatat');
     }
 
     public function createStep1(Request $request)

@@ -16,20 +16,33 @@
                 Edit Data
             </a>
 
-            <a href="{{ route('datamedis.cetatakStruk', $RmPemeriksaan->pesanan->pembayarans->last()->id) }}"
-                target="_blank"
-                class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition">
-                Lihat Struk
-            </a>
+            @php
+                $pembayaran = $RmPemeriksaan->pesanan->pembayarans->last();
+            @endphp
+
+            @if ($pembayaran)
+                <a href="{{ route('datamedis.cetatakStruk', $pembayaran->id) }}" target="_blank"
+                    class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition">
+                    Lihat Struk
+                </a>
+            @else
+                <button disabled title="Pembayaran belum dicatat"
+                    class="px-4 py-2 bg-gray-200 text-gray-500 rounded-lg text-sm cursor-not-allowed">
+                    Lihat Struk
+                </button>
+            @endif
 
             <a href="{{ route('datamedis.cetakSuratBalasan', $RmPemeriksaan->id) }}" target="_blank"
                 class="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm hover:bg-teal-700 transition">
                 Surat Balasan
             </a>
-            <a href="" target="_blank"
-                class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition">
-                Pengambilan
-            </a>
+            @if ($RmPemeriksaan->pesanan->status !== 'diambil')
+                <button type="button" onclick="openPengambilanModal({{ $RmPemeriksaan->id }})"
+                    class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition">
+                    Pengambilan
+                </button>
+            @endif
+
         </div>
     </x-slot>
 
@@ -72,20 +85,36 @@
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Status</td>
-                                    <td class="px-3 py-2"><span
-                                            class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded">{{ $RmPemeriksaan->pesanan->status }}</span>
+                                    <td class="px-3 py-2">
+                                        <span
+                                            class="px-2 py-1 mr-2 bg-blue-100 text-blue-700 text-xs font-semibold rounded">
+                                            {{ $RmPemeriksaan->pesanan->status }}
+                                        </span>
+                                        @if ($RmPemeriksaan->pesanan->status == 'diambil')
+                                            {{ $RmPemeriksaan->pesanan->tanggal_pengambilan?->format('d F Y') }}
+                                        @else
+                                            {{ $RmPemeriksaan->pesanan->updated_at->format('d F Y') }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Tgl Dipesan</td>
-                                    <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pesanan->tanggal_dipesan }}
+                                    <td class="px-3 py-2 text-gray-900">
+                                        {{ $RmPemeriksaan->pesanan->tanggal_dipesan?->format('d F Y') }}
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Tgl Pengambilan</td>
                                     <td class="px-3 py-2 text-gray-900">
-                                        {{ $RmPemeriksaan->pesanan->tanggal_pengambilan ?? '-' }}</td>
+                                        {{ $RmPemeriksaan->pesanan->tanggal_pengambilan?->format('d F Y') ?? '-' }}
+                                    </td>
                                 </tr>
+                                {{-- <tr class="hover:bg-blue-50">
+                                    <td class="px-3 py-2 font-medium text-gray-600">Tgl Diambilan</td>
+                                    <td class="px-3 py-2 text-gray-900">
+                                        {{ $RmPemeriksaan->pesanan->pengambilan?->created_at->format('d F Y') ?? '-' }}
+                                    </td>
+                                </tr> --}}
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Dokumen</td>
                                     <td class="px-3 py-2">
@@ -147,11 +176,11 @@
                             </tr>
                             <tr class="hover:bg-indigo-50">
                                 <td class="px-3 py-2 font-medium text-gray-600">No Kartu</td>
-                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->no_kartu }}</td>
+                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->no_kartu ?? '-' }}</td>
                             </tr>
                             <tr class="hover:bg-indigo-50">
                                 <td class="px-3 py-2 font-medium text-gray-600">Kelas</td>
-                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->kelas }}</td>
+                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->kelas ?? '-' }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -278,7 +307,7 @@
                         @foreach ($RmPemeriksaan->pesanan->pembayarans as $pembayaran)
                             <tr class="hover:bg-green-50 transition">
                                 <td class="px-4 py-3 text-gray-900">
-                                    {{ $pembayaran->tanggal_bayar->format('d/m/Y') }}</td>
+                                    {{ $pembayaran->tanggal_bayar->format('d F Y') }}</td>
                                 <td class="px-4 py-3">
                                     <span class="px-2 py-1 bg-blue-100 text-blue-700 font-semibold rounded">
                                         @switch($pembayaran->metode)
@@ -369,7 +398,28 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <x-detail label="Nama Pengambil" :value="$RmPemeriksaan->pesanan->pengambilan->nama_pengambil" />
                     <x-detail label="Hubungan Pengambil" :value="$RmPemeriksaan->pesanan->pengambilan->hub_pengambil" />
-                    <x-detail label="Bukti Pengambil" :value="$RmPemeriksaan->pesanan->pengambilan->bukti_pengambil" />
+
+                    <!-- Bukti Pengambil (Signature Image) -->
+                    <div class="border rounded-lg p-4 bg-gray-50">
+                        <p class="text-sm font-semibold text-gray-700 mb-2">Tanda Tangan Penerima</p>
+                        @if ($RmPemeriksaan->pesanan->pengambilan->bukti_pengambil)
+                            @if (strpos($RmPemeriksaan->pesanan->pengambilan->bukti_pengambil, 'storage/') === 0)
+                                <img src="{{ asset($RmPemeriksaan->pesanan->pengambilan->bukti_pengambil) }}"
+                                    alt="Tanda Tangan"
+                                    class="w-full h-32 border-2 border-gray-300 rounded bg-white object-contain p-2">
+                            @else
+                                <img src="{{ asset('storage/' . $RmPemeriksaan->pesanan->pengambilan->bukti_pengambil) }}"
+                                    alt="Tanda Tangan"
+                                    class="w-full h-32 border-2 border-gray-300 rounded bg-white object-contain p-2">
+                            @endif
+                        @else
+                            <p class="text-gray-500 text-sm italic">Tidak ada tanda tangan</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t">
+                    <p class="text-xs text-gray-500">Disimpan pada:
+                        {{ $RmPemeriksaan->pesanan->pengambilan->created_at?->format('d F Y H:i') }}</p>
                 </div>
             </div>
         @endif
@@ -398,9 +448,9 @@
 
                         @if ($uploaded)
                             @php
-                                $filePath = $uploaded->url;
+                                $filePath = 'storage/' . $uploaded->url;
                             @endphp
-
+                            {{-- {{ $filePath }} --}}
                             @if (file_exists(public_path($filePath)))
                                 <a href="{{ asset($filePath) }}" target="_blank"
                                     class="inline-block text-green-600 text-sm font-medium hover:underline">
@@ -695,4 +745,6 @@
             summaryBox.classList.add('hidden');
         }
     </script>
+
+    @include('admin.rekammedis.pengambilan_modal')
 </x-app-layout>

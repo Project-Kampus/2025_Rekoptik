@@ -69,13 +69,13 @@ class RekamMedisSeeder extends Seeder
             'od_silindris' => -0.50,
             'od_axis' => 90,
             'od_add_lensa' => 1.50,
-            'pd_od' => 31.0,
+            'pd_od' => 31,
 
             'os_sferis' => 0.00,
             'os_silindris' => -0.75,
             'os_axis' => 85,
             'os_add_lensa' => 1.50,
-            'pd_os' => 31.0,
+            'pd_os' => 31,
         ]);
 
         RmResep::create([

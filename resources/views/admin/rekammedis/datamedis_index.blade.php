@@ -27,7 +27,7 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                            Tanggal Pemeriksaan
+                            Tanggal
                         </th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Nama
@@ -59,7 +59,7 @@
                     @forelse ($data as $item)
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
-                                {{ $item->resep->tanggal }}
+                                {{ $item->pesanan->created_at->format('d/F/Y') }}
                             </td>
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
                                 {{ $item->pasien->nama_pasien }}

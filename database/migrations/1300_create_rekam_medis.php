@@ -53,13 +53,13 @@ return new class extends Migration
             $table->decimal('od_silindris', 6, 2)->nullable();
             $table->integer('od_axis')->nullable();
             $table->decimal('od_add_lensa', 6, 2)->nullable();
-            $table->integer('pd_od', 5, 2)->nullable();
+            $table->integer('pd_od')->nullable();
 
             $table->decimal('os_sferis', 6, 2)->nullable();
             $table->decimal('os_silindris', 6, 2)->nullable();
             $table->integer('os_axis')->nullable();
             $table->decimal('os_add_lensa', 6, 2)->nullable();
-            $table->integer('pd_os', 5, 2)->nullable();
+            $table->integer('pd_os')->nullable();
 
             $table->timestamps();
 
@@ -102,7 +102,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pesanan_id');
             $table->string('nama_pengambil');
             $table->string('hub_pengambil');
-            $table->string('bukti_pengambil')->nullable();
+            $table->text('bukti_pengambil')->nullable();
             $table->timestamps();
 
             $table->foreign('pesanan_id')->references('id')->on('rm_pesanans')->onDelete('cascade');
