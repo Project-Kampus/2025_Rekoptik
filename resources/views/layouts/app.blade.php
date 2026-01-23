@@ -101,7 +101,7 @@
         md:translate-x-0
         duration-200 ease-in-out z-40"
         :class="{ '-translate-x-full': !sidebarOpen }">
-        @include('layouts.sidebar')
+        <x-sidebar />
     </aside>
 
 
