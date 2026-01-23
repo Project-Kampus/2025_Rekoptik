@@ -24,7 +24,36 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::middleware('role:admin|superadmin')->group(function () {
         // Rekam Medis
-
+        Route::prefix('datamedis')
+            ->name('datamedis.')
+            ->group(function () {
+                Route::get('/', [DataMedisController::class, 'index'])->name('index');
+                Route::get('/create/step1', [DataMedisController::class, 'createStep1'])->name('create.step1');
+                Route::post('/create/step1', [DataMedisController::class, 'storeStep1'])->name('store.step1');
+                Route::get('/create/step2/{pasien}', [DataMedisController::class, 'createStep2'])->name('create.step2');
+                Route::post('/create/step2/{pasien}', [DataMedisController::class, 'storeStep2'])->name('store.step2');
+                Route::get('/{RmPemeriksaan}/show', [DataMedisController::class, 'show'])->name('show');
+                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
+                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
+                Route::put('/{RmPemeriksaan}/update', [DataMedisController::class, 'update'])->name('update');
+                Route::post('/{RmPemeriksaan}/storePengambilan', [DataMedisController::class, 'storePengambilan'])->name('storePengambilan');
+                Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
+                Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
+                Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
+                Route::get('/{RmPembayaran}/cetatakStruk', [DataMedisController::class, 'cetatakStruk'])->name('cetatakStruk');
+                Route::get('/{RmPemeriksaan}/cetakSuratBalasan', [DataMedisController::class, 'cetakSuratBalasan'])->name('cetakSuratBalasan');
+            });
+        // Identitas Pasien
+        Route::prefix('identitaspasien')
+            ->name('identitaspasien.')
+            ->group(function () {
+                Route::get('/', [IdentitasPasienController::class, 'index'])->name('index');
+                Route::get('/create', [IdentitasPasienController::class, 'create'])->name('create');
+                Route::post('/', [IdentitasPasienController::class, 'store'])->name('store');
+                Route::get('/{identitaspasien}/edit', [IdentitasPasienController::class, 'edit'])->name('edit');
+                Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
+                Route::get('/{identitaspasien}/show', [IdentitasPasienController::class, 'show'])->name('show');
+            });
         // Mater data
         Route::resource('frame', FrameController::class);
         Route::resource('lensa', LensaController::class);
@@ -50,36 +79,6 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
                 Route::put('/{admin}', [AdminController::class, 'update'])->name('update');
                 Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
-            });
-        Route::prefix('datamedis')
-            ->name('datamedis.')
-            ->group(function () {
-                Route::get('/', [DataMedisController::class, 'index'])->name('index');
-                Route::get('/create/step1', [DataMedisController::class, 'createStep1'])->name('create.step1');
-                Route::post('/create/step1', [DataMedisController::class, 'storeStep1'])->name('store.step1');
-                Route::get('/create/step2/{pasien}', [DataMedisController::class, 'createStep2'])->name('create.step2');
-                Route::post('/create/step2/{pasien}', [DataMedisController::class, 'storeStep2'])->name('store.step2');
-                Route::get('/{RmPemeriksaan}/show', [DataMedisController::class, 'show'])->name('show');
-                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
-                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
-                Route::put('/{RmPemeriksaan}/update', [DataMedisController::class, 'update'])->name('update');
-                Route::post('/{RmPemeriksaan}/storePengambilan', [DataMedisController::class, 'storePengambilan'])->name('storePengambilan');
-                Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
-                Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
-                Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
-                Route::get('/{RmPembayaran}/cetatakStruk', [DataMedisController::class, 'cetatakStruk'])->name('cetatakStruk');
-                Route::get('/{RmPemeriksaan}/cetakSuratBalasan', [DataMedisController::class, 'cetakSuratBalasan'])->name('cetakSuratBalasan');
-            });
-
-        Route::prefix('identitaspasien')
-            ->name('identitaspasien.')
-            ->group(function () {
-                Route::get('/', [IdentitasPasienController::class, 'index'])->name('index');
-                Route::get('/create', [IdentitasPasienController::class, 'create'])->name('create');
-                Route::post('/', [IdentitasPasienController::class, 'store'])->name('store');
-                Route::get('/{identitaspasien}/edit', [IdentitasPasienController::class, 'edit'])->name('edit');
-                Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
-                Route::get('/{identitaspasien}/show', [IdentitasPasienController::class, 'show'])->name('show');
             });
     });
 

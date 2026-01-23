@@ -2,7 +2,7 @@
     $activeClass = 'bg-blue-50 text-blue-600 font-semibold';
     $inactiveClass = 'text-gray-600 hover:bg-gray-100 hover:text-gray-800';
 
-    $isRekamMedisActive = request()->routeIs('rekam-medis.*');
+    $isRekamMedisActive = request()->routeIs('datamedis.*') || request()->routeIs('identitaspasien.*');
     $isMasterActive =
         request()->routeIs('frame.*') ||
         request()->routeIs('lensa.*') ||
@@ -26,9 +26,10 @@
     <li class="my-3 border-t border-gray-200"></li>
 
     <!-- Rekam Medis -->
-    <li x-data="{ open: false }">
+    <li x-data="{ open: {{ $isRekamMedisActive ? 'true' : 'false' }} }">
         <button @click="open = !open"
-            class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition {{ $inactiveClass }}">
+            class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg transition
+            {{ $isRekamMedisActive ? $activeClass : $inactiveClass }}">
             <span>Rekam Medis</span>
             <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
@@ -39,19 +40,19 @@
         <ul x-show="open" x-collapse class="mt-1 ml-4 space-y-1">
             <li>
                 <a href="{{ route('datamedis.create.step1') }}"
-                    class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('datamedis.create.*') ? $activeClass : $inactiveClass }}">
                     Tambah Pemesanan
                 </a>
             </li>
             <li>
                 <a href="{{ route('datamedis.index') }}"
-                    class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('datamedis.index', 'datamedis.show', 'datamedis.edit') ? $activeClass : $inactiveClass }}">
                     Data Medis
                 </a>
             </li>
             <li>
                 <a href="{{ route('identitaspasien.index') }}"
-                    class="block px-4 py-2 rounded-md transition {{ $inactiveClass }}">
+                    class="block px-4 py-2 rounded-md transition {{ request()->routeIs('identitaspasien.*') ? $activeClass : $inactiveClass }}">
                     Data Identitas Pasien
                 </a>
             </li>

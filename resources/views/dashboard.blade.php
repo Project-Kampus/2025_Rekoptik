@@ -72,44 +72,50 @@
     <!-- AKTIVITAS TERBARU -->
     <div class="bg-white border rounded-lg p-6">
         <h3 class="font-semibold text-gray-800 mb-4">
-            Aktivitas Terbaru
+            Aktivitas Terbaru Hari Ini
         </h3>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm border">
-                <thead class="bg-gray-50">
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
-                        <th class="px-3 py-2 border">Tanggal</th>
-                        <th class="px-3 py-2 border">Nama Pasien</th>
-                        <th class="px-3 py-2 border">Kategori</th>
-                        <th class="px-3 py-2 border text-center">Aksi</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Jam</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Nama Pasien</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Kategori</th>
+                        <th class="px-4 py-3 text-center font-semibold text-gray-700">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-gray-200">
                     @forelse($aktivitas as $item)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-3 py-2 border">
-                            {{ $item->tanggal_pemeriksaan?->format('d-m-Y') }}
-                        </td>
-                        <td class="px-3 py-2 border">
-                            {{ $item->nama_pasien }}
-                        </td>
-                        <td class="px-3 py-2 border capitalize">
-                            {{ $item->kategori }}
-                        </td>
-                        <td class="px-3 py-2 border text-center">
-                            <a href=""
-                                class="text-blue-600 hover:underline text-xs">
-                                Detail
-                            </a>
-                        </td>
-                    </tr>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-4 py-3 text-gray-600 font-medium whitespace-nowrap">
+                                {{ $item->tanggal_pemeriksaan?->format('H:i') }}
+                            </td>
+                            <td class="px-4 py-3 text-gray-900">
+                                {{ $item->nama_pasien }}
+                            </td>
+                            <td class="px-4 py-3">
+                                <span
+                                    class="px-3 py-1 text-xs font-medium rounded-full inline-block
+                                    @if ($item->kategori === 'bpjs') bg-emerald-100 text-emerald-700
+                                    @elseif($item->kategori === 'umum') bg-blue-100 text-blue-700
+                                    @else bg-orange-100 text-orange-700 @endif">
+                                    {{ ucfirst($item->kategori) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <a href="{{ route('datamedis.show', $item->id) }}"
+                                    class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
+                                    Detail
+                                </a>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="4" class="text-center py-4 text-gray-500">
-                            Belum ada aktivitas
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="4" class="px-4 py-8 text-center text-gray-500">
+                                Belum ada aktivitas hari ini
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -117,13 +123,13 @@
     </div>
 
     @php
-    $dashboardData = [
-    'bulan' => $bulan ?? [],
-    'jumlahPasien' => $jumlahPasien ?? [],
-    'totalBpjs' => $totalBpjs ?? 0,
-    'totalUmum' => $totalUmum ?? 0,
-    'totalAsuransi' => $totalAsuransi ?? 0,
-    ];
+        $dashboardData = [
+            'bulanNames' => $bulanNames ?? [],
+            'grafikData' => $grafikData ?? [],
+            'totalBpjs' => $totalBpjs ?? 0,
+            'totalUmum' => $totalUmum ?? 0,
+            'totalAsuransi' => $totalAsuransi ?? 0,
+        ];
     @endphp
 
     <!-- CHART JS -->
@@ -131,8 +137,8 @@
     <script>
         const dashboardData = @json($dashboardData);
         const {
-            bulan,
-            jumlahPasien,
+            bulanNames,
+            grafikData,
             totalBpjs,
             totalUmum,
             totalAsuransi
@@ -141,13 +147,15 @@
         new Chart(document.getElementById('grafikPasien'), {
             type: 'line',
             data: {
-                labels: bulan,
+                labels: bulanNames,
                 datasets: [{
-                    label: 'Jumlah Pasien',
-                    data: jumlahPasien,
+                    label: 'Jumlah Pemeriksaan',
+                    data: grafikData,
                     borderWidth: 2,
                     tension: 0.4,
-                    fill: false
+                    fill: false,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)'
                 }]
             },
             options: {

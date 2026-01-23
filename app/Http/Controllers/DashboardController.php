@@ -2,13 +2,81 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RmPemeriksaan;
+use App\Models\RmPasien;
+use App\Models\RmPesanan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    protected $bulanNames = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    ];
     public function index()
+    {
+        return $this->indexsampel();
+        // return $this->indexreal();
+    }
+    public function indexreal()
+    {
+        $totalPasien = RmPasien::count();
+        $totalBpjs = RmPasien::where('kategori', 'bpjs')->count();
+        $totalUmum = RmPasien::where('kategori', 'umum')->count();
+        $totalAsuransi = RmPasien::where('kategori', 'asuransi')->count();
+        $hariIni = RmPemeriksaan::whereDate('created_at', Carbon::today())->count();
+        $belumDiambil = RmPesanan::where('status', 'dipesan')->count();
+        $aktivitas = RmPemeriksaan::with('pasien')
+            ->whereDate('created_at', Carbon::today())
+            ->latest()
+            ->get()
+            ->map(function ($item) {
+                return (object) [
+                    'id' => $item->id,
+                    'tanggal_pemeriksaan' => $item->created_at,
+                    'nama_pasien' => $item->pasien->nama_pasien ?? '-',
+                    'kategori' => $item->pasien->kategori ?? '-',
+                ];
+            });
+
+        // Data grafik kunjungan pasien per bulan (tahun saat ini)
+        $currentYear = Carbon::now()->year;
+        $grafikData = [];
+        $bulanNames = $this->bulanNames;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $count = RmPemeriksaan::whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $month)
+                ->count();
+            $grafikData[] = $count;
+        }
+
+        return view('dashboard', compact(
+            'totalPasien',
+            'totalBpjs',
+            'totalAsuransi',
+            'totalUmum',
+            'hariIni',
+            'belumDiambil',
+            'aktivitas',
+            'bulanNames',
+            'grafikData'
+        ));
+    }
+
+    public function indexsampel()
     {
         $totalPasien    = 128;
         $totalBpjs      = 62;
@@ -36,22 +104,9 @@ class DashboardController extends Controller
                 'kategori' => 'asuransi',
             ],
         ]);
-        $bulan = [
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ];
+        $bulanNames = $this->bulanNames;
 
-        $jumlahPasien = [
+        $grafikData = [
             5,
             8,
             12,
@@ -74,8 +129,8 @@ class DashboardController extends Controller
             'hariIni',
             'belumDiambil',
             'aktivitas',
-            'bulan',
-            'jumlahPasien'
+            'bulanNames',
+            'grafikData'
         ));
     }
 
