@@ -1,17 +1,15 @@
 - [x] Perbaiki Readme.md
-   - [x] Ganti nama aplikasi menjadi OMS (Optical Management System) OPTIMA
+    - [x] Ganti nama aplikasi menjadi OMS (Optical Management System) OPTIMA
 - [ ] Perbaiki Data Master
-   - [x] kelola dokuemnt
-   - [x] kelola aksesoris
-   - [ ] penyamaan tampilan index dengn aksesoris.index
-   - [ ] perbaikan ui supplier.show menambah kolom aksesoris
-- [ ] Perbaiki Rekam Medis
-   - [ ] kelola data kunjungan, pemeriksaan, pemesanan
-   - [ ] pesanan baru
-      - [ ] identias pasien (cari nama/nik atau isi identitas baru)
-      - [ ] form fisus, resep kacamata
-      - [ ] pesan kacamata
-      - [ ] pembayaran
-      - [ ] pengambilan
-   - [ ] daftar identitas pasien
-
+    - [x] kelola dokuemnt
+    - [x] kelola aksesoris
+    - [x] penyamaan tampilan index dengn aksesoris.index
+    - [x] perbaikan ui supplier.show menambah kolom aksesoris
+- [x] Perbaiki Rekam Medis
+    - [ ] kelola data kunjungan, pemeriksaan, pemesanan
+    - [x] pesanan baru
+        - [x] identias pasien (cari nama/nik atau isi identitas baru)
+        - [x] form fisus, resep kacamata
+        - [x] pesan kacamata
+        - [x] pembayaran
+    - [x] daftar identitas pasien

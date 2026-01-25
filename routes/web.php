@@ -10,6 +10,7 @@ use App\Http\Controllers\Super\PengaturanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
+use App\Http\Controllers\Mitra\RekapBpjsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedis\DataMedisController;
 use App\Http\Controllers\RekamMedis\IdentitasPasienController;
@@ -81,6 +82,18 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
             });
     });
+
+    Route::middleware('role:bpjs')->prefix('mitra')->name('mitra.')->group(function () {
+        // Pengaturan Sistem
+        Route::prefix('bpjs')
+            ->name('bpjs.')
+            ->group(function () {
+                Route::get('/', [RekapBpjsController::class, 'index'])->name('index');
+                Route::get('/{pesanan}', [RekapBpjsController::class, 'show'])->name('show');
+            });
+    });
+
+
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

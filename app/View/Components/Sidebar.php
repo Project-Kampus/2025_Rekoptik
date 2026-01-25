@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Sidebar extends Component
 {
@@ -12,8 +13,6 @@ class Sidebar extends Component
     public string $inactiveClass = 'text-gray-600 hover:bg-gray-100 hover:text-gray-800';
 
     public array $menu = [];
-    public bool $isSuperAdmin;
-    public bool $isAdmin;
 
     /**
      * Create a new component instance.
@@ -21,9 +20,7 @@ class Sidebar extends Component
     public function __construct()
     {
         // Check user role
-        $user = auth()->user();
-        $this->isSuperAdmin = $user && $user->hasRole('superadmin');
-        $this->isAdmin = $user && $user->hasRole('admin');
+        $user = Auth::user();
 
         // Define menu structure
         $this->menu = [
@@ -49,17 +46,26 @@ class Sidebar extends Component
                     [
                         'label' => 'Tambah Pemesanan',
                         'route' => 'datamedis.create.step1',
+                        'requireRole' => ['admin', 'superadmin'],
                         'routePattern' => 'datamedis.create.*',
                     ],
                     [
                         'label' => 'Data Medis',
                         'route' => 'datamedis.index',
+                        'requireRole' => ['admin', 'superadmin'],
                         'routePattern' => ['datamedis.index', 'datamedis.show', 'datamedis.edit'],
                     ],
                     [
                         'label' => 'Data Identitas Pasien',
                         'route' => 'identitaspasien.index',
+                        'requireRole' => ['admin', 'superadmin'],
                         'routePattern' => 'identitaspasien.*',
+                    ],
+                    [
+                        'label' => 'Rekam Medis',
+                        'route' => 'mitra.bpjs.index',
+                        'requireRole' => ['bpjs'],
+                        'routePattern' => 'mitra.bpjs.*',
                     ],
                 ],
             ],
@@ -154,13 +160,15 @@ class Sidebar extends Component
             return true;
         }
 
+        $user = Auth::user();
+        if (!$user) {
+            return false;
+        }
+
         $requiredRoles = is_array($role) ? $role : [$role];
 
         foreach ($requiredRoles as $requiredRole) {
-            if ($requiredRole === 'superadmin' && $this->isSuperAdmin) {
-                return true;
-            }
-            if ($requiredRole === 'admin' && $this->isAdmin) {
+            if ($user->hasRole($requiredRole)) {
                 return true;
             }
         }
