@@ -24,8 +24,12 @@ class DataMedisController extends Controller
     public function index(Request $request)
     {
         $search = $request->query('search');
+        $kategori = $request->query('kategori');
+        $status = $request->query('status');
+        $tanggal_awal = $request->query('tanggal_awal');
+        $tanggal_akhir = $request->query('tanggal_akhir');
 
-        $query = RmPemeriksaan::with('pasien', 'pesanan', 'resep');
+        $query = RmPemeriksaan::with('pasien', 'pesanan.pembayarans', 'resep');
 
         if ($search) {
             $query->whereHas('pasien', function ($q) use ($search) {
@@ -35,9 +39,53 @@ class DataMedisController extends Controller
             })->orWhere('diagnosa', 'like', "%{$search}%");
         }
 
+        // Filter kategori
+        if ($kategori) {
+            $query->whereHas('pasien', function ($q) use ($kategori) {
+                $q->where('kategori', $kategori);
+            });
+        }
+
+        // Filter status pesanan
+        if ($status) {
+            $query->whereHas('pesanan', function ($q) use ($status) {
+                $q->where('status', $status);
+            });
+        }
+
+        // Filter tanggal
+        if ($tanggal_awal && $tanggal_akhir) {
+            $query->whereHas('pesanan', function ($q) use ($tanggal_awal, $tanggal_akhir) {
+                $q->whereBetween('created_at', [$tanggal_awal, $tanggal_akhir . ' 23:59:59']);
+            });
+        } elseif ($tanggal_awal) {
+            $query->whereHas('pesanan', function ($q) use ($tanggal_awal) {
+                $q->whereDate('created_at', '>=', $tanggal_awal);
+            });
+        } elseif ($tanggal_akhir) {
+            $query->whereHas('pesanan', function ($q) use ($tanggal_akhir) {
+                $q->whereDate('created_at', '<=', $tanggal_akhir);
+            });
+        }
+
         $data = $query->latest()->paginate(20);
 
-        return view('admin.rekammedis.datamedis_index', compact('data', 'search'));
+        // Buat ringkasan filter
+        $filterSummary = [];
+        if ($search) {
+            $filterSummary[] = "Pencarian: <strong>{$search}</strong>";
+        }
+        if ($kategori) {
+            $filterSummary[] = "Kategori: <strong>" . ucfirst($kategori) . "</strong>";
+        }
+        if ($status) {
+            $filterSummary[] = "Status: <strong>" . ucfirst($status) . "</strong>";
+        }
+        if ($tanggal_awal && $tanggal_akhir) {
+            $filterSummary[] = "Tanggal: <strong>" . date('d/m/Y', strtotime($tanggal_awal)) . " - " . date('d/m/Y', strtotime($tanggal_akhir)) . "</strong>";
+        }
+
+        return view('admin.rekammedis.datamedis_index', compact('data', 'search', 'kategori', 'status', 'tanggal_awal', 'tanggal_akhir', 'filterSummary'));
     }
 
     public function show(RmPemeriksaan $RmPemeriksaan)

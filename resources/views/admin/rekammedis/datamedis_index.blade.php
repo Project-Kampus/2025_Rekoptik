@@ -12,7 +12,7 @@
     </x-slot>
 
     <div class="bg-white rounded-lg border p-6">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div class="flex flex-col lg:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div>
                 <h2 class="text-lg font-medium text-gray-900">
                     Tabel Medis
@@ -20,15 +20,42 @@
                 <p class="mt-1 text-sm text-gray-600">
                     Kelola data medis
                 </p>
+                @if (count($filterSummary) > 0)
+                    <p class="mt-2 text-sm text-blue-700">
+                        {!! implode(' | ', $filterSummary) !!}
+                    </p>
+                @endif
             </div>
-            <form method="GET" action="{{ route('datamedis.index') }}" class="flex gap-2">
+            <form method="GET" action="{{ route('datamedis.index') }}" class="flex flex-wrap gap-2">
                 <input type="text" name="search" placeholder="Cari nama pasien, nomor kartu, diagnosa..."
                     value="{{ $search }}"
                     class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+
+                <input type="date" name="tanggal_awal" value="{{ $tanggal_awal }}"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+
+                <input type="date" name="tanggal_akhir" value="{{ $tanggal_akhir }}"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+
+                <select name="kategori"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- Semua Kategori --</option>
+                    <option value="bpjs" @selected($kategori === 'bpjs')>BPJS</option>
+                    <option value="asuransi" @selected($kategori === 'asuransi')>Asuransi</option>
+                    <option value="umum" @selected($kategori === 'umum')>Umum</option>
+                </select>
+
+                <select name="status"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- Semua Status --</option>
+                    <option value="dipesan" @selected($status === 'dipesan')>Dipesan</option>
+                    <option value="diambil" @selected($status === 'diambil')>Diambil</option>
+                </select>
+
                 <button type="submit" class="px-6 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
                     Cari
                 </button>
-                @if ($search)
+                @if ($search || $kategori || $status || $tanggal_awal || $tanggal_akhir)
                     <a href="{{ route('datamedis.index') }}"
                         class="px-4 py-2 bg-gray-300 text-gray-700 text-sm rounded-md hover:bg-gray-400">
                         Reset
@@ -65,6 +92,9 @@
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Status
                         </th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                            Pembayaran
+                        </th>
                         <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">
                             Aksi
                         </th>
@@ -100,6 +130,36 @@
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
                                 {{ $item->pesanan->status }}
                             </td>
+
+                            @php
+                                $totalBayar = $item->pesanan->pembayarans->sum('jumlah') ?? 0;
+                                $totalBiaya = $item->pesanan->biaya_kacamata ?? 0;
+
+                                if ($totalBiaya == 0) {
+                                    $statusPembayaran = 'Belum Ada Biaya';
+                                    $badgeClass = 'bg-gray-100 text-gray-700';
+                                } elseif ($totalBayar == 0) {
+                                    $statusPembayaran = 'Belum Bayar';
+                                    $badgeClass = 'bg-red-100 text-red-700';
+                                } elseif ($totalBayar >= $totalBiaya) {
+                                    $statusPembayaran = 'Lunas';
+                                    $badgeClass = 'bg-green-100 text-green-700';
+                                } else {
+                                    $statusPembayaran = 'Belum Lunas';
+                                    $badgeClass = 'bg-yellow-100 text-yellow-700';
+                                }
+                            @endphp
+
+                            <td class="px-4 py-3 text-sm font-medium">
+                                <span class="px-2 py-1 rounded text-xs font-semibold {{ $badgeClass }}">
+                                    {{ $statusPembayaran }}
+                                </span>
+                                <div class="text-xs text-gray-600 mt-1">
+                                    Rp {{ number_format($totalBayar, 0, ',', '.') }} / Rp
+                                    {{ number_format($totalBiaya, 0, ',', '.') }}
+                                </div>
+                            </td>
+
                             <td class="px-4 py-3 text-sm text-center">
                                 <div class="flex justify-center gap-2">
                                     <a href="#"
@@ -148,7 +208,7 @@
 
                     @empty
                         <tr>
-                            <td colspan="4" class="px-4 py-6 text-center text-sm text-gray-500">
+                            <td colspan="10" class="px-4 py-6 text-center text-sm text-gray-500">
                                 Data dokumen belum tersedia
                             </td>
                         </tr>
