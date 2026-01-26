@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
             PengaturanSeeder::class,
             AksesorisSeeder::class,
 
-            RekamMedisSeeder::class
+            // RekamMedisSeeder::class
         ]);
     }
 }

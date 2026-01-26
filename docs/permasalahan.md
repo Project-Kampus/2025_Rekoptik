@@ -1,53 +1,43 @@
-# Analisis Masalah pada ERD Saat Ini
+# Analisis Masalah pada ERD Versi 3
 
-## 1. Tabel Pasien Terlalu Besar (God Table)
+## 1. Pesanan Tidak Fleksibel (Hanya Satu Item per Pesanan)
 
-Tabel Pasien saat ini mencampur:
+Setiap pesanan saat ini hanya bisa memesan 1 kacamata, frame, atau aksesoris. Ini tidak fleksibel karena:
 
-- Data identitas pasien
-- Data rekam medis
-- Data resep kacamata
-- Data transaksi & pembayaran
-- Data pengambilan kacamata
-- Data dokumen
+- Tidak memungkinkan pesanan kombinasi item (misalnya kacamata + aksesoris).
+- Sulit mengelola pesanan kompleks.
 
-Ini melanggar prinsip Single Responsibility dan 3rd Normal Form (3NF).
+## 2. Pengecekan BPJS Tidak Tepat
 
-## 2. Redundansi Data Pemeriksaan
+Pengecekan apakah pesanan menggunakan BPJS dilakukan melalui pembayaran, bukan dari data rekam medis pasien. Ini menyebabkan:
 
-Field seperti:
+- Inkonsistensi data.
+- Kesulitan dalam pelacakan dan audit.
 
-- tanggal_pemeriksaan
-- diagnosa
-- od_sferis, os_sferis, dll
+## 3. Pasien Hanya Bisa Memiliki Satu Kartu
 
-Seharusnya bisa lebih dari satu pemeriksaan per pasien, tapi sekarang hanya bisa satu.
+Pasien hanya memiliki 1 kartu, sehingga jika pasien memiliki kartu BPJS dan asuransi, sistem akan rusak. Ini kurang fleksibel karena:
 
-## 3. Pembayaran Tidak Fleksibel
+- Tidak mendukung multiple asuransi per pasien.
+- Membatasi opsi pembayaran.
 
-Kolom:
+## 4. Kolom Umur Tidak Statis di Tabel Pasien
 
-- dibayar_bpjs
-- dibayar_asuransi
-- dibayar_pasien
+Dalam tabel pasien, ada kolom umur yang datanya tidak statis dan bisa berubah. Seharusnya menyimpan tanggal lahir, yang secara otomatis menghitung umur sesuai tanggal pesanan.
 
-Ini tidak fleksibel:
+## 5. Kurangnya Tanggal Pemeriksaan di Tabel Resep
 
-- Bagaimana kalau metode bertambah?
-- Bagaimana kalau cicilan?
+Dalam tabel resep perlu ditambahkan kolom tanggal pemeriksaan untuk melacak kapan resep dibuat.
 
-## 4. Dokumen Pasien Menumpuk di Satu Tabel
+## 6. Menu Transaksi Terbatas
 
-Field:
+Saat ini hanya ada menu untuk tambah pemeriksaan saat pasien membuat kacamata. Perlu penambahan menu untuk customer yang datang hanya untuk ganti frame atau beli aksesoris, sehingga tidak perlu form pemeriksaan dan resep.
 
-- doc_ktp
-- doc_legalitas
-- doc_rujukan
+## 7. Struktur Tabel Perlu Diubah untuk Dua Jenis Transaksi
 
-Sulit dikembangkan jika dokumen bertambah.
+Struktur tabel perlu diubah karena ada 2 jenis transaksi: pembuatan kacamata dan pembelian biasa. Ini memerlukan:
 
-## 5. Role Sudah Benar (Many-to-Many)
+- Pemisahan tabel untuk jenis transaksi berbeda.
+- Dukungan untuk transaksi tanpa pemeriksaan/resep.
 
-users, roles, role_user
-
-Ini sudah profesional, tinggal pembatasan akses via middleware.
+perbiki isi permasalahan sesuai denan versi-3 saya, juga buatkan saya rancanagn red baru untuk versi3 saya

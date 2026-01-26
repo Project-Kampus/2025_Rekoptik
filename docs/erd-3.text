@@ -1,0 +1,99 @@
+# Rancangan ERD Versi 3
+
+## Tabel Utama
+
+### Pasien
+- id: BigInt (Primary Key)
+- nama_pasien: String
+- no_hp: String
+- alamat: Text
+- tanggal_lahir: Date (untuk menghitung umur otomatis)
+- email: String
+
+### KartuPasien
+- id: BigInt (Primary Key)
+- pasien_id: BigInt (Foreign Key ke Pasien)
+- jenis_kartu: Enum(bpjs, asuransi, umum)
+- no_kartu: String
+- kelas: Enum(1, 2, 3) (jika berlaku)
+
+### RekamMedis
+- id: BigInt (Primary Key)
+- pasien_id: BigInt (Foreign Key ke Pasien)
+- user_id: BigInt (Foreign Key ke Users)
+- no_sep: String
+- tanggal_pemeriksaan: Date
+- keluhan_utama: Text
+- riwayat_penyakit: Text
+- penyakit_sekarang: Text
+- penyakit_keluarga: Text
+- kebiasaan: Text
+- pengobatan: Text
+- diagnosa: String
+- is_bpjs: Boolean (untuk menentukan apakah rekam medis ini menggunakan BPJS)
+
+### ResepKacamata
+- id: BigInt (Primary Key)
+- rekammedis_id: BigInt (Foreign Key ke RekamMedis)
+- resep_dari: String
+- tanggal_pemeriksaan: Date (ditambahkan untuk melacak kapan resep dibuat)
+- od_sferis: Decimal
+- od_silindris: Decimal
+- od_axis: Integer
+- od_add_lensa: Decimal
+- os_sferis: Decimal
+- os_silindris: Decimal
+- os_axis: Integer
+- os_add_lensa: Decimal
+- pd: String
+
+### Transaksi
+- id: BigInt (Primary Key)
+- pasien_id: BigInt (Foreign Key ke Pasien)
+- jenis_transaksi: Enum(pembuatan_kacamata, pembelian_biasa) (untuk membedakan jenis transaksi)
+- tanggal_transaksi: Date
+- total_biaya: BigInt
+- status: Enum(dipesan, diambil)
+
+### ItemTransaksi
+- id: BigInt (Primary Key)
+- transaksi_id: BigInt (Foreign Key ke Transaksi)
+- jenis_item: Enum(frame, lensa, aksesoris)
+- item_id: BigInt (Foreign Key ke Frame, Lensa, atau Aksesoris sesuai jenis_item)
+- jumlah: Integer
+- harga: BigInt
+
+### Pembayaran
+- id: BigInt (Primary Key)
+- transaksi_id: BigInt (Foreign Key ke Transaksi)
+- kartu_pasien_id: BigInt (Foreign Key ke KartuPasien, untuk menentukan metode pembayaran)
+- jumlah: BigInt
+- tanggal_bayar: Date
+
+### Pengambilan
+- id: BigInt (Primary Key)
+- transaksi_id: BigInt (Foreign Key ke Transaksi)
+- nama_pengambil: String
+- hub_pengambil: String
+- bukti_pengambil: String
+- tanggal_pengambilan: Date
+
+### Dokumen
+- id: BigInt (Primary Key)
+- nama: String
+- keterangan: String
+
+### DokumentPelengkap
+- id: BigInt (Primary Key)
+- dokumen_id: BigInt (Foreign Key ke Dokumen)
+- pasien_id: BigInt (Foreign Key ke Pasien)
+- url: Text
+
+## Tabel Master (Tidak Berubah)
+- Users
+- Roles
+- Aksesoris
+- Frame
+- Lensa
+- Supplier
+- Pengaturan
