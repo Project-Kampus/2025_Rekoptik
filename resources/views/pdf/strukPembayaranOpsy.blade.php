@@ -14,7 +14,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            /* background-color: #f5f5f5; */
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -27,7 +27,7 @@
             max-width: 450px;
             background-color: white;
             padding: 30px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
         }
 
         .header {
@@ -283,9 +283,11 @@
         <!-- Header dengan Logo -->
         <div class="header">
             <div class="logo-section">
-                <div class="logo">①</div>
+                <div class="logo">
+                    <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="Logo Optik" width="70">
+                </div>
                 <div class="logo-text">
-                    <h1>{{ $pengaturan['nama_toko'] ?? 'OPTIK' }}</h1>
+                    <h1 style="text-align: center">{{ $pengaturan['nama_toko'] ?? 'OPTIK' }}</h1>
                     <p>{{ $pengaturan['deskripsi'] ?? 'Computer System Refraksi & Contact Lens Centre' }}</p>
                     <p class="address">{{ $pengaturan['alamat'] ?? '-' }} Telp. {{ $pengaturan['telp'] ?? '-' }}</p>
                 </div>
@@ -322,7 +324,7 @@
                 </div>
                 <div>
                     <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Rp.
-                        {{ number_format($RmPemeriksaan->pesanan->biaya_kacamata ?? 0, 0, ',', '.') }}</div>
+                        {{ number_format($RmPemeriksaan->pesanan->frame->harga ?? 0, 0, ',', '.') }}</div>
                 </div>
             </div>
 
@@ -333,7 +335,9 @@
                         {{ $RmPemeriksaan->pesanan->lensa->nama_lensa ?? '-' }}</div>
                 </div>
                 <div>
-                    <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Rp. -</div>
+                    <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Rp.
+                        {{ number_format($RmPemeriksaan->pesanan->lensa->harga ?? 0, 0, ',', '.') }}
+                    </div>
                 </div>
             </div>
 
@@ -387,17 +391,17 @@
                 <tbody>
                     <tr>
                         <td class="resep-label">R</td>
-                        <td>{{ $RmPemeriksaan->resep->od_sferis }}</td>
-                        <td>{{ $RmPemeriksaan->resep->od_silindris }}</td>
-                        <td>{{ $RmPemeriksaan->resep->od_axis }}</td>
-                        <td>{{ $RmPemeriksaan->resep->od_add_lensa }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_sferis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_silindris ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_axis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->od_add_lensa ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td class="resep-label">L</td>
-                        <td>{{ $RmPemeriksaan->resep->os_sferis }}</td>
-                        <td>{{ $RmPemeriksaan->resep->os_silindris }}</td>
-                        <td>{{ $RmPemeriksaan->resep->os_axis }}</td>
-                        <td>{{ $RmPemeriksaan->resep->os_add_lensa }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_sferis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_silindris ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_axis ?? '-' }}</td>
+                        <td>{{ $RmPemeriksaan->resep->os_add_lensa ?? '-' }}</td>
                     </tr>
                 </tbody>
             </table>
