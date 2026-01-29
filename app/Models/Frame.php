@@ -29,6 +29,6 @@ class Frame extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(supplier::class);
+        return $this->belongsTo(Supplier::class);
     }
 }

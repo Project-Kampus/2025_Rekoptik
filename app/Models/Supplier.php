@@ -21,6 +21,6 @@ class Supplier extends Model
 
     public function lensas()
     {
-        return $this->hasMany(lensa::class);
+        return $this->hasMany(Lensa::class);
     }
 }
