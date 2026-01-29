@@ -70,6 +70,21 @@ class Sidebar extends Component
                 ],
             ],
 
+            // Multi Menu - Laporan
+            [
+                'type' => 'multi',
+                'label' => 'Laporan',
+                'routePattern' => ['laporan.*', 'laporan.*'],
+                'items' => [
+                    [
+                        'label' => 'Rekap Pemeriksaan',
+                        'route' => 'laporan.rekap-pemeriksaan.index',
+                        'requireRole' => ['admin', 'superadmin'],
+                        'routePattern' => 'laporan.rekap-pemeriksaan.*',
+                    ],
+                ],
+            ],
+
             // Multi Menu - Master Data (Admin & SuperAdmin)
             [
                 'type' => 'multi',

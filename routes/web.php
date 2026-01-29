@@ -8,6 +8,7 @@ use App\Http\Controllers\Super\AdminController;
 use App\Http\Controllers\Super\PengaturanController;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Laporan\RekapPemeriksaan;
 use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\Mitra\RekapBpjsController;
@@ -43,8 +44,6 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
                 Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
                 Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
-                Route::get('/{RmPembayaran}/cetatakStruk', [DataMedisController::class, 'cetatakStruk'])->name('cetatakStruk');
-                Route::get('/{RmPemeriksaan}/cetakSuratBalasan', [DataMedisController::class, 'cetakSuratBalasan'])->name('cetakSuratBalasan');
             });
         // Identitas Pasien
         Route::prefix('identitaspasien')
@@ -57,12 +56,29 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
                 Route::get('/{identitaspasien}/show', [IdentitasPasienController::class, 'show'])->name('show');
             });
+
+        // Laporan Rekap Pemeriksaan
+        Route::prefix('laporan')
+            ->name('laporan.')
+            ->group(function () {
+                Route::prefix('rekap-pemeriksaan')
+                    ->name('rekap-pemeriksaan.')
+                    ->group(function () {
+                        Route::get('/', [RekapPemeriksaan::class, 'index'])->name('index');
+                        Route::get('/export', [RekapPemeriksaan::class, 'export'])->name('export');
+                    });
+            });
         // Mater data
         Route::resource('frame', FrameController::class);
         Route::resource('lensa', LensaController::class);
         Route::resource('supplier', SupplierController::class);
         Route::resource('document', DocumentController::class);
         Route::resource('aksesoris', AksesorisController::class);
+    });
+
+    Route::middleware('role:superadmin|admin|bpjs')->group(function () {
+        Route::get('datamedis/{RmPembayaran}/cetatakStruk', [DataMedisController::class, 'cetatakStruk'])->name('datamedis.cetatakStruk');
+        Route::get('datamedis/{RmPemeriksaan}/cetakSuratBalasan', [DataMedisController::class, 'cetakSuratBalasan'])->name('datamedis.cetakSuratBalasan');
     });
 
     Route::middleware('role:superadmin')->group(function () {
