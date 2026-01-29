@@ -188,13 +188,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <div>
                     <x-input-label value="Frame" />
-                    <x-form-select class="w-full" name="frame_id" :options="$frame" labelKey="merk"
-                        extraLabel="kode_frame" placeholder="Pilih Frame" />
+                    <x-form-select class="w-full" name="frame_id" :options="$frame" labelKey="merk" :extraLabels="['kode_frame', 'harga']"
+                        placeholder="Pilih Frame" />
                 </div>
                 <div>
                     <x-input-label value="Lensa" />
                     <x-form-select class="w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
-                        placeholder="Pilih Lensa" />
+                        :extraLabels="['harga']" placeholder="Pilih Lensa" />
                 </div>
                 <div>
                     <x-input-label value="Aksesoris (bisa pilih lebih dari satu)" />

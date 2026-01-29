@@ -3,11 +3,20 @@
     'options' => [],
     'valueKey' => 'id',
     'labelKey',
-    'extraLabel' => null,
+    'extraLabels' => null,
     'placeholder' => 'Pilih data',
     'selected' => null,
 ])
 
+@php
+    // Support both singular 'extraLabel' and plural 'extraLabels' for backward compatibility
+    $extraLabelList = $extraLabels;
+    if (is_string($extraLabelList)) {
+        $extraLabelList = [$extraLabelList];
+    } elseif (!is_array($extraLabelList)) {
+        $extraLabelList = [];
+    }
+@endphp
 
 {{-- Select --}}
 <select name="{{ $name }}" id="{{ $name }}"
@@ -21,7 +30,9 @@
     @forelse ($options as $option)
         <option value="{{ $option[$valueKey] }}" @selected(old($name, $selected) == $option[$valueKey])>
             {{ $option[$labelKey] }}
-            {{ $extraLabel ? ' - ' . $option[$extraLabel] : '' }}
+            @foreach ($extraLabelList as $extra)
+                {{ ' - ' . $option[$extra] }}
+            @endforeach
         </option>
     @empty
         <option disabled>Tidak ada data</option>
