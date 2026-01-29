@@ -18,6 +18,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'CR-39',
                 'coating'     => null,
+                'harga'       => 250000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -25,6 +26,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'CR-39',
                 'coating'     => 'Blue Cut',
+                'harga'       => 300000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -32,6 +34,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'bifokal',
                 'material'    => 'CR-39',
                 'coating'     => null,
+                'harga'       => 350000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -39,6 +42,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'kryptok',
                 'material'    => 'CR-39',
                 'coating'     => 'HMC',
+                'harga'       => 400000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -46,6 +50,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'progresif',
                 'material'    => 'High Index 1.67',
                 'coating'     => 'HMC',
+                'harga'       => 800000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -53,6 +58,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'CR-39',
                 'coating'     => 'Anti Radiasi',
+                'harga'       => 320000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -60,6 +66,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'Polycarbonate',
                 'coating'     => 'Photochromic',
+                'harga'       => 600000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -67,6 +74,7 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'High Index 1.74',
                 'coating'     => 'Blue Cut',
+                'harga'       => 500000,
             ],
         ];
 

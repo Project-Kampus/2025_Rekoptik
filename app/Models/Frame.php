@@ -15,11 +15,12 @@ class Frame extends Model
         'merk',
         'warna',
         'bahan',
+        'harga',
     ];
 
 
     protected $casts = [
-        'harga' => 'integer',
+        'harga' => 'decimal:2',
     ];
 
     public function pasiens()

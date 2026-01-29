@@ -42,6 +42,7 @@ class FrameController extends Controller
             'merk' => 'nullable|string',
             'warna' => 'nullable|string',
             'bahan' => 'nullable|string',
+            'harga' => 'required|numeric|min:0',
         ]);
 
         Frame::create($request->all());
@@ -64,6 +65,7 @@ class FrameController extends Controller
             'merk'        => 'nullable|string|max:100',
             'warna'       => 'nullable|string|max:100',
             'bahan'       => 'nullable|string|max:100',
+            'harga'       => 'required|numeric|min:0',
         ]);
 
 
