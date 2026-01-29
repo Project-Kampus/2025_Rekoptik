@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Mitra;
 use App\Http\Controllers\Controller;
 use App\Models\RmPesanan;
 use Illuminate\Http\Request;
+use App\Exports\RekapBpjsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RekapBpjsController extends Controller
 {
@@ -17,10 +19,7 @@ class RekapBpjsController extends Controller
             'pengambilan'
         ])->whereHas('pemeriksaan.pasien', function ($q) {
             $q->where('kategori', 'bpjs');
-        });
-        // ->whereHas('pembayarans', function ($q) {
-        //     $q->where('metode', 'tunai');
-        // });
+        })->orderByDesc('id');
 
         // Filter tanggal
         if ($request->tanggal_awal && $request->tanggal_akhir) {
@@ -35,6 +34,29 @@ class RekapBpjsController extends Controller
         return view('admin.mitra.bpjs_rekap_index', [
             'rekamMedis' => $pesanan
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        $query = RmPesanan::with([
+            'pemeriksaan.pasien',
+            'pemeriksaan.resep',
+            'pembayarans',
+            'pengambilan'
+        ])->whereHas('pemeriksaan.pasien', function ($q) {
+            $q->where('kategori', 'bpjs');
+        });
+
+        if ($request->tanggal_awal && $request->tanggal_akhir) {
+            $query->whereBetween('tanggal_pengambilan', [
+                $request->tanggal_awal,
+                $request->tanggal_akhir
+            ]);
+        }
+
+        $data = $query->orderByDesc('id')->get();
+
+        return Excel::download(new RekapBpjsExport($data, $request->tanggal_awal, $request->tanggal_akhir), 'rekap-bpjs.xlsx');
     }
 
     public function show(RmPesanan $pesanan)

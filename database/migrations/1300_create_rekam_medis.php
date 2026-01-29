@@ -83,6 +83,17 @@ return new class extends Migration
             $table->foreign('resep_id')->references('id')->on('rm_resep')->onDelete('cascade');
             $table->foreign('frame_id')->references('id')->on('frames')->onDelete('cascade');
             $table->foreign('lensa_id')->references('id')->on('lensas')->onDelete('cascade');
+            // $table->foreign('aksesoris_id')->references('id')->on('aksesoris')->onDelete('cascade');
+        });
+
+        Schema::create('pesanan_aksesoris', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('pesanan_id');
+            $table->unsignedBigInteger('aksesoris_id');
+            $table->integer('jumlah')->nullable();
+            $table->timestamps();
+
+            $table->foreign('pesanan_id')->references('id')->on('rm_pesanans')->onDelete('cascade');
             $table->foreign('aksesoris_id')->references('id')->on('aksesoris')->onDelete('cascade');
         });
 
@@ -132,5 +143,6 @@ return new class extends Migration
         Schema::dropIfExists('rm_resep');
         Schema::dropIfExists('rm_pemeriksaan');
         Schema::dropIfExists('rm_pasiens');
+        Schema::dropIfExists('pesanan_aksesoris');
     }
 };

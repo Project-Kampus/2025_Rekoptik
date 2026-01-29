@@ -29,6 +29,10 @@ class RmResep extends Model
         'pd_os',
     ];
 
+    protected $casts = [
+        'tanggal' => 'date',
+    ];
+
     public function pemeriksaan()
     {
         return $this->belongsTo(RmPemeriksaan::class, 'pemeriksaan_id');

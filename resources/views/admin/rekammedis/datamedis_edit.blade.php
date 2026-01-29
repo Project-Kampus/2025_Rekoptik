@@ -221,7 +221,7 @@
                 Pesanan Kacamata
             </h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
                 <div>
                     <x-input-label for="frame_id" value="Frame" />
                     <select id="frame_id" name="frame_id"
@@ -255,18 +255,9 @@
                 </div>
 
                 <div>
-                    <x-input-label for="aksesoris_id" value="Aksesoris" />
-                    <select id="aksesoris_id" name="aksesoris_id"
-                        class="mt-1 block w-full rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500"
-                        required>
-                        <option value="">-- Pilih Aksesoris --</option>
-                        @foreach ($aksesoris as $item)
-                            <option value="{{ $item->id }}"
-                                {{ old('aksesoris_id', $RmPemeriksaan->pesanan->aksesoris_id) == $item->id ? 'selected' : '' }}>
-                                {{ $item->nama }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <x-input-label for="aksesoris_id" value="Aksesoris (bisa pilih lebih dari satu)" />
+                    <x-form-multiselect name="aksesoris_id" :options="$aksesoris" labelKey="nama" :selected="$RmPemeriksaan->pesanan?->aksesoris->pluck('id')->toArray() ?? []"
+                        placeholder="Pilih Aksesoris" />
                     <x-input-error :messages="$errors->get('aksesoris_id')" class="mt-2" />
                 </div>
 
@@ -275,6 +266,21 @@
                     <x-form-input id="biaya_kacamata" name="biaya_kacamata" type="number" class="w-full"
                         value="{{ old('biaya_kacamata', $RmPemeriksaan->pesanan->biaya_kacamata) }}" required />
                     <x-input-error :messages="$errors->get('biaya_kacamata')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="tanggal_dipesan" value="Tanggal Pemesanan" />
+                    <x-form-input id="tanggal_dipesan" name="tanggal_dipesan" type="date" class="w-full"
+                        value="{{ old('tanggal_dipesan', optional($RmPemeriksaan->pesanan)->tanggal_dipesan ? $RmPemeriksaan->pesanan->tanggal_dipesan->format('Y-m-d') : '') }}"
+                        required />
+                    <x-input-error :messages="$errors->get('tanggal_dipesan')" class="mt-2" />
+                </div>
+                <div>
+                    <x-input-label for="tanggal_pengambilan" value="Tanggal Pengambilan" />
+                    <x-form-input id="tanggal_pengambilan" name="tanggal_pengambilan" type="date" class="w-full"
+                        value="{{ old('tanggal_pengambilan', optional($RmPemeriksaan->pesanan)->tanggal_pengambilan ? $RmPemeriksaan->pesanan->tanggal_pengambilan->format('Y-m-d') : '') }}"
+                        required />
+                    <x-input-error :messages="$errors->get('tanggal_pengambilan')" class="mt-2" />
                 </div>
             </div>
         </div>

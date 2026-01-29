@@ -16,13 +16,21 @@ class RmPesanan extends Model
         'resep_id',
         'frame_id',
         'lensa_id',
-        'aksesoris_id',
-
+        // 'aksesoris_id', // dihapus karena relasi many-to-many
         'biaya_kacamata',
         'status',
         'tanggal_dipesan',
         'tanggal_pengambilan',
     ];
+    public function aksesoris()
+    {
+        return $this->belongsToMany(Aksesoris::class, 'pesanan_aksesoris', 'pesanan_id', 'aksesoris_id')->withPivot('jumlah')->withTimestamps();
+    }
+
+    //  public function aksesoris()
+    // {
+    //     return $this->belongsTo(Aksesoris::class);
+    // }
 
     protected $casts = [
         'tanggal_dipesan' => 'date',
@@ -47,10 +55,6 @@ class RmPesanan extends Model
     public function lensa()
     {
         return $this->belongsTo(Lensa::class);
-    }
-    public function aksesoris()
-    {
-        return $this->belongsTo(Aksesoris::class);
     }
 
     public function pembayarans()

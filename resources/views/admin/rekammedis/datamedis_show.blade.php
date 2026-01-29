@@ -71,7 +71,16 @@
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Aksesoris</td>
                                     <td class="px-3 py-2 text-gray-900 font-semibold">
-                                        {{ $RmPemeriksaan->pesanan->aksesoris->nama }}</td>
+                                        @if ($RmPemeriksaan->pesanan && $RmPemeriksaan->pesanan->aksesoris->count())
+                                            <ul class="list-disc ml-4">
+                                                @foreach ($RmPemeriksaan->pesanan->aksesoris as $aks)
+                                                    <li>{{ $aks->nama }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <span class="text-gray-400">-</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Biaya</td>
@@ -314,6 +323,8 @@
                             <tr class="hover:bg-green-50 transition">
                                 <td class="px-4 py-3 text-gray-900">
                                     {{ $pembayaran->tanggal_bayar->format('d F Y') }}</td>
+                                {{-- <td class="px-4 py-3 text-gray-900">
+                                    {{ $pembayaran->id }}</td> --}}
                                 <td class="px-4 py-3">
                                     <span class="px-2 py-1 bg-blue-100 text-blue-700 font-semibold rounded">
                                         @switch($pembayaran->metode)

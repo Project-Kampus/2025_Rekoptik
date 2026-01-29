@@ -14,8 +14,14 @@ class Aksesoris extends Model
         'keterangan',
         'supplier_id',
     ];
+
     public function supplier()
     {
         return $this->belongsTo(supplier::class);
+    }
+
+    public function pesanan()
+    {
+        return $this->belongsToMany(RmPesanan::class, 'pesanan_aksesoris', 'aksesoris_id', 'pesanan_id')->withPivot('jumlah')->withTimestamps();
     }
 }

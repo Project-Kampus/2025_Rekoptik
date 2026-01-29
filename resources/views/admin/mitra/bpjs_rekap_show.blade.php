@@ -66,7 +66,16 @@
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Aksesoris</td>
                                     <td class="px-3 py-2 text-gray-900 font-semibold">
-                                        {{ $pesanan->aksesoris->nama ?? '-' }}</td>
+                                        @if ($pesanan && $pesanan->aksesoris->count())
+                                            <ul class="list-disc ml-4">
+                                                @foreach ($pesanan->aksesoris as $aks)
+                                                    <li>{{ $aks->nama }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <span class="text-gray-400">-</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Biaya</td>

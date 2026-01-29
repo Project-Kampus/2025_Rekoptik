@@ -145,8 +145,11 @@ class DataMedisController extends Controller
 
             'frame_id' => 'required|exists:frames,id',
             'lensa_id' => 'required|exists:lensas,id',
-            'aksesoris_id' => 'required|exists:aksesoris,id',
+            'aksesoris_id' => 'required|array',
+            'aksesoris_id.*' => 'exists:aksesoris,id',
             'biaya_kacamata' => 'required|numeric',
+            'tanggal_dipesan' => 'required|date',
+            'tanggal_pengambilan' => 'required|date',
         ]);
 
         // Update pemeriksaan
@@ -185,6 +188,8 @@ class DataMedisController extends Controller
             'lensa_id' => $validated['lensa_id'],
             'aksesoris_id' => $validated['aksesoris_id'],
             'biaya_kacamata' => $validated['biaya_kacamata'],
+            'tanggal_dipesan' => $validated['tanggal_dipesan'],
+            'tanggal_pengambilan' => $validated['tanggal_pengambilan'],
         ]);
 
         return redirect()
@@ -410,16 +415,18 @@ class DataMedisController extends Controller
             'pd_os' => $validated['resep']['kiri']['pd'],
         ]);
 
-        RmPesanan::create([
+        $pesanan = RmPesanan::create([
             'pemeriksaan_id' => $RmPemeriksaan->id,
             'resep_id' => $RMresep->id,
             'frame_id' => $validated['frame_id'],
             'lensa_id' => $validated['lensa_id'],
-            'aksesoris_id' => $validated['aksesoris_id'],
             'biaya_kacamata' => $validated['biaya_kacamata'],
             'tanggal_dipesan' => $validated['tanggal_dipesan'],
             'tanggal_pengambilan' => $validated['tanggal_pengambilan'],
         ]);
+
+        // Simpan relasi aksesoris ke tabel pivot
+        $pesanan->aksesoris()->sync($validated['aksesoris_id']);
 
         return redirect()
             ->route('datamedis.show', [$RmPemeriksaan])

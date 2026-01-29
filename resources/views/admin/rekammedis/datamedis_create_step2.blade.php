@@ -197,9 +197,9 @@
                         placeholder="Pilih Lensa" />
                 </div>
                 <div>
-                    <x-input-label value="Aksesoris" />
-                    <x-form-select class="w-full" name="aksesoris_id" :options="$aksesoris" labelKey="nama"
-                        placeholder="Pilih Akseoris" />
+                    <x-input-label value="Aksesoris (bisa pilih lebih dari satu)" />
+                    <x-form-multiselect name="aksesoris_id" :options="$aksesoris" labelKey="nama"
+                        placeholder="Pilih Aksesoris" />
                 </div>
                 <div>
                     <x-input-label value="Biaya (Rp)" />

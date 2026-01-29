@@ -71,31 +71,31 @@
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Tanggal
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                             Nama
                         </th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Kategori
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                             Dokter
                         </th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Diagnosa
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                             Frame
                         </th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Lensa
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                             Status
                         </th>
                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                             Pembayaran
                         </th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700 whitespace-nowrap">
                             Aksi
                         </th>
                     </tr>
@@ -106,24 +106,24 @@
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
                                 {{ $item->pesanan->created_at->format('d/F/Y') }}
                             </td>
-                            <td class="px-4 py-3 text-sm font-medium text-gray-800">
+                            <td class="px-4 py-3 text-sm whitespace-nowrap font-medium text-gray-800">
                                 {{ $item->pasien->nama_pasien }}
                             </td>
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
                                 {{ $item->pasien->kategori }}
                             </td>
-                            <td class="px-4 py-3 text-sm font-medium text-gray-800">
+                            <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
                                 {{ $item->resep->resep_dari }}
                             </td>
-                            <td class="px-4 py-3 text-sm font-medium text-gray-800">
+                            <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
                                 {{ $item->diagnosa }}
                             </td>
-                            <td class="px-4 py-3 text-sm font-medium text-gray-800">
+                            <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
                                 {{ $item->pesanan?->frame?->merk ?? '-' }}
                                 {{ $item->pesanan?->frame?->kode_frame ? ' - ' . $item->pesanan->frame->kode_frame : '' }}
                             </td>
 
-                            <td class="px-4 py-3 text-sm font-medium text-gray-800">
+                            <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
                                 {{ $item->pesanan?->lensa?->nama_lensa ?? '-' }}
                             </td>
 

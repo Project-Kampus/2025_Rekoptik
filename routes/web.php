@@ -20,6 +20,8 @@ Route::get('/', fn() => view('welcome'))->name('welcome');
 Route::get('/test', fn() => view('test'))->name('test');
 
 Route::middleware('auth', 'verified')->group(function () {
+    // Export Rekap BPJS Excel
+    Route::get('mitra/bpjs/rekap/export', [RekapBpjsController::class, 'export'])->name('mitra.bpjs.rekap.export');
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
