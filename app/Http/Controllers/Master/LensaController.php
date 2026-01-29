@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-use App\Models\lensa;
-use App\Models\supplier;
+use App\Models\Lensa;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class LensaController extends Controller

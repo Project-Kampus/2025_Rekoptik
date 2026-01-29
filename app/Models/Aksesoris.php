@@ -17,7 +17,7 @@ class Aksesoris extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(supplier::class);
+        return $this->belongsTo(Supplier::class);
     }
 
     public function pesanan()
