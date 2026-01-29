@@ -20,13 +20,15 @@ class RmPasienFactory extends Factory
     public function definition(): array
     {
         $kategori = $this->faker->randomElement(['umum', 'bpjs', 'asuransi']);
+        // Generate a birth date for someone aged 18-75
+        $tanggalLahir = $this->faker->dateTimeBetween('-75 years', '-18 years');
 
         return [
             'nama_pasien' => $this->faker->name(),
             'no_hp' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'alamat' => $this->faker->address(),
-            'umur' => $this->faker->numberBetween(18, 75),
+            'tanggal_lahir' => $tanggalLahir,
             'kategori' => $kategori,
             'no_kartu' => $kategori === 'umum' ? null : $this->faker->unique()->numerify('##############'),
             'kelas' => $kategori === 'umum' ? null : $this->faker->randomElement(['1', '2', '3']),

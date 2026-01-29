@@ -150,7 +150,13 @@
 
             <p>Nama : <strong>{{ $RmPemeriksaan->pasien->nama_pasien }}</strong></p>
             <p>No. Kartu JKN : {{ $RmPemeriksaan->no_kartu ?? '-' }}</p>
-            <p>Umur : {{ $RmPemeriksaan->pasien->umur ?? '-' }} Tahun</p>
+            @php
+                $tanggal_lahir = \Carbon\Carbon::parse($RmPemeriksaan->pasien->tanggal_lahir);
+                $umur = $tanggal_lahir->diffInYears(\Carbon\Carbon::parse($RmPemeriksaan->created_at));
+                $umur = floor($umur);
+
+            @endphp
+            <p>Umur : {{ $umur }} Tahun</p>
 
             <br>
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->string('email')->nullable();
             $table->text('alamat')->nullable();
-            $table->integer('umur')->nullable();
+            $table->date('tanggal_lahir')->nullable();
             $table->enum('kategori', ['bpjs', 'asuransi', 'umum']);
             $table->string('no_kartu')->nullable();
             $table->enum('kelas', ['1', '2', '3'])->nullable();

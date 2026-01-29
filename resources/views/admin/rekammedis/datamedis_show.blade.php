@@ -181,7 +181,8 @@
                             </tr>
                             <tr class="hover:bg-indigo-50">
                                 <td class="px-3 py-2 font-medium text-gray-600">Umur</td>
-                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->umur }} Tahun</td>
+                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->umur ?? '-' }} Tahun
+                                </td>
                             </tr>
                             <tr class="hover:bg-indigo-50">
                                 <td class="px-3 py-2 font-medium text-gray-600">Kategori</td>

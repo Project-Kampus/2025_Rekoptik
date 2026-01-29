@@ -74,6 +74,7 @@ class Sidebar extends Component
             [
                 'type' => 'multi',
                 'label' => 'Laporan',
+                'requireRole' => ['admin', 'superadmin'],
                 'routePattern' => ['laporan.*', 'laporan.*'],
                 'items' => [
                     [

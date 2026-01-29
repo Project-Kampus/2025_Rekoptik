@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class RmPasien extends Model
 {
@@ -16,14 +17,29 @@ class RmPasien extends Model
         'no_hp',
         'email',
         'alamat',
-        'umur',
+        'tanggal_lahir',
         'kategori',
         'no_kartu',
         'kelas'
     ];
 
+    protected $casts = [
+        'tanggal_lahir' => 'date',
+    ];
+
     public function pemeriksaans()
     {
         return $this->hasMany(RmPemeriksaan::class, 'pasien_id');
+    }
+
+    /**
+     * Get umur (age) calculated from tanggal_lahir
+     */
+    public function getUmurAttribute(): ?int
+    {
+        if (!$this->tanggal_lahir) {
+            return null;
+        }
+        return Carbon::parse($this->tanggal_lahir)->age;
     }
 }

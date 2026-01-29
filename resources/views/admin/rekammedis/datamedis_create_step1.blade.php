@@ -124,8 +124,8 @@
                         <x-form-input name="alamat" class="mt-1 w-full" />
                     </div>
                     <div>
-                        <x-input-label value="Umur" />
-                        <x-form-input name="umur" type="number" class="mt-1 w-full" />
+                        <x-input-label value="Tanggal Lahir" />
+                        <x-form-input name="tanggal_lahir" type="date" class="mt-1 w-full" />
                     </div>
                     <div>
                         <x-input-label value="Kategori" />
