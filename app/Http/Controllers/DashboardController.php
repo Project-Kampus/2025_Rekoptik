@@ -27,8 +27,8 @@ class DashboardController extends Controller
     ];
     public function index()
     {
-        // return $this->indexsampel();
-        return $this->indexreal();
+        return $this->indexsampel();
+        // return $this->indexreal();
     }
     public function indexreal()
     {
