@@ -21,10 +21,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer('*', function ($view) {
-            $view->with(
-                'pengaturan',
-                pengaturan::first()
-            );
+            try {
+                $view->with(
+                    'pengaturan',
+                    pengaturan::first()
+                );
+            } catch (\Exception $e) {
+                // Jika database belum siap (saat test), gunakan data default
+                $view->with('pengaturan', null);
+            }
         });
     }
 }
