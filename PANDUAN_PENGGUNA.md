@@ -22,15 +22,16 @@ Superadmin adalah pengguna dengan akses tertinggi dalam sistem Rekoptik. Superad
 
 Superadmin memiliki akses penuh ke:
 
-- ✓ [Dashboard dengan analitik lengkap](#dashboard-superadmin)
-- ✓ [Manajemen pengguna (User Management)](#manajemen-pengguna)
-- ✓ [Manajemen data master (Master Data)](#data-master)
+- ✓ Dashboard dengan analitik lengkap
+- ✓ Manajemen pengguna (User Management)
+- ✓ Manajemen data master (Master Data)
     - Dokumen
     - Aksesoris / Frame / Lensa
     - Supplier
-- ✓ [Manajemen klinik / pengaturan](#pengaturan-sistem)
-- ✓ [Rekam medis pasien](#rekam-medis-1)
-- ✓ [Rekap Pemeriksaan](#rekap-pemeriksaan-superadmin)
+- ✓ Manajemen klinik / pengaturan
+- ✓ Rekam medis pasien
+- ✓ Laporan dan rekapitulasi data
+- ✓ Pengaturan sistem
 
 ## 🚀 Cara Login
 
@@ -267,12 +268,12 @@ Admin adalah pengguna dengan akses menyeluruh untuk mengelola data klinik. Admin
 
 Admin memiliki akses ke:
 
-- ✓ [Dashboard dengan statistik operasional](#dashboard-admin)
-- ✓ [Manajemen data pasien](#identitas-pasien)
-- ✓ [Input dan kelola rekam medis](#input-pemeriksaan--pesanan)
-- ✓ [Manajemen pemesanan kacamata](#langkah-3-pesanan-kacamata-opsional)
-- ✓ [Kelola pembayaran/invoice](#kelola-pembayaran)
-- ✓ [Rekap Pemeriksaan](#rekap-pemeriksaan-admin)
+- ✓ Dashboard dengan statistik operasional
+- ✓ Manajemen data pasien
+- ✓ Input dan kelola rekam medis
+- ✓ Manajemen pemesanan kacamata
+- ✓ Kelola pembayaran/invoice
+- ✓ Lihat laporan data
 - ✗ Tidak bisa ubah pengguna/admin
 - ✗ Tidak bisa ubah pengaturan sistem
 
@@ -564,11 +565,12 @@ Admin BPJS adalah pengguna khusus yang menangani pengelolaan data dan billing pa
 
 Admin BPJS memiliki akses ke:
 
-- ✓ [Dashboard BPJS](#dashboard-admin-bpjs)
-- ✓ [Daftar pasien dengan BPJS](#pasien-bpjs)
-- ✓ [Input pemeriksaan pasien BPJS](#input-pemeriksaan-bpjs)
-- ✓ [Kelola billing BPJS](#kelola-billing-bpjs)
-- ✓ [Rekap Pemeriksaan BPJS](#rekap-pemeriksaan-bpjs)
+- ✓ Dashboard BPJS
+- ✓ Daftar pasien dengan BPJS
+- ✓ Input pemeriksaan pasien BPJS
+- ✓ Kelola billing BPJS
+- ✓ Rekap dan laporan BPJS
+- ✓ Cetak klaim BPJS
 - ✗ Tidak bisa mengelola pasien non-BPJS
 - ✗ Tidak bisa ubah data master
 - ✗ Tidak bisa manajemen pengguna
