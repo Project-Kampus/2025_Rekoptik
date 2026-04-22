@@ -22,16 +22,15 @@ Superadmin adalah pengguna dengan akses tertinggi dalam sistem Rekoptik. Superad
 
 Superadmin memiliki akses penuh ke:
 
-- ✓ Dashboard dengan analitik lengkap
-- ✓ Manajemen pengguna (User Management)
-- ✓ Manajemen data master (Master Data)
+- ✓ [Dashboard dengan analitik lengkap](#dashboard-superadmin)
+- ✓ [Manajemen pengguna (User Management)](#manajemen-pengguna)
+- ✓ [Manajemen data master (Master Data)](#data-master)
     - Dokumen
     - Aksesoris / Frame / Lensa
     - Supplier
-- ✓ Manajemen klinik / pengaturan
-- ✓ Rekam medis pasien
-- ✓ Laporan dan rekapitulasi data
-- ✓ Pengaturan sistem
+- ✓ [Manajemen klinik / pengaturan](#pengaturan-sistem)
+- ✓ [Rekam medis pasien](#rekam-medis-1)
+- ✓ [Rekap Pemeriksaan](#rekap-pemeriksaan-superadmin)
 
 ## 🚀 Cara Login
 
@@ -171,13 +170,13 @@ Menu untuk konfigurasi umum aplikasi.
 
 **Opsi yang Dapat Dikonfigurasi:**
 
-- Nama Klinik / Rumah Sakit
-- Alamat Klinik
+- Nama Aplikasi
+- Nama Klinik / Optik
+- Logo Klinik / Optik
+- Nomor HP/WhatsApp
 - Nomor Telepon
-- Email Resmi
-- Logo Klinik (untuk laporan)
-- Jam Operasional
-- Hari Libur / Cuti
+- Email
+- Alamat
 
 **Cara Mengubah Pengaturan:**
 
@@ -198,28 +197,25 @@ Menu untuk melihat semua rekam medis pasien (referensi).
 - Ekspor data ke Excel/PDF
 - Audit log riwayat perubahan
 
-### 5. 📊 Laporan & Rekapitulasi
+### 5. 📊 Rekap Pemeriksaan
 
-Menu untuk membuat laporan data.
+Menu untuk membuat rekapitulasi data pemeriksaan.
 
-**Lokasi Menu:** Laporan
+**Lokasi Menu:** Laporan → Rekap Pemeriksaan
 
-**Jenis Laporan Tersedia:**
+**Fungsi:**
 
-- **Rekap BPJS**: Rekapitulasi pasien BPJS
-- **Rekap Pemeriksaan**: Data pemeriksaan per periode
-- **Rekap Pembayaran**: Ringkasan keuangan
-- **Rekap Pesanan**: Data pesanan kacamata
+- Data pemeriksaan per tanggal/periode
+- Jumlah pasien yang diperiksa
+- Total pemeriksaan
 
-**Cara Membuat Laporan:**
+**Cara Membuat Rekap Pemeriksaan:**
 
-1. Klik menu **Laporan**
-2. Pilih jenis laporan yang diinginkan
-3. Atur filter (tanggal, jenis, dll)
-4. Klik **Generate Laporan**
-5. Pilih format:
-    - **PDF**: Untuk cetak langsung
-    - **Excel**: Untuk analisis lebih lanjut
+1. Klik menu **Laporan** → **Rekap Pemeriksaan**
+2. Pilih tanggal awal - akhir
+3. Klik **Generate Rekap**
+4. Ekspor format:
+    - **Excel**: Untuk analisis dan dokumentasi
 
 ---
 
@@ -229,10 +225,14 @@ Menu untuk membuat laporan data.
 
 **Fungsi:**
 
-- Ubah foto profil
 - Ubah nama penampilan
 - Ubah password
-- Ubah email
+
+**Cara Mengubah Nama:**
+
+1. Klik profil → **Profil Saya**
+2. Edit **Nama**
+3. Klik **Simpan**
 
 **Cara Mengubah Password:**
 
@@ -250,9 +250,8 @@ Menu untuk membuat laporan data.
 
 1. **Jaga Kerahasiaan Akun**: Password hanya untuk Superadmin
 2. **Audit Log Rutin**: Periksa aktivitas user secara berkala
-3. **Backup Data**: Minta backup database secara berkala kepada IT
-4. **Update Password**: Ubah password setiap 90 hari
-5. **Jangan Share Akun**: Setiap user harus punya akun sendiri
+3. **Update Password**: Ubah password setiap 90 hari
+4. **Jangan Share Akun**: Setiap user harus punya akun sendiri
 
 ---
 
@@ -268,12 +267,12 @@ Admin adalah pengguna dengan akses menyeluruh untuk mengelola data klinik. Admin
 
 Admin memiliki akses ke:
 
-- ✓ Dashboard dengan statistik operasional
-- ✓ Manajemen data pasien
-- ✓ Input dan kelola rekam medis
-- ✓ Manajemen pemesanan kacamata
-- ✓ Kelola pembayaran/invoice
-- ✓ Lihat laporan data
+- ✓ [Dashboard dengan statistik operasional](#dashboard-admin)
+- ✓ [Manajemen data pasien](#identitas-pasien)
+- ✓ [Input dan kelola rekam medis](#input-pemeriksaan--pesanan)
+- ✓ [Manajemen pemesanan kacamata](#langkah-3-pesanan-kacamata-opsional)
+- ✓ [Kelola pembayaran/invoice](#kelola-pembayaran)
+- ✓ [Rekap Pemeriksaan](#rekap-pemeriksaan-admin)
 - ✗ Tidak bisa ubah pengguna/admin
 - ✗ Tidak bisa ubah pengaturan sistem
 
@@ -476,89 +475,37 @@ Gunakan filter untuk mencari data:
     - Struk Pembayaran
 3. Dokumen akan otomatis diunduh dalam format PDF
 
-### 4. 💰 Kelola Pembayaran
+### 4. � Rekap Pemeriksaan
 
-Menu untuk mengelola transaksi keuangan.
+Menu untuk membuat rekapitulasi data pemeriksaan.
 
-**Lokasi Menu:** Rekam Medis → Pembayaran
+**Lokasi Menu:** Laporan → Rekap Pemeriksaan
 
-#### a) Melihat Daftar Pembayaran
-
-1. Klik **Pembayaran**
-2. Tampil daftar dengan:
-    - Nama pasien
-    - Tanggal pembayaran
-    - Jumlah pembayaran
-    - Metode pembayaran
-    - Status
-
-#### b) Tambah Pembayaran (Cicilan)
-
-1. Jika ada pasien belum lunas, klik **Tambah Pembayaran**
-2. Pilih pasien
-3. Isi:
-    - **Jumlah Pembayaran**: Nominal pembayaran
-    - **Metode**: Tunai / Transfer / E-wallet
-    - **Catatan**: Deskripsi pembayaran (opsional)
-4. Klik **Simpan**
-
-#### c) Cetak Invoice
-
-1. Di daftar pembayaran, klik **Cetak Invoice**
-2. Dokumen PDF akan diunduh
-
-### 5. 📋 Laporan Operasional
-
-Menu untuk membuat laporan data.
-
-**Lokasi Menu:** Laporan
-
-**Jenis Laporan:**
-
-#### A. Rekap Pemeriksaan
+**Fungsi:**
 
 - Data pemeriksaan per tanggal/periode
 - Jumlah pasien yang diperiksa
-- Rata-rata akurasi pemeriksaan
+- Total pemeriksaan
 
-**Cara membuat:**
+**Cara Membuat Rekap Pemeriksaan:**
 
 1. Klik **Laporan** → **Rekap Pemeriksaan**
 2. Pilih tanggal awal - akhir
-3. Klik **Generate**
-4. Export: PDF / Excel
-
-#### B. Rekap Pesanan
-
-- Data pesanan frame, lensa, aksesoris
-- Jumlah pesanan per produk
-- Total penjualan
-
-#### C. Rekap Pembayaran
-
-- Ringkasan pendapatan per periode
-- Metode pembayaran
-- Status pembayaran (lunas/belum lunas)
-
-#### D. Rekap Pasien
-
-- Total pasien baru per periode
-- Pasien yang kembali
-- Demografi pasien (usia, gender)
-
-**Cara Ekspor Laporan:**
-
-1. Setelah laporan ditampilkan
-2. Klik tombol **Export**
-3. Pilih format:
-    - **PDF**: Cetak langsung
-    - **Excel**: Untuk analisis lebih lanjut
+3. Klik **Generate Rekap**
+4. Ekspor format:
+    - **Excel**: Untuk analisis dan dokumentasi
 
 ---
 
 ## 📱 Profil & Pengaturan Personal
 
 **Lokasi Menu:** Ikon Profil (pojok atas kanan)
+
+#### Ubah Nama
+
+1. Klik profil → **Profil Saya**
+2. Edit **Nama Tampilan**
+3. Klik **Simpan**
 
 #### Ubah Password
 
@@ -569,15 +516,6 @@ Menu untuk membuat laporan data.
     - Password baru
     - Konfirmasi password baru
 4. Klik **Perbarui**
-
-#### Ubah Data Profil
-
-1. Klik profil → **Profil Saya**
-2. Edit:
-    - Nama tampilan
-    - Foto profil
-    - Nomor telepon
-3. Klik **Simpan**
 
 ---
 
@@ -626,12 +564,11 @@ Admin BPJS adalah pengguna khusus yang menangani pengelolaan data dan billing pa
 
 Admin BPJS memiliki akses ke:
 
-- ✓ Dashboard BPJS
-- ✓ Daftar pasien dengan BPJS
-- ✓ Input pemeriksaan pasien BPJS
-- ✓ Kelola billing BPJS
-- ✓ Rekap dan laporan BPJS
-- ✓ Cetak klaim BPJS
+- ✓ [Dashboard BPJS](#dashboard-admin-bpjs)
+- ✓ [Daftar pasien dengan BPJS](#pasien-bpjs)
+- ✓ [Input pemeriksaan pasien BPJS](#input-pemeriksaan-bpjs)
+- ✓ [Kelola billing BPJS](#kelola-billing-bpjs)
+- ✓ [Rekap Pemeriksaan BPJS](#rekap-pemeriksaan-bpjs)
 - ✗ Tidak bisa mengelola pasien non-BPJS
 - ✗ Tidak bisa ubah data master
 - ✗ Tidak bisa manajemen pengguna
@@ -929,54 +866,25 @@ Menu untuk membuat dan mengirim rekapitulasi klaim ke BPJS.
     - **Ditolak**: Ada kekurangan/error
 3. Jika ditolak, lihat pesan error & perbaiki di Billing
 
-### 5. 📋 Laporan BPJS
+### 5. � Rekap Pemeriksaan BPJS
 
-Menu untuk membuat laporan BPJS untuk keperluan administrasi.
+Menu untuk membuat rekapitulasi data pemeriksaan pasien BPJS.
 
-**Lokasi Menu:** BPJS → Laporan BPJS
+**Lokasi Menu:** BPJS → Rekap Pemeriksaan
 
-#### Jenis Laporan BPJS:
+**Fungsi:**
 
-**A. Rekap Pasien BPJS**
+- Data pemeriksaan pasien BPJS per periode
+- Jumlah pasien BPJS yang diperiksa
+- Total pemeriksaan BPJS
 
-- Total pasien BPJS aktif
-- Breakdown by PBI/Non-PBI
-- Pasien baru vs repeat
-- Demografi pasien
+**Cara Membuat Rekap Pemeriksaan BPJS:**
 
-**B. Rekap Kunjungan BPJS**
-
-- Jumlah kunjungan per periode
-- Rata-rata biaya per kunjungan
-- Jenis layanan yang sering diminta
-- Diagnosis yang sering muncul
-
-**C. Rekap Klaim BPJS**
-
-- Total klaim terkirim
-- Status klaim (diterima/ditolak)
-- Persentase acceptance rate
-- Timeline pembayaran
-
-**D. Rekap Finansial BPJS**
-
-- Total pendapatan dari BPJS
-- Outstanding (belum dicairkan)
-- Proyeksi pendapatan
-
-#### Cara Membuat Laporan BPJS:
-
-1. Klik **BPJS** → **Laporan BPJS**
-2. Pilih jenis laporan
-3. Atur filter:
-    - **Periode**: Tanggal awal - akhir
-    - **Jenis Kepesertaan**: PBI / Non-PBI / Semua
-    - **Status Klaim**: Semua / Diterima / Ditolak
-4. Klik **Generate Laporan**
-5. **Preview** laporan
-6. **Export**:
-    - PDF: Untuk laporan cetak
-    - Excel: Untuk analisis lanjutan
+1. Klik **BPJS** → **Rekap Pemeriksaan**
+2. Pilih tanggal awal - akhir
+3. Klik **Generate Rekap**
+4. Ekspor format:
+    - **Excel**: Untuk analisis dan dokumentasi
 
 ---
 
@@ -1020,6 +928,12 @@ Menu untuk membuat laporan BPJS untuk keperluan administrasi.
 ## 📱 Profil & Pengaturan Personal
 
 **Lokasi Menu:** Ikon Profil (pojok atas kanan)
+
+#### Ubah Nama
+
+1. Klik profil → **Profil Saya**
+2. Edit **Nama Tampilan**
+3. Klik **Simpan**
 
 #### Ubah Password
 
