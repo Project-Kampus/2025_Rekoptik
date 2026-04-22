@@ -1,6 +1,6 @@
-# 📘 Panduan Pengguna - Rekoptik (OMS OPTIMA)
+# 📘 Panduan Pengguna - Rekoptik (OMS Rekoptik)
 
-Panduan lengkap penggunaan aplikasi Rekoptik (Optical Management System OPTIMA) untuk setiap level pengguna.
+Panduan lengkap penggunaan aplikasi Rekoptik (Optical Management System Rekoptik) untuk setiap level pengguna.
 
 ---
 
