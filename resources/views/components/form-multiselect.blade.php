@@ -1,4 +1,10 @@
-@props(['name', 'options' => [], 'labelKey' => 'name', 'selected' => [], 'placeholder' => 'Pilih...'])
+@props([
+    'name' => '',
+    'options' => [],
+    'labelKey' => 'name',
+    'selected' => [],
+    'placeholder' => 'Pilih...',
+])
 
 @php
     $mappedOptions = collect($options)->mapWithKeys(fn($o) => [$o['id'] => $o[$labelKey]])->toArray();
@@ -10,7 +16,8 @@
     options: @js($mappedOptions)
 }" class="relative">
     <!-- Trigger -->
-    <div @click="open = !open" class="border rounded px-3 py-2 bg-white cursor-pointer min-h-[40px] flex flex-wrap gap-1">
+    <div @click="open = !open"
+        class="border rounded px-3 py-2 mt-2 bg-white cursor-pointer min-h-[40px] flex flex-wrap gap-1">
         <template x-for="id in selected" :key="id">
             <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs mr-1 mb-1" x-text="options[id]"></span>
         </template>
