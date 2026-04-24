@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
 
         $superadmin = User::firstOrCreate(
             [
-                'email' => 'utamajambioptima@gmail.com',
-                // 'email' => 'super@gmail.com',
+                // 'email' => 'utamajambioptima@gmail.com',
+                'email' => 'super@gmail.com',
                 'name'     => 'Super Admin',
                 'password' => Hash::make('password'),
             ]

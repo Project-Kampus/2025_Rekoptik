@@ -18,6 +18,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '0428',
                 'bahan'       => 'Metal',
+                'harga'       => 350000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -25,6 +26,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '04GF',
                 'bahan'       => 'Metal',
+                'harga'       => 375000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -32,6 +34,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '0531',
                 'bahan'       => 'Metal',
+                'harga'       => 360000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -39,6 +42,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '700P',
                 'bahan'       => 'Metal',
+                'harga'       => 380000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -46,6 +50,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '08H5',
                 'bahan'       => 'Metal',
+                'harga'       => 355000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -53,6 +58,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '583',
                 'bahan'       => 'Metal',
+                'harga'       => 340000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -60,6 +66,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '0978',
                 'bahan'       => 'Metal',
+                'harga'       => 365000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -67,6 +74,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '0173',
                 'bahan'       => 'Metal',
+                'harga'       => 370000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -74,6 +82,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '08F2',
                 'bahan'       => 'Metal',
+                'harga'       => 385000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -81,6 +90,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '0909',
                 'bahan'       => 'Metal',
+                'harga'       => 390000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -88,6 +98,7 @@ class FrameSeeder extends Seeder
                 'merk'        => 'POLICE',
                 'warna'       => '08HS',
                 'bahan'       => 'Metal',
+                'harga'       => 395000,
             ],
         ];
 

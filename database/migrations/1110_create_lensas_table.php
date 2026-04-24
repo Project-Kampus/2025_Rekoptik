@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('coating')->nullable();
             $table->string('od')->nullable();
             $table->string('os')->nullable();
+            $table->decimal('harga', 12, 2)->default(0);
 
             $table->foreignId('supplier_id')
                 ->constrained('suppliers')

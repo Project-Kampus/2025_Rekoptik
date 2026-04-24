@@ -16,6 +16,7 @@ class Lensa extends Model
         'coating',
         'od',
         'os',
+        'harga',
     ];
     public function supplier()
     {

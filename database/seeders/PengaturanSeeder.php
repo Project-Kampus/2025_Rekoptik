@@ -17,11 +17,11 @@ class PengaturanSeeder extends Seeder
     {
         pengaturan::create(
             [
-                'nama_toko'     => 'CV. OPTIK UTAMA',
-                'nama_aplikasi' => 'OMS OPTIMA',
-                'alamat'        => 'Jl. Rd. Mattaher No. 83 Pasar Jambi',
-                'telp'          => '(0741) 20483',
-                'no_hp'         => '0852 6452 4577',
+                'nama_toko'     => 'OPTIK ARSY',
+                'nama_aplikasi' => 'OMS ARSY',
+                'alamat'        => 'Jl. Ir. H. Juanda',
+                'telp'          => '(0741) 307 3466',
+                'no_hp'         => '0800',
                 'email'         => 'utamajambioptima@gmail.com',
                 'logo'          => null, // isi manual lewat menu pengaturan
             ]

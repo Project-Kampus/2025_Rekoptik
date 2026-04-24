@@ -59,6 +59,14 @@
                         <x-input-error :messages="$errors->get('kategori')" class="mt-2" />
                     </div>
 
+                    <!-- Harga -->
+                    <div>
+                        <x-input-label for="harga" value="Harga (Rp)" />
+                        <x-form-input id="harga" name="harga" type="number" class="mt-1 block w-full" required
+                            value="{{ old('harga') }}" placeholder="250000" min="0" step="1" />
+                        <x-input-error :messages="$errors->get('harga')" class="mt-2" />
+                    </div>
+
                 </div>
             </div>
 

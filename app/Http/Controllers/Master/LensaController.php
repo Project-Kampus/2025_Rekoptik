@@ -40,6 +40,7 @@ class LensaController extends Controller
             'coating'    => 'nullable|string|max:100',
             'od'    => 'nullable|string|max:100',
             'os'    => 'nullable|string|max:100',
+            'harga'      => 'required|numeric|min:0',
         ]);
 
         Lensa::create($request->all());
@@ -65,6 +66,7 @@ class LensaController extends Controller
             'coating'    => 'nullable|string|max:100',
             'od'    => 'nullable|string|max:100',
             'os'    => 'nullable|string|max:100',
+            'harga'      => 'required|numeric|min:0',
         ]);
 
         $lensa->update($request->all());
