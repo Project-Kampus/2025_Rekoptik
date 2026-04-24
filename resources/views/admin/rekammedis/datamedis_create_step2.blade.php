@@ -184,12 +184,12 @@
                 <div>
                     <x-input-label value="Frame" class="font-semibold" />
                     <x-form-select-search class="mt-2 w-full" name="frame_id" :options="$frame" labelKey="kode_frame"
-                        :extraLabels="['merk', 'harga']" placeholder="Pilih Frame" />
+                        valueKey="id" :extraLabels="['merk', 'harga']" placeholder="Pilih Frame" />
                 </div>
                 <div>
                     <x-input-label value="Lensa" class="font-semibold" />
                     <x-form-select-search class="mt-2 w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
-                        :extraLabels="['harga']" placeholder="Pilih Lensa" />
+                        valueKey="id" :extraLabels="['harga']" placeholder="Pilih Lensa" />
                 </div>
                 <div>
                     <x-input-label value="Aksesoris" class="font-semibold" />

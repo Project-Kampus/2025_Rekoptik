@@ -48,27 +48,33 @@
 
             <!-- List -->
             <template x-for="(option, index) in filteredOptions" :key="index">
-                <li @click="select(option)" class="px-4 py-2 cursor-pointer hover:bg-indigo-50 transition"
+                <li @click="select(option)"
+                    class="px-4 py-2 cursor-pointer hover:bg-indigo-50 transition flex items-center justify-between"
                     :class="isSelected(option) ? 'bg-indigo-100 text-indigo-700 font-medium' : ''">
 
-                    <!-- Label utama -->
-                    <div class="font-medium" x-text="getLabel(option)"></div>
+                    <!-- KIRI: Label + Extra -->
+                    <div>
+                        <!-- Label utama -->
+                        <div class="font-medium" x-text="getLabel(option)"></div>
 
-                    <!-- Extra labels -->
-                    @if (!empty($extraLabels))
-                        <div class="text-xs text-gray-500 mt-0.5">
-                            @foreach ($extraLabels as $label)
-                                <span>
-                                    {{ ucfirst($label) }}:
-                                    <span x-text="option['{{ $label }}'] ?? '-'"></span>
-                                    •
-                                </span>
-                            @endforeach
-                        </div>
-                    @endif
+                        <!-- Extra labels -->
+                        @if (!empty($extraLabels))
+                            <div class="text-xs text-gray-500 mt-0.5">
+                                @foreach ($extraLabels as $index => $label)
+                                    <span>
+                                        {{ ucfirst($label) }}:
+                                        <span x-text="option['{{ $label }}'] ?? '-'"></span>
+                                        @if ($index < count($extraLabels) - 1)
+                                            •
+                                        @endif
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
 
-                    <!-- Check icon -->
-                    <div class="flex justify-end">
+                    <!-- KANAN: Check icon -->
+                    <div class="ml-3 flex-shrink-0">
                         <svg x-show="isSelected(option)" class="w-4 h-4 text-indigo-600" fill="currentColor"
                             viewBox="0 0 20 20">
                             <path fill-rule="evenodd"
