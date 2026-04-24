@@ -1,42 +1,40 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create Data Medis
-            </h2>
-            <div class="text-sm text-gray-600">
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-semibold">
-                    Step 2 of 2
-                </span>
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="font-bold text-2xl text-gray-900">
+                    Buat Data Medis
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">Langkah 2: Riwayat Medis & Pesanan</p>
             </div>
+
         </div>
     </x-slot>
 
     <!-- Identitas Pasien -->
-    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6 shadow-sm">
-        <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-            </svg>
-            Identitas Pasien
-        </h3>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="mb-4">
+            <h3 class="text-base font-bold text-gray-900 mb-4">
+                Data Pasien
+            </h3>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white rounded p-4 border-l-4 border-blue-500">
-                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Nama Pasien</p>
-                <p class="text-lg font-semibold text-gray-800">{{ $pasien->nama_pasien }}</p>
+            <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4 border border-indigo-200">
+                <p class="text-xs font-semibold text-indigo-600 uppercase mb-1">Nama Pasien</p>
+                <p class="text-base font-semibold text-gray-900">{{ $pasien->nama_pasien }}</p>
             </div>
-            <div class="bg-white rounded p-4 border-l-4 border-green-500">
-                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">No HP</p>
-                <p class="text-lg font-semibold text-gray-800">{{ $pasien->no_hp ?? '-' }}</p>
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
+                <p class="text-xs font-semibold text-blue-600 uppercase mb-1">No HP</p>
+                <p class="text-base font-semibold text-gray-900">{{ $pasien->no_hp ?? '-' }}</p>
             </div>
-            <div class="bg-white rounded p-4 border-l-4 border-purple-500">
-                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Kategori</p>
-                <p class="text-lg font-semibold text-gray-800 uppercase">{{ $pasien->kategori }}</p>
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 border border-purple-200">
+                <p class="text-xs font-semibold text-purple-600 uppercase mb-1">Kategori</p>
+                <p class="text-base font-semibold text-gray-900">{{ ucfirst($pasien->kategori) }}</p>
             </div>
-            <div class="bg-white rounded p-4 border-l-4 border-orange-500">
-                <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Umur</p>
-                <p class="text-lg font-semibold text-gray-800">{{ $pasien->umur ?? '-' }} Tahun</p>
+            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-4 border border-emerald-200">
+                <p class="text-xs font-semibold text-emerald-600 uppercase mb-1">Umur</p>
+                <p class="text-base font-semibold text-gray-900">{{ $pasien->umur ?? '-' }} Tahun</p>
             </div>
         </div>
     </div>
@@ -45,127 +43,127 @@
         @csrf
 
         <!-- Data Pemeriksaan -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-            <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center pb-4 border-b-2 border-gray-100">
-                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path fill-rule="evenodd"
-                        d="M4 5a2 2 0 012-2 1 1 0 000-2H2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V9a1 1 0 10-2 0v8H4V5zm12-3a1 1 0 000 2h2a1 1 0 100-2h-2z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                Data Pemeriksaan
-            </h3>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 m-0">
+            <div class="mb-6">
+                <h3 class="text-base font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+                    Data Pemeriksaan
+                </h3>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                 <div>
-                    <x-input-label value="No. SEP" />
-                    <x-form-input name="no_sep" class="w-full" value="{{ old('no_sep') }}" required />
+                    <x-input-label value="No. SEP" class="font-semibold" />
+                    <x-form-input name="no_sep" class="mt-2 w-full" value="{{ old('no_sep') }}"
+                        placeholder="Masukkan nomor SEP" required />
                 </div>
                 <div>
-                    <x-input-label value="Kebiasaan/Pekerjaan" />
-                    <x-form-input name="kebiasaan" class="w-full" value="{{ old('kebiasaan') }}" required />
+                    <x-input-label value="Kebiasaan/Pekerjaan" class="font-semibold" />
+                    <x-form-input name="kebiasaan" class="mt-2 w-full" value="{{ old('kebiasaan') }}"
+                        placeholder="Masukkan kebiasaan/pekerjaan" required />
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-5">
+            <div class="space-y-4">
                 <div>
-                    <x-input-label value="Keluhan Utama" />
+                    <x-input-label value="Keluhan Utama" class="font-semibold" />
                     <textarea name="keluhan_utama"
-                        class="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                        rows="3" placeholder="Deskripsi keluhan utama pasien..."></textarea>
+                        class="mt-2 w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-3 transition-colors"
+                        rows="3" placeholder="Deskripsi keluhan utama pasien...">{{ old('keluhan_utama') }}</textarea>
                 </div>
                 <div>
-                    <x-input-label value="Diagnosa" />
+                    <x-input-label value="Diagnosa" class="font-semibold" />
                     <textarea name="diagnosa"
-                        class="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
+                        class="mt-2 w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-3 transition-colors"
                         rows="3" placeholder="Hasil diagnosa pemeriksaan...">{{ old('diagnosa') }}</textarea>
                 </div>
                 <div>
-                    <x-input-label value="Riwayat Penyakit" />
+                    <x-input-label value="Riwayat Penyakit" class="font-semibold" />
                     <textarea name="riwayat_penyakit"
-                        class="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                        rows="3" placeholder="Riwayat penyakit sebelumnya..."></textarea>
+                        class="mt-2 w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-3 transition-colors"
+                        rows="3" placeholder="Riwayat penyakit sebelumnya...">{{ old('riwayat_penyakit') }}</textarea>
                 </div>
                 <div>
-                    <x-input-label value="Penyakit Sekarang" />
+                    <x-input-label value="Penyakit Sekarang" class="font-semibold" />
                     <textarea name="penyakit_sekarang"
-                        class="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                        rows="3" placeholder="Kondisi kesehatan saat ini..."></textarea>
+                        class="mt-2 w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-3 transition-colors"
+                        rows="3" placeholder="Kondisi kesehatan saat ini...">{{ old('penyakit_sekarang') }}</textarea>
                 </div>
                 <div>
-                    <x-input-label value="Penyakit Keluarga" />
+                    <x-input-label value="Penyakit Keluarga" class="font-semibold" />
                     <textarea name="penyakit_keluarga"
-                        class="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                        rows="3" placeholder="Riwayat penyakit dalam keluarga..."></textarea>
+                        class="mt-2 w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-3 transition-colors"
+                        rows="3" placeholder="Riwayat penyakit dalam keluarga...">{{ old('penyakit_keluarga') }}</textarea>
                 </div>
                 <div>
-                    <x-input-label value="Pengobatan" />
+                    <x-input-label value="Pengobatan" class="font-semibold" />
                     <textarea name="pengobatan"
-                        class="mt-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-3"
-                        rows="3" placeholder="Riwayat pengobatan atau alergi..."></textarea>
+                        class="mt-2 w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-3 transition-colors"
+                        rows="3" placeholder="Riwayat pengobatan atau alergi...">{{ old('pengobatan') }}</textarea>
                 </div>
             </div>
         </div>
 
         <!-- Resep Kacamata -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-            <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center pb-4 border-b-2 border-gray-100">
-                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z">
-                    </path>
-                </svg>
-                Resep Kacamata
-            </h3>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-6">
+                <h3 class="text-base font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+                    Resep Kacamata
+                </h3>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div>
-                    <x-input-label value="Resep Dari" />
-                    <x-form-input name="resep_dari" class="w-full" value="{{ old('resep_dari') }}"
+                    <x-input-label value="Resep Dari" class="font-semibold" />
+                    <x-form-input name="resep_dari" class="mt-2 w-full" value="{{ old('resep_dari') }}"
                         placeholder="Nama dokter/optometris..." required />
                 </div>
                 <div>
-                    <x-input-label value="Tanggal Resep" />
-                    <x-form-input name="resep_tanggal" type="date" class="w-full" value="{{ old('resep_tanggal') }}"
-                        required />
+                    <x-input-label value="Tanggal Resep" class="font-semibold" />
+                    <x-form-input name="resep_tanggal" type="date" class="mt-2 w-full"
+                        value="{{ old('resep_tanggal') }}" required />
                 </div>
             </div>
 
             <div class="overflow-x-auto rounded-lg border border-gray-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
+                    <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b-2 border-gray-200">
                         <tr>
-                            <th class="px-4 py-3 text-left font-semibold">Mata</th>
-                            <th class="px-4 py-3 text-left font-semibold">SPH</th>
-                            <th class="px-4 py-3 text-left font-semibold">CYL</th>
-                            <th class="px-4 py-3 text-left font-semibold">AXIS</th>
-                            <th class="px-4 py-3 text-left font-semibold">ADD</th>
-                            <th class="px-4 py-3 text-left font-semibold">PD</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">Mata</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">SPH</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">CYL</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">AXIS</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">ADD</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-900">PD</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @foreach (['kanan' => 'Mata Kanan (OD)', 'kiri' => 'Mata Kiri (OS)'] as $key => $label)
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-4 py-3 font-semibold text-gray-700">{{ $label }}</td>
+                            <tr class="hover:bg-indigo-50 transition-colors duration-150">
+                                <td class="px-4 py-3 font-semibold text-gray-900">{{ $label }}</td>
                                 <td class="px-4 py-3">
-                                    <x-form-input name="resep[{{ $key }}][sph]" class="w-full text-center"
-                                        placeholder="0.00" required />
+                                    <x-form-input name="resep[{{ $key }}][sph]" type="number"
+                                        step="0.01" class="w-full text-center" placeholder="0.00"
+                                        value="{{ old('resep.' . $key . '.sph') }}" required />
                                 </td>
                                 <td class="px-4 py-3">
-                                    <x-form-input name="resep[{{ $key }}][cyl]" class="w-full text-center"
-                                        placeholder="0.00" required />
+                                    <x-form-input name="resep[{{ $key }}][cyl]" type="number"
+                                        step="0.01" class="w-full text-center" placeholder="0.00"
+                                        value="{{ old('resep.' . $key . '.cyl') }}" required />
                                 </td>
                                 <td class="px-4 py-3">
-                                    <x-form-input name="resep[{{ $key }}][axis]" class="w-full text-center"
-                                        placeholder="0" required />
+                                    <x-form-input name="resep[{{ $key }}][axis]" type="number"
+                                        step="0.01" class="w-full text-center" placeholder="0"
+                                        value="{{ old('resep.' . $key . '.axis') }}" required />
                                 </td>
                                 <td class="px-4 py-3">
-                                    <x-form-input name="resep[{{ $key }}][add]" class="w-full text-center"
-                                        placeholder="0.00" required />
+                                    <x-form-input name="resep[{{ $key }}][add]" type="number"
+                                        step="0.01" class="w-full text-center" placeholder="0.00"
+                                        value="{{ old('resep.' . $key . '.add') }}" required />
                                 </td>
                                 <td class="px-4 py-3">
-                                    <x-form-input name="resep[{{ $key }}][pd]" class="w-full text-center"
-                                        placeholder="0.00" required />
+                                    <x-form-input name="resep[{{ $key }}][pd]" type="number"
+                                        step="0.01" class="w-full text-center" placeholder="0.00"
+                                        value="{{ old('resep.' . $key . '.pd') }}" required />
                                 </td>
                             </tr>
                         @endforeach
@@ -175,54 +173,52 @@
         </div>
 
         <!-- Pesanan -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-            <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center pb-4 border-b-2 border-gray-100">
-                <svg class="w-5 h-5 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 6H6.28l-.31-1.243A1 1 0 005 4H3z">
-                    </path>
-                </svg>
-                Pesanan
-            </h3>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-6">
+                <h3 class="text-base font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+                    Pesanan
+                </h3>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
-                    <x-input-label value="Frame" />
-                    <x-form-select class="w-full" name="frame_id" :options="$frame" labelKey="merk" :extraLabels="['kode_frame', 'harga']"
-                        placeholder="Pilih Frame" />
+                    <x-input-label value="Frame" class="font-semibold" />
+                    <x-form-select class="mt-2 w-full" name="frame_id" :options="$frame" labelKey="merk"
+                        :extraLabels="['kode_frame', 'harga']" placeholder="Pilih Frame" />
                 </div>
                 <div>
-                    <x-input-label value="Lensa" />
-                    <x-form-select class="w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
+                    <x-input-label value="Lensa" class="font-semibold" />
+                    <x-form-select class="mt-2 w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
                         :extraLabels="['harga']" placeholder="Pilih Lensa" />
                 </div>
                 <div>
-                    <x-input-label value="Aksesoris (bisa pilih lebih dari satu)" />
+                    <x-input-label value="Aksesoris" class="font-semibold" />
                     <x-form-multiselect name="aksesoris_id" :options="$aksesoris" labelKey="nama"
                         placeholder="Pilih Aksesoris" />
                 </div>
                 <div>
-                    <x-input-label value="Biaya (Rp)" />
-                    <x-form-input name="biaya_kacamata" class="w-full" type="number"
+                    <x-input-label value="Biaya (Rp)" class="font-semibold" />
+                    <x-form-input name="biaya_kacamata" class="mt-2 w-full" type="rupiah"
                         value="{{ old('biaya_kacamata') }}" placeholder="0" required />
                 </div>
                 <div>
-                    <x-input-label value="Tanggal Pemesanan" />
-                    <x-form-input name="tanggal_dipesan" type="date" class="w-full"
+                    <x-input-label value="Tanggal Pemesanan" class="font-semibold" />
+                    <x-form-input name="tanggal_dipesan" type="date" class="mt-2 w-full"
                         value="{{ old('tanggal_dipesan') }}" required />
                 </div>
                 <div>
-                    <x-input-label value="Tanggal Pengambilan" />
-                    <x-form-input name="tanggal_pengambilan" type="date" class="w-full"
+                    <x-input-label value="Tanggal Pengambilan" class="font-semibold" />
+                    <x-form-input name="tanggal_pengambilan" type="date" class="mt-2 w-full"
                         value="{{ old('tanggal_pengambilan') }}" required />
                 </div>
             </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-between items-center gap-4">
+        <div
+            class="bg-white rounded-lg shadow-sm border flex justify-between items-center gap-4 px-6 py-3 border-gray-200">
             <a href="{{ route('datamedis.index') }}"
-                class="inline-flex items-center px-6 py-2.5 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition-colors">
+                class="inline-flex items-center px-6 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                     </path>

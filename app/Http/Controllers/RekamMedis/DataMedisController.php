@@ -362,7 +362,7 @@ class DataMedisController extends Controller
             'no_hp'       => 'nullable|string|max:20',
             'email'       => 'nullable|email|max:255',
             'alamat'      => 'nullable|string',
-            'umur'        => 'nullable|integer|min:0',
+            'tanggal_lahir' => 'required|date',
             'kategori'    => 'required|in:umum,bpjs,asuransi',
             'no_kartu'    => 'nullable|string|max:50',
             'kelas'       => 'nullable|in:1,2,3',
@@ -425,6 +425,8 @@ class DataMedisController extends Controller
             'tanggal_dipesan' => 'required|date',
             'tanggal_pengambilan' => 'required|date',
         ]);
+
+        // return $validated;
 
         $RmPemeriksaan = RmPemeriksaan::create([
             'pasien_id' => $pasien->id,

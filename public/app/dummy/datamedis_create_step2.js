@@ -44,7 +44,7 @@ class DataDumyFormMedis {
             this.setVal(`input[name="resep[${mata}][sph]"]`, "-1.50");
             this.setVal(`input[name="resep[${mata}][cyl]"]`, "-0.50");
             this.setVal(`input[name="resep[${mata}][axis]"]`, "180");
-            this.setVal(`input[name="resep[${mata}][add]"]`, "+1.00");
+            this.setVal(`input[name="resep[${mata}][add]"]`, "1.00");
             this.setVal(`input[name="resep[${mata}][pd]"]`, "62");
         });
 

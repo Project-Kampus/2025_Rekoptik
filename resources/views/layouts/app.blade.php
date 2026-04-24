@@ -131,7 +131,7 @@
             @endif
 
             <!-- Content -->
-            <div class="flex-grow flex flex-col space-y-2">
+            <div class="flex-grow flex flex-col space-y-3">
                 {{ $slot }}
             </div>
 
@@ -160,7 +160,9 @@
     @include('layouts.notification')
 
     <!-- Componen Select Search -->
-    <script></script>
+
+    <!-- Componen Form Input Type Rupiah -->
+    <script src="{{ asset('app/Component/form-input.js') }}"></script>
 
 
 
