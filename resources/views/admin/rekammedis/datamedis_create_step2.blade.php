@@ -183,12 +183,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
                     <x-input-label value="Frame" class="font-semibold" />
-                    <x-form-select class="mt-2 w-full" name="frame_id" :options="$frame" labelKey="merk"
-                        :extraLabels="['kode_frame', 'harga']" placeholder="Pilih Frame" />
+                    <x-form-select-search class="mt-2 w-full" name="frame_id" :options="$frame" labelKey="kode_frame"
+                        :extraLabels="['merk', 'harga']" placeholder="Pilih Frame" />
                 </div>
                 <div>
                     <x-input-label value="Lensa" class="font-semibold" />
-                    <x-form-select class="mt-2 w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
+                    <x-form-select-search class="mt-2 w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
                         :extraLabels="['harga']" placeholder="Pilih Lensa" />
                 </div>
                 <div>
