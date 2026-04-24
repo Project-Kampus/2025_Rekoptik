@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Storage;
 
 class DataMedisController extends Controller
 {
+    /**
+     * Tampilkan daftar data medis dengan filter pencarian, kategori, status, dan tanggal
+     */
     public function index(Request $request)
     {
         $search = $request->query('search');
@@ -88,6 +91,9 @@ class DataMedisController extends Controller
         return view('admin.rekammedis.datamedis_index', compact('data', 'search', 'kategori', 'status', 'tanggal_awal', 'tanggal_akhir', 'filterSummary'));
     }
 
+    /**
+     * Tampilkan detail data medis beserta riwayat pemeriksaan, pesanan, dan pembayaran
+     */
     public function show(RmPemeriksaan $RmPemeriksaan)
     {
         $RmPemeriksaan->load(
@@ -105,6 +111,9 @@ class DataMedisController extends Controller
         return view('admin.rekammedis.datamedis_show', compact('RmPemeriksaan', 'uploadedDokumens', 'allDokumens'));
     }
 
+    /**
+     * Tampilkan form untuk mengedit data medis pemeriksaan
+     */
     public function edit(RmPemeriksaan $RmPemeriksaan)
     {
         $RmPemeriksaan->load('pasien', 'resep', 'pesanan');
@@ -115,6 +124,9 @@ class DataMedisController extends Controller
         return view('admin.rekammedis.datamedis_edit', compact('RmPemeriksaan', 'frames', 'lensas', 'aksesoris'));
     }
 
+    /**
+     * Perbarui data medis pemeriksaan, resep, dan pesanan kacamata
+     */
     public function update(Request $request, RmPemeriksaan $RmPemeriksaan)
     {
         $validated = $request->validate([
@@ -197,6 +209,9 @@ class DataMedisController extends Controller
             ->with('success', 'Data medis berhasil diperbarui');
     }
 
+    /**
+     * Simpan dokumen pendukung untuk pemeriksaan tertentu
+     */
     public function storeDokumnet(Request $request, RmPemeriksaan $RmPemeriksaan)
     {
         $validated = $request->validate([
@@ -215,6 +230,9 @@ class DataMedisController extends Controller
             ->with('success', 'Dokumen pendukung berhasil diunggah');
     }
 
+    /**
+     * Simpan data pembayaran untuk pesanan kacamata
+     */
     public function storePembayaran(Request $request, RmPemeriksaan $RmPemeriksaan)
     {
         $validated = $request->validate([
@@ -242,6 +260,9 @@ class DataMedisController extends Controller
             ->with('success', 'Pembayaran berhasil dicatat');
     }
 
+    /**
+     * Hapus data pembayaran dari database
+     */
     public function destroyPembayaran(RmPembayaran $RmPembayaran)
     {
         $RmPembayaran->delete();
@@ -250,6 +271,9 @@ class DataMedisController extends Controller
             ->with('success', 'Pembayaran berhasil dihapus');
     }
 
+    /**
+     * Cetak struk pembayaran dalam format PDF
+     */
     public function cetatakStruk(RmPembayaran $RmPembayaran)
     {
         $RmPembayaran->load('pesanan.pemeriksaan.pasien', 'pesanan.pemeriksaan.resep', 'pesanan.pemeriksaan.user', 'pesanan.frame', 'pesanan.lensa', 'pesanan.pembayarans');
@@ -259,6 +283,9 @@ class DataMedisController extends Controller
         return $pdf->download('Struk-' . str_pad($RmPembayaran->id, 6, '0', STR_PAD_LEFT) . '.pdf');
     }
 
+    /**
+     * Cetak surat balasan pemeriksaan dalam format PDF
+     */
     public function cetakSuratBalasan(RmPemeriksaan $RmPemeriksaan)
     {
         return view('pdf.suratBalasan', compact('RmPemeriksaan')); // for debug
@@ -266,6 +293,9 @@ class DataMedisController extends Controller
         return $pdf->download('SuratBalasan-' . str_pad($RmPemeriksaan->id, 6, '0', STR_PAD_LEFT) . '.pdf');
     }
 
+    /**
+     * Simpan data pengambilan pesanan kacamata dengan tanda tangan digital
+     */
     public function storePengambilan(Request $request, RmPemeriksaan $RmPemeriksaan)
     {
         $validated = $request->validate([
@@ -303,6 +333,9 @@ class DataMedisController extends Controller
             ->with('success', 'Pengambilan pesanan berhasil dicatat');
     }
 
+    /**
+     * Tampilkan form pencarian pasien atau form untuk membuat pasien baru (step 1)
+     */
     public function createStep1(Request $request)
     {
         $pasien = null;
@@ -319,6 +352,9 @@ class DataMedisController extends Controller
         return view('admin.rekammedis.datamedis_create_step1', compact('action', 'pasien', 'nama_pasien'));
     }
 
+    /**
+     * Simpan data biodata pasien baru (step 1) dan redirect ke step 2
+     */
     public function storeStep1(Request $request)
     {
         $validated = $request->validate([
@@ -339,6 +375,9 @@ class DataMedisController extends Controller
             ->with('success', 'Biodata pasien berhasil disimpan');
     }
 
+    /**
+     * Tampilkan form untuk input pemeriksaan dan pesanan kacamata (step 2)
+     */
     public function createStep2(RmPasien $pasien)
     {
         $frame = Frame::all();
@@ -347,6 +386,9 @@ class DataMedisController extends Controller
         return view('admin.rekammedis.datamedis_create_step2', compact('pasien', 'frame', 'lensa', 'aksesoris'));
     }
 
+    /**
+     * Simpan data pemeriksaan, resep, dan pesanan kacamata pasien (step 2)
+     */
     public function storeStep2(Request $request, RmPasien $pasien)
     {
         // return $request->all();

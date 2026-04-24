@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class IdentitasPasienController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar semua data identitas pasien
      */
     public function index(Request $request)
     {
@@ -31,7 +31,7 @@ class IdentitasPasienController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form untuk membuat data identitas pasien baru
      */
     public function create()
     {
@@ -39,7 +39,7 @@ class IdentitasPasienController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan data identitas pasien baru ke database
      */
     public function store(Request $request)
     {
@@ -61,7 +61,7 @@ class IdentitasPasienController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Tampilkan detail identitas pasien beserta riwayat pemeriksaannya
      */
     public function show(RmPasien $identitaspasien)
     {
@@ -74,7 +74,7 @@ class IdentitasPasienController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Tampilkan form untuk mengedit data identitas pasien
      */
     public function edit(RmPasien $identitaspasien)
     {
@@ -82,7 +82,7 @@ class IdentitasPasienController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Perbarui data identitas pasien di database
      */
     public function update(Request $request, RmPasien $identitaspasien)
     {
@@ -104,7 +104,7 @@ class IdentitasPasienController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Hapus data identitas pasien dari database
      */
     public function destroy(RmPasien $identitaspasien)
     {
