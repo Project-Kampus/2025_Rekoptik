@@ -5,6 +5,7 @@
     'extraLabels' => [],
     'placeholder' => 'Pilih...',
     'name' => '',
+    'selected' => null,
 ])
 
 @php
@@ -12,14 +13,15 @@
 @endphp
 
 
-<div x-data="selectSearch_{{ $uid }}()" @click.outside="open = false" class="relative w-full">
+<div x-data="selectSearch_{{ $uid }}()" x-init="init()" @click.outside="open = false" class="relative w-full">
 
     <!-- Trigger -->
     <div @click="open = !open"
         class="flex items-center justify-between px-3 py-2 mt-2 border rounded-lg cursor-pointer bg-white">
         <span x-text="selectedLabel || '{{ $placeholder }}'" class=" text-gray-700"></span>
 
-        <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-90' : ''" fill="currentColor" viewBox="0 0 20 20">
+        <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-90' : ''" fill="currentColor"
+            viewBox="0 0 20 20">
             <path d="M6 4l8 6-8 6V4z" />
         </svg>
     </div>
@@ -98,10 +100,22 @@
         return {
             open: false,
             search: '',
-            selectedValue: '',
+            selectedValue: @json($selected),
             selectedLabel: '',
             allOptions: @json($options),
             filteredOptions: @json($options),
+
+            init() {
+                if (this.selectedValue !== null && this.selectedValue !== '') {
+                    let found = this.allOptions.find(opt =>
+                        this.getValue(opt) == this.selectedValue
+                    )
+
+                    if (found) {
+                        this.selectedLabel = this.getLabel(found)
+                    }
+                }
+            },
 
             getLabel(option) {
                 return typeof option === 'object' ?

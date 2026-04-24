@@ -126,14 +126,14 @@
 
             <div class="overflow-x-auto rounded-lg border border-gray-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b-2 border-gray-200">
+                    <thead class="bg-gradient-to-r  from-indigo-600 to-indigo-700 text-white">
                         <tr>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">Mata</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">SPH</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">CYL</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">AXIS</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">ADD</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-900">PD</th>
+                            <th class="px-4 py-3 text-left font-semibold">Mata</th>
+                            <th class="px-4 py-3 text-left font-semibold">SPH</th>
+                            <th class="px-4 py-3 text-left font-semibold">CYL</th>
+                            <th class="px-4 py-3 text-left font-semibold">AXIS</th>
+                            <th class="px-4 py-3 text-left font-semibold">ADD</th>
+                            <th class="px-4 py-3 text-left font-semibold">PD</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
