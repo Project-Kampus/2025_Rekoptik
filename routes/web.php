@@ -37,13 +37,9 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/create/step2/{pasien}', [DataMedisController::class, 'createStep2'])->name('create.step2');
                 Route::post('/create/step2/{pasien}', [DataMedisController::class, 'storeStep2'])->name('store.step2');
                 Route::get('/{RmPemeriksaan}/show', [DataMedisController::class, 'show'])->name('show');
-                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
-                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
-                Route::put('/{RmPemeriksaan}/update', [DataMedisController::class, 'update'])->name('update');
                 Route::post('/{RmPemeriksaan}/storePengambilan', [DataMedisController::class, 'storePengambilan'])->name('storePengambilan');
                 Route::post('/{RmPemeriksaan}/storeDokumnet', [DataMedisController::class, 'storeDokumnet'])->name('storeDokumnet');
                 Route::post('/{RmPemeriksaan}/storePembayaran', [DataMedisController::class, 'storePembayaran'])->name('storePembayaran');
-                Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
             });
         // Identitas Pasien
         Route::prefix('identitaspasien')
@@ -52,8 +48,6 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/', [IdentitasPasienController::class, 'index'])->name('index');
                 Route::get('/create', [IdentitasPasienController::class, 'create'])->name('create');
                 Route::post('/', [IdentitasPasienController::class, 'store'])->name('store');
-                Route::get('/{identitaspasien}/edit', [IdentitasPasienController::class, 'edit'])->name('edit');
-                Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
                 Route::get('/{identitaspasien}/show', [IdentitasPasienController::class, 'show'])->name('show');
             });
 
@@ -73,25 +67,16 @@ Route::middleware('auth', 'verified')->group(function () {
             Route::get('/', [FrameController::class, 'index'])->name('index');
             Route::get('/create', [FrameController::class, 'create'])->name('create');
             Route::post('/', [FrameController::class, 'store'])->name('store');
-            // Route::get('/{frame}/edit', [FrameController::class, 'edit'])->name('edit');
-            // Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
-            // Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
         });
         Route::prefix('lensa')->name('lensa.')->group(function () {
             Route::get('/', [LensaController::class, 'index'])->name('index');
             Route::get('/create', [LensaController::class, 'create'])->name('create');
             Route::post('/', [LensaController::class, 'store'])->name('store');
-            // Route::get('/{lensa}/edit', [LensaController::class, 'edit'])->name('edit');
-            // Route::put('/{lensa}', [LensaController::class, 'update'])->name('update');
-            // Route::delete('/{lensa}', [LensaController::class, 'destroy'])->name('destroy');
         });
         Route::prefix('aksesoris')->name('aksesoris.')->group(function () {
             Route::get('/', [AksesorisController::class, 'index'])->name('index');
             Route::get('/create', [AksesorisController::class, 'create'])->name('create');
             Route::post('/', [AksesorisController::class, 'store'])->name('store');
-            // Route::get('/{aksesoris}/edit', [AksesorisController::class, 'edit'])->name('edit');
-            // Route::put('/{aksesoris}', [AksesorisController::class, 'update'])->name('update');
-            // Route::delete('/{aksesoris}', [AksesorisController::class, 'destroy'])->name('destroy');
         });
     });
 
@@ -101,6 +86,23 @@ Route::middleware('auth', 'verified')->group(function () {
     });
 
     Route::middleware('role:superadmin')->group(function () {
+        // Rekam Medis
+        Route::prefix('datamedis')
+            ->name('datamedis.')
+            ->group(function () {
+                Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
+                Route::put('/{RmPemeriksaan}/update', [DataMedisController::class, 'update'])->name('update');
+                Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
+            });
+
+        // Identitas Pasien
+        Route::prefix('identitaspasien')
+            ->name('identitaspasien.')
+            ->group(function () {
+                Route::get('/{identitaspasien}/edit', [IdentitasPasienController::class, 'edit'])->name('edit');
+                Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
+            });
+
         // Master Data
         Route::resource('supplier', SupplierController::class);
         Route::resource('document', DocumentController::class);
@@ -119,7 +121,6 @@ Route::middleware('auth', 'verified')->group(function () {
             Route::put('/{aksesoris}', [AksesorisController::class, 'update'])->name('update');
             Route::delete('/{aksesoris}', [AksesorisController::class, 'destroy'])->name('destroy');
         });
-
 
         // Pengaturan Sistem
         Route::prefix('pengaturan')
