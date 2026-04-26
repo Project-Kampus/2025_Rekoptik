@@ -162,7 +162,8 @@
     <!-- Componen Select Search -->
 
     <!-- Componen Form Input Type Rupiah -->
-    <script src="{{ asset('app/Component/form-input.js') }}"></script>
+    <script src="{{ asset('app/Components/form-input.js') }}"></script>
+    <script src="{{ asset('app/Components/form-select-search.js') }}"></script>
 
 
 

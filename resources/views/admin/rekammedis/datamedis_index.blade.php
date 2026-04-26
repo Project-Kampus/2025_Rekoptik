@@ -162,49 +162,53 @@
 
                             <td class="px-4 py-3 text-sm text-center">
                                 <div class="flex justify-center gap-2">
-                                    <a href="#"
-                                        class="px-3 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">
-                                        Edit
-                                    </a>
+
+                                    @if (auth()->user()->hasRole('superadmin'))
+                                        <a href="#"
+                                            class="px-3 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">
+                                            Edit
+                                        </a>
+                                    @endif
                                     <a href="{{ route('datamedis.show', [$item->id]) }}"
                                         class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
                                         Detail
                                     </a>
 
-                                    <button type="button"
-                                        class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
-                                        onclick="window.dispatchEvent(
-                           new CustomEvent('open-modal', {
-                              detail: 'delete-document-{{ $item->id }}'
-                           })
-                        )">
-                                        Hapus
-                                    </button>
+                                    @if (auth()->user()->hasRole('superadmin'))
+                                        <button type="button"
+                                            class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
+                                            onclick="window.dispatchEvent(
+                                            new CustomEvent('open-modal', {
+                                                detail: 'delete-document-{{ $item->id }}'
+                                            })
+                                            )">
+                                            Hapus
+                                        </button>
+                                        <x-danger-modal id="delete-document-{{ $item->id }}" title="Hapus Dokumen">
+                                            <p class="text-sm text-gray-600">
+                                                Apakah Anda yakin ingin menghapus rekam medis
+                                                <strong class="text-gray-900">{{ $item->pasien->nama_pasien }} -
+                                                    {{ $item->resep->tanggal }}</strong>?
+                                                <br>
+                                                Tindakan ini tidak dapat dibatalkan.
+                                            </p>
+
+                                            <x-slot name="actions">
+                                                <form action="#" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="submit"
+                                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
+                                                        Ya, Hapus
+                                                    </button>
+                                                </form>
+                                            </x-slot>
+                                        </x-danger-modal>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
-
-                        <x-danger-modal id="delete-document-{{ $item->id }}" title="Hapus Dokumen">
-                            <p class="text-sm text-gray-600">
-                                Apakah Anda yakin ingin menghapus rekam medis
-                                <strong class="text-gray-900">{{ $item->pasien->nama_pasien }} -
-                                    {{ $item->resep->tanggal }}</strong>?
-                                <br>
-                                Tindakan ini tidak dapat dibatalkan.
-                            </p>
-
-                            <x-slot name="actions">
-                                <form action="#" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit"
-                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
-                                        Ya, Hapus
-                                    </button>
-                                </form>
-                            </x-slot>
-                        </x-danger-modal>
 
                     @empty
                         <tr>

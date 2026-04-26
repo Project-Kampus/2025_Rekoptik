@@ -8,17 +8,15 @@
     'selected' => null,
 ])
 
-@php
-    $uid = uniqid();
-@endphp
-
-
-<div x-data="selectSearch_{{ $uid }}()" x-init="init()" @click.outside="open = false" class="relative w-full">
+<div x-data="selectSearchData()" x-init="init()" @click.outside="open = false" class="relative w-full"
+    data-options='@json($options)' data-selected='@json($selected)'
+    data-label-key='{{ $labelKey ?? 'label' }}' data-value-key='{{ $valueKey ?? 'value' }}'
+    data-extra-labels='@json($extraLabels)' data-placeholder='{{ $placeholder }}'>
 
     <!-- Trigger -->
     <div @click="open = !open"
         class="flex items-center justify-between px-3 py-2 mt-2 border rounded-lg cursor-pointer bg-white">
-        <span x-text="selectedLabel || '{{ $placeholder }}'" class=" text-gray-700"></span>
+        <span x-text="selectedLabel || placeholder" class=" text-gray-700"></span>
 
         <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-90' : ''" fill="currentColor"
             viewBox="0 0 20 20">
@@ -60,19 +58,18 @@
                         <div class="font-medium" x-text="getLabel(option)"></div>
 
                         <!-- Extra labels -->
-                        @if (!empty($extraLabels))
+                        <template x-if="extraLabels.length > 0">
                             <div class="text-xs text-gray-500 mt-0.5">
-                                @foreach ($extraLabels as $index => $label)
+                                <template x-for="(label, idx) in extraLabels" :key="idx">
                                     <span>
-                                        {{ ucfirst($label) }}:
-                                        <span x-text="option['{{ $label }}'] ?? '-'"></span>
-                                        @if ($index < count($extraLabels) - 1)
-                                            •
-                                        @endif
+                                        <span x-text="capitalizeFirst(label) + ': ' + (option[label] ?? '-')"></span>
+                                        <template x-if="idx < extraLabels.length - 1">
+                                            <span>•</span>
+                                        </template>
                                     </span>
-                                @endforeach
+                                </template>
                             </div>
-                        @endif
+                        </template>
                     </div>
 
                     <!-- KANAN: Check icon -->
@@ -94,59 +91,3 @@
     <!-- Hidden input -->
     <input type="hidden" name="{{ $name }}" x-model="selectedValue">
 </div>
-
-<script>
-    function selectSearch_{{ $uid }}() {
-        return {
-            open: false,
-            search: '',
-            selectedValue: @json($selected),
-            selectedLabel: '',
-            allOptions: @json($options),
-            filteredOptions: @json($options),
-
-            init() {
-                if (this.selectedValue !== null && this.selectedValue !== '') {
-                    let found = this.allOptions.find(opt =>
-                        this.getValue(opt) == this.selectedValue
-                    )
-
-                    if (found) {
-                        this.selectedLabel = this.getLabel(found)
-                    }
-                }
-            },
-
-            getLabel(option) {
-                return typeof option === 'object' ?
-                    option['{{ $labelKey ?? 'label' }}'] :
-                    option
-            },
-
-            getValue(option) {
-                return typeof option === 'object' ?
-                    option['{{ $valueKey ?? 'value' }}'] :
-                    option
-            },
-
-            filterOptions() {
-                let keyword = this.search.toLowerCase()
-
-                this.filteredOptions = this.allOptions.filter(opt => {
-                    return this.getLabel(opt).toLowerCase().includes(keyword)
-                })
-            },
-
-            select(option) {
-                this.selectedValue = this.getValue(option)
-                this.selectedLabel = this.getLabel(option)
-                this.open = false
-                this.search = ''
-            },
-
-            isSelected(option) {
-                return this.getValue(option) == this.selectedValue
-            }
-        }
-    }
-</script>
