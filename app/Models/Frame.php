@@ -16,12 +16,9 @@ class Frame extends Model
         'warna',
         'bahan',
         'harga',
+        'modal',
     ];
 
-
-    protected $casts = [
-        'harga' => 'decimal:2',
-    ];
 
     public function pasiens()
     {

@@ -85,16 +85,17 @@
                                 </tr>
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Biaya</td>
-                                    <td class="px-3 py-2 text-purple-600 font-bold">Rp
-                                        {{ number_format($RmPemeriksaan->pesanan->biaya_kacamata, 0, ',', '.') }}</td>
-                                </tr>
-                                <tr class="hover:bg-blue-50">
-                                    <td class="px-3 py-2 font-medium text-gray-600">Sisa Pembayaran</td>
                                     @php
                                         $sisaPembayaran =
                                             $RmPemeriksaan->pesanan->biaya_kacamata -
                                             $RmPemeriksaan->pesanan->pembayarans->sum('jumlah');
                                     @endphp
+                                    <td class="px-3 py-2 text-purple-600 font-bold">Rp
+                                        {{ number_format($RmPemeriksaan->pesanan->biaya_kacamata, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-blue-50">
+                                    <td class="px-3 py-2 font-medium text-gray-600">Sisa Pembayaran</td>
                                     <td class="px-3 py-2 text-purple-600 font-bold">Rp
                                         {{ number_format($sisaPembayaran, 0, ',', '.') }}
                                     </td>
@@ -106,11 +107,6 @@
                                             class="px-2 py-1 mr-2 bg-blue-100 text-blue-700 text-xs font-semibold rounded">
                                             {{ $RmPemeriksaan->pesanan->status }}
                                         </span>
-                                        @if ($RmPemeriksaan->pesanan->status == 'diambil')
-                                            {{ $RmPemeriksaan->pesanan->tanggal_pengambilan?->format('d F Y') }}
-                                        @else
-                                            {{ $RmPemeriksaan->pesanan->updated_at->format('d F Y') }}
-                                        @endif
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
@@ -265,7 +261,7 @@
 
                     <div class="overflow-x-auto rounded-lg border border-gray-200">
                         <table class="w-full text-sm">
-                            <thead class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
+                            <thead class="bg-gradient-to-r from-indigo-200 to-indigo-100 text-gray-700">
                                 <tr>
                                     <th class="px-4 py-3 text-left font-semibold">Mata</th>
                                     <th class="px-4 py-3 text-left font-semibold">SPH</th>
@@ -303,18 +299,26 @@
         <!-- RIWAYAT PEMBAYARAN -->
         <div class="bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
-                <h3 class="text-base font-bold text-gray-800">Riwayat Pembayaran</h3>
+                {{-- <h3 class="text-base font-bold text-gray-800">Riwayat Pembayaran</h3> --}}
+                <div>
+                    <h3 class="text-base font-bold text-gray-800">Riwayat Pembayaran</h3>
+                    <p class="text-sm text-gray-500 mt-1">Total: <strong class="text-green-600">Rp
+                            {{ number_format($RmPemeriksaan->pesanan->pembayarans->sum('jumlah'), 0, ',', '.') }}</strong>
+                        / Rp
+                        {{ number_format($RmPemeriksaan->pesanan->biaya_kacamata, 0, ',', '.') }}</p>
+                </div>
                 <button onclick="openPembayaranModal()"
                     class="px-3 py-1.5 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition">
-                    + Pembayaran
+                    Tambah Pembayaran
                 </button>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto rounded-lg border border-gray-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-gradient-to-r from-green-100 to-green-50 border-b border-gray-200">
+                    <thead class="bg-gradient-to-r from-green-200 to-green-100 border-b border-gray-200">
                         <tr>
                             <th class="px-4 py-3 text-left font-semibold text-gray-700">Tanggal Bayar</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Kategori</th>
                             <th class="px-4 py-3 text-left font-semibold text-gray-700">Metode</th>
                             <th class="px-4 py-3 text-right font-semibold text-gray-700">Jumlah</th>
                             <th class="px-4 py-3 w-1/6 text-center font-semibold text-gray-700"></th>
@@ -324,26 +328,41 @@
                         @foreach ($RmPemeriksaan->pesanan->pembayarans as $pembayaran)
                             <tr class="hover:bg-green-50 transition">
                                 <td class="px-4 py-3 text-gray-900">
-                                    {{ $pembayaran->tanggal_bayar->format('d F Y') }}</td>
-                                {{-- <td class="px-4 py-3 text-gray-900">
-                                    {{ $pembayaran->id }}</td> --}}
+                                    {{ $pembayaran->tanggal_bayar->format('d F Y') }}
+                                </td>
                                 <td class="px-4 py-3">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 font-semibold rounded">
-                                        @switch($pembayaran->metode)
+                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 font-semibold rounded">
+                                        @switch($pembayaran->kategori)
                                             @case('bpjs')
-                                                Dibayar dengan BPJS
+                                                BPJS
                                             @break
 
                                             @case('asuransi')
-                                                Dibayar dengan Asuransi
+                                                Asuransi
+                                            @break
+
+                                            @case('dp')
+                                                Uang Muka
+                                            @break
+
+                                            @case('lunas')
+                                                Pelunasan
+                                            @break
+
+                                            @default
+                                                -
+                                        @endswitch
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 font-semibold rounded">
+                                        @switch($pembayaran->metode)
+                                            @case('tunai')
+                                                Tunai
                                             @break
 
                                             @case('non-tunai')
-                                                Dibayar dengan Non Tunai
-                                            @break
-
-                                            @case('tunai')
-                                                Dibayar dengan Tunai
+                                                Non Tunai
                                             @break
 
                                             @default
@@ -400,7 +419,7 @@
                             </tr>
                         @endforeach
                         <tr class="bg-gray-50 font-bold">
-                            <td colspan="2" class="px-4 py-3 text-gray-800">Total Pembayaran</td>
+                            <td colspan="3" class="px-4 py-3 text-gray-800">Total Pembayaran</td>
                             <td class="px-4 py-3 text-right text-green-600">Rp
                                 {{ number_format($RmPemeriksaan->pesanan->pembayarans->sum('jumlah'), 0, ',', '.') }}
                             </td>
@@ -410,6 +429,8 @@
                 </table>
             </div>
         </div>
+
+
 
         <!-- PENGAMBILAN -->
         @if (strtolower($RmPemeriksaan->pesanan->status) == 'diambil' && $RmPemeriksaan->pesanan->pengambilan)

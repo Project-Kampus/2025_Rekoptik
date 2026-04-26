@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->text('alamat')->nullable();
             $table->date('tanggal_lahir')->nullable();
-            $table->enum('kategori', ['bpjs', 'asuransi', 'dp', 'lunas']);
-            $table->enum('metode', ['tunai', 'non_tunai']);
+            $table->enum('kategori', ['umum', 'bpjs', 'asuransi']);
             $table->string('no_kartu')->nullable();
             $table->enum('kelas', ['1', '2', '3'])->nullable();
             $table->timestamps();
@@ -101,7 +100,8 @@ return new class extends Migration
         Schema::create('rm_pembayarans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pesanan_id');
-            $table->enum('metode', ['bpjs', 'asuransi', 'tunai', 'non-tunai']);
+            $table->enum('kategori', ['bpjs', 'asuransi', 'dp', 'lunas']);
+            $table->enum('metode', ['tunai', 'non_tunai']);
             $table->bigInteger('jumlah');
             $table->date('tanggal_bayar')->default(now());
             $table->timestamps();
@@ -137,6 +137,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
+
+        Schema::dropIfExists('pesanan_aksesoris');
         Schema::dropIfExists('rm_dokument');
         Schema::dropIfExists('rm_pengambilans');
         Schema::dropIfExists('rm_pembayarans');
@@ -144,6 +147,7 @@ return new class extends Migration
         Schema::dropIfExists('rm_resep');
         Schema::dropIfExists('rm_pemeriksaan');
         Schema::dropIfExists('rm_pasiens');
-        Schema::dropIfExists('pesanan_aksesoris');
+
+        Schema::enableForeignKeyConstraints();
     }
 };

@@ -19,9 +19,7 @@ class RmPasien extends Model
         'alamat',
         'tanggal_lahir',
         'kategori',
-        // bpjs, asuransi, dp, lunas
-        'metode',
-        // tunai, non_tunai
+        // bpjs, asuransi, umum
         'no_kartu',
         'kelas'
     ];

@@ -13,6 +13,8 @@ class Aksesoris extends Model
         'material',
         'keterangan',
         'supplier_id',
+        'harga',
+        'modal',
     ];
 
     public function supplier()

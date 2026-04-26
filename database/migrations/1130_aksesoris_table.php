@@ -20,6 +20,8 @@ return new class extends Migration
                 ->constrained('suppliers')
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
+            $table->decimal('harga', 12, 2)->default(0);
+            $table->decimal('modal', 12, 2)->default(0);
             $table->timestamps();
         });
     }

@@ -13,8 +13,10 @@ class RmPembayaran extends Model
 
     protected $fillable = [
         'pesanan_id',
+        'kategori',
+        // bpjs, asuransi, dp, lunas
         'metode',
-        // 'bpjs', 'asuransi', 'tunai', 'non-tunai'
+        // tunai, non_tunai
         'jumlah',
         'tanggal_bayar',
     ];

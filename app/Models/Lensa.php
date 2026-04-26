@@ -17,7 +17,10 @@ class Lensa extends Model
         'od',
         'os',
         'harga',
+        'modal',
     ];
+
+
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
