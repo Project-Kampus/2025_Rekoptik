@@ -52,6 +52,7 @@ class Sidebar extends Component
                     [
                         'label' => 'Data Medis',
                         'route' => 'datamedis.index',
+                        'routeParams' => ['status' => 'dipesan'],
                         'requireRole' => ['admin', 'superadmin'],
                         'routePattern' => ['datamedis.index', 'datamedis.show', 'datamedis.edit'],
                     ],

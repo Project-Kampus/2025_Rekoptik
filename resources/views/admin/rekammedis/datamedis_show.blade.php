@@ -364,10 +364,9 @@
                                             <button type="button"
                                                 class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
                                                 onclick="window.dispatchEvent(
-                                        new CustomEvent('open-modal', {
-                                            detail: 'delete-pembayaran-{{ $pembayaran->id }}'
-                                        })
-                                        )">
+                                                new CustomEvent('open-modal', {
+                                                    detail: 'delete-pembayaran-{{ $pembayaran->id }}'
+                                                }))">
                                                 Hapus
                                             </button>
 
@@ -694,17 +693,8 @@
                     </select>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-bold text-gray-800 mb-2">Jumlah Pembayaran (Rp)</label>
-                    <input type="number" name="jumlah" required min="1" placeholder="0"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white" />
-                </div>
-
-                <!-- Summary -->
-                <div id="summaryBox" class="hidden bg-green-50 border border-green-200 rounded-lg p-3">
-                    <p class="text-xs text-gray-600 mb-1">Ringkasan Pembayaran:</p>
-                    <p class="text-sm font-semibold text-green-700" id="summaryText"></p>
-                </div>
+                <x-form-input name="jumlah" class="mt-2 w-full" type="rupiah" value="{{ old('jumlah') }}"
+                    placeholder="0" max="{{ $sisaPembayaran }}" required />
 
                 <!-- Action Buttons -->
                 <div class="flex gap-3 justify-end pt-4 border-t border-gray-100">
@@ -740,30 +730,8 @@
             }
         });
 
-        // Update summary
-        const jumlahInput = document.querySelector('input[name="jumlah"]');
-        const metodeSelect = document.querySelector('select[name="metode"]');
-        const summaryBox = document.getElementById('summaryBox');
-        const summaryText = document.getElementById('summaryText');
-
-        function updateSummary() {
-            const jumlah = parseInt(jumlahInput.value) || 0;
-            const metode = metodeSelect.value;
-
-            if (jumlah > 0 && metode) {
-                summaryText.textContent = `${metode} - Rp ${jumlah.toLocaleString('id-ID')}`;
-                summaryBox.classList.remove('hidden');
-            } else {
-                summaryBox.classList.add('hidden');
-            }
-        }
-
-        jumlahInput.addEventListener('input', updateSummary);
-        metodeSelect.addEventListener('change', updateSummary);
-
         function resetPembayaranForm() {
             document.querySelector('#pembayaranModal form').reset();
-            summaryBox.classList.add('hidden');
         }
     </script>
 

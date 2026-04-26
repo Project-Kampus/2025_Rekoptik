@@ -1,7 +1,7 @@
-@props(['disabled' => false, 'type' => 'text'])
+@props(['disabled' => false, 'type' => 'text', 'max' => null])
 
 @if ($type === 'rupiah')
-    <input @disabled($disabled) type="text" data-currency="rupiah"
+    <input @disabled($disabled) type="text" data-currency="rupiah" {{ $max ? 'data-max=' . $max : '' }}
         {{ $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm currency-input']) }}>
 
     @php
@@ -12,6 +12,6 @@
 
     <input type="hidden" name="{{ $actualName }}" class="currency-hidden" value="{{ $value }}">
 @else
-    <input type="{{ $type }}" @disabled($disabled)
+    <input type="{{ $type }}" @disabled($disabled) {{ $max ? 'max=' . $max : '' }}
         {{ $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm']) }}>
 @endif

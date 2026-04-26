@@ -7,7 +7,7 @@
         @elseif ($item['type'] === 'single')
             @if ($hasRequiredRole($item['requireRole'] ?? null))
                 <li>
-                    <a href="{{ route($item['route']) }}"
+                    <a href="{{ route($item['route'], $item['routeParams'] ?? []) }}"
                         class="flex items-center px-4 py-2.5 rounded-lg transition
                        {{ $isRouteActive($item['routePattern']) ? $activeClass : $inactiveClass }}">
                         {{ $item['label'] }}
@@ -31,7 +31,7 @@
                         @foreach ($item['items'] as $subitem)
                             @if ($hasRequiredRole($subitem['requireRole'] ?? null))
                                 <li>
-                                    <a href="{{ route($subitem['route']) }}"
+                                    <a href="{{ route($subitem['route'], $subitem['routeParams'] ?? []) }}"
                                         class="block px-4 py-2 rounded-md transition {{ $isRouteActive($subitem['routePattern']) ? $activeClass : $inactiveClass }}">
                                         {{ $subitem['label'] }}
                                     </a>

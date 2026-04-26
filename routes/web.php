@@ -101,6 +101,7 @@ Route::middleware('auth', 'verified')->group(function () {
             ->group(function () {
                 Route::get('/{identitaspasien}/edit', [IdentitasPasienController::class, 'edit'])->name('edit');
                 Route::put('/{identitaspasien}', [IdentitasPasienController::class, 'update'])->name('update');
+                Route::delete('/{identitaspasien}', [IdentitasPasienController::class, 'destroy'])->name('destroy');
             });
 
         // Master Data
