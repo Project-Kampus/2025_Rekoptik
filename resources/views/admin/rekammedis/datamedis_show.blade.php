@@ -11,11 +11,12 @@
                 class="px-4 py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700 transition">
                 Kembali
             </a>
-
-            <a href="{{ route('datamedis.edit', $RmPemeriksaan->id) }}"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition">
-                Edit Data
-            </a>
+            @if (auth()->user()->hasRole('superadmin'))
+                <a href="{{ route('datamedis.edit', $RmPemeriksaan->id) }}"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition">
+                    Edit Data
+                </a>
+            @endif
 
             @php
                 $pembayaran = $RmPemeriksaan->pesanan->pembayarans->last();
@@ -359,41 +360,43 @@
                                             class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
                                             Struk
                                         </a>
-                                        <button type="button"
-                                            class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
-                                            onclick="window.dispatchEvent(
+                                        @if (auth()->user()->hasRole('superadmin'))
+                                            <button type="button"
+                                                class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
+                                                onclick="window.dispatchEvent(
                                         new CustomEvent('open-modal', {
                                             detail: 'delete-pembayaran-{{ $pembayaran->id }}'
                                         })
                                         )">
-                                            Hapus
-                                        </button>
+                                                Hapus
+                                            </button>
+
+                                            <x-danger-modal id="delete-pembayaran-{{ $pembayaran->id }}"
+                                                title="Hapus Dokumen">
+                                                <p class="text-sm text-gray-600">
+                                                    Apakah Anda yakin ingin menghapus pembayaran seharga
+                                                    {{ number_format($pembayaran->jumlah, 0, ',', '.') }}
+                                                    <strong class="text-gray-900">{{ $pembayaran->nama }}</strong>?
+                                                    <br>
+                                                    Tindakan ini tidak dapat dibatalkan.
+                                                </p>
+
+                                                <x-slot name="actions">
+                                                    <form
+                                                        action="{{ route('datamedis.destroyPembayaran', $pembayaran->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <button type="submit"
+                                                            class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
+                                                            Ya, Hapus
+                                                        </button>
+                                                    </form>
+                                                </x-slot>
+                                            </x-danger-modal>
+                                        @endif
                                     </div>
-
-                                    <x-danger-modal id="delete-pembayaran-{{ $pembayaran->id }}"
-                                        title="Hapus Dokumen">
-                                        <p class="text-sm text-gray-600">
-                                            Apakah Anda yakin ingin menghapus pembayaran seharga
-                                            {{ number_format($pembayaran->jumlah, 0, ',', '.') }}
-                                            <strong class="text-gray-900">{{ $pembayaran->nama }}</strong>?
-                                            <br>
-                                            Tindakan ini tidak dapat dibatalkan.
-                                        </p>
-
-                                        <x-slot name="actions">
-                                            <form action="{{ route('datamedis.destroyPembayaran', $pembayaran->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button type="submit"
-                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
-                                                    Ya, Hapus
-                                                </button>
-                                            </form>
-                                        </x-slot>
-                                    </x-danger-modal>
-
                                 </td>
                             </tr>
                         @endforeach

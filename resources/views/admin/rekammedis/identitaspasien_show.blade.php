@@ -21,7 +21,7 @@
             <!-- Konten -->
             <div class="p-6">
                 <!-- Row 1: Nama & No Kartu -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 text-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
                     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                         <label class="block font-semibold text-gray-500 uppercase tracking-wide">No.
                             Kartu</label>
@@ -83,22 +83,45 @@
                     </div>
                 </div>
                 <!-- Tombol Aksi -->
-                <div class="flex items-center gap-3 mt-8 pt-6 border-t">
-                    <a href="{{ route('identitaspasien.edit', $identitaspasien->id) }}"
-                        class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition">
-                        Edit
-                    </a>
+                @if (auth()->user()->hasRole('superadmin'))
+                    <div class="flex items-center gap-3 mt-8 pt-6 border-t">
+                        <a href="{{ route('identitaspasien.edit', $identitaspasien->id) }}"
+                            class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg hover:bg-yellow-600 transition">
+                            Edit
+                        </a>
 
-                    <button type="button"
-                        class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition"
-                        onclick="window.dispatchEvent(
+                        <button type="button"
+                            class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition"
+                            onclick="window.dispatchEvent(
                             new CustomEvent('open-modal', {
                                 detail: 'delete-pasien'
                             })
                         )">
-                        Hapus
-                    </button>
-                </div>
+                            Hapus
+                        </button>
+
+                        <!-- Delete Modal -->
+                        <x-danger-modal id="delete-pasien" title="Hapus Data Pasien">
+                            <p>
+                                Apakah Anda yakin ingin menghapus data pasien
+                                <strong>{{ $identitaspasien->nama_pasien }}</strong>?
+                                <br>
+                                Tindakan ini tidak dapat dibatalkan.
+                            </p>
+
+                            <x-slot name="actions">
+                                <form action="#" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
+                                        Ya, Hapus
+                                    </button>
+                                </form>
+                            </x-slot>
+                        </x-danger-modal>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -165,26 +188,6 @@
                 </div>
             @endif
         </div>
-
-        <!-- Delete Modal -->
-        <x-danger-modal id="delete-pasien" title="Hapus Data Pasien">
-            <p>
-                Apakah Anda yakin ingin menghapus data pasien
-                <strong>{{ $identitaspasien->nama_pasien }}</strong>?
-                <br>
-                Tindakan ini tidak dapat dibatalkan.
-            </p>
-
-            <x-slot name="actions">
-                <form action="#" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
-                        Ya, Hapus
-                    </button>
-                </form>
-            </x-slot>
-        </x-danger-modal>
 
     </div>
 </x-app-layout>
