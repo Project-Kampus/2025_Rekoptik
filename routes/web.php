@@ -69,11 +69,30 @@ Route::middleware('auth', 'verified')->group(function () {
                     });
             });
         // Mater data
-        Route::resource('frame', FrameController::class);
-        Route::resource('lensa', LensaController::class);
-        Route::resource('supplier', SupplierController::class);
-        Route::resource('document', DocumentController::class);
-        Route::resource('aksesoris', AksesorisController::class);
+        Route::prefix('frame')->name('frame.')->group(function () {
+            Route::get('/', [FrameController::class, 'index'])->name('index');
+            Route::get('/create', [FrameController::class, 'create'])->name('create');
+            Route::post('/', [FrameController::class, 'store'])->name('store');
+            // Route::get('/{frame}/edit', [FrameController::class, 'edit'])->name('edit');
+            // Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
+            // Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('lensa')->name('lensa.')->group(function () {
+            Route::get('/', [LensaController::class, 'index'])->name('index');
+            Route::get('/create', [LensaController::class, 'create'])->name('create');
+            Route::post('/', [LensaController::class, 'store'])->name('store');
+            // Route::get('/{lensa}/edit', [LensaController::class, 'edit'])->name('edit');
+            // Route::put('/{lensa}', [LensaController::class, 'update'])->name('update');
+            // Route::delete('/{lensa}', [LensaController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('aksesoris')->name('aksesoris.')->group(function () {
+            Route::get('/', [AksesorisController::class, 'index'])->name('index');
+            Route::get('/create', [AksesorisController::class, 'create'])->name('create');
+            Route::post('/', [AksesorisController::class, 'store'])->name('store');
+            // Route::get('/{aksesoris}/edit', [AksesorisController::class, 'edit'])->name('edit');
+            // Route::put('/{aksesoris}', [AksesorisController::class, 'update'])->name('update');
+            // Route::delete('/{aksesoris}', [AksesorisController::class, 'destroy'])->name('destroy');
+        });
     });
 
     Route::middleware('role:superadmin|admin|bpjs')->group(function () {
@@ -82,6 +101,26 @@ Route::middleware('auth', 'verified')->group(function () {
     });
 
     Route::middleware('role:superadmin')->group(function () {
+        // Master Data
+        Route::resource('supplier', SupplierController::class);
+        Route::resource('document', DocumentController::class);
+        Route::prefix('frame')->name('frame.')->group(function () {
+            Route::get('/{frame}/edit', [FrameController::class, 'edit'])->name('edit');
+            Route::put('/{frame}', [FrameController::class, 'update'])->name('update');
+            Route::delete('/{frame}', [FrameController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('lensa')->name('lensa.')->group(function () {
+            Route::get('/{lensa}/edit', [LensaController::class, 'edit'])->name('edit');
+            Route::put('/{lensa}', [LensaController::class, 'update'])->name('update');
+            Route::delete('/{lensa}', [LensaController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('aksesoris')->name('aksesoris.')->group(function () {
+            Route::get('/{aksesoris}/edit', [AksesorisController::class, 'edit'])->name('edit');
+            Route::put('/{aksesoris}', [AksesorisController::class, 'update'])->name('update');
+            Route::delete('/{aksesoris}', [AksesorisController::class, 'destroy'])->name('destroy');
+        });
+
+
         // Pengaturan Sistem
         Route::prefix('pengaturan')
             ->name('pengaturan.')

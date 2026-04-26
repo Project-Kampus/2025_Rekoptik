@@ -97,7 +97,7 @@ class Sidebar extends Component
                         'label' => 'Supplier',
                         'route' => 'supplier.index',
                         'routePattern' => 'supplier.*',
-                        'requireRole' => ['admin', 'superadmin'],
+                        'requireRole' => ['superadmin'],
                     ],
                     [
                         'label' => 'Frame',
