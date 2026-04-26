@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
             LensaSeeder::class,
             PengaturanSeeder::class,
             AksesorisSeeder::class,
+            PasienSeeder::class,
 
             // RekamMedisSeeder::class
         ]);

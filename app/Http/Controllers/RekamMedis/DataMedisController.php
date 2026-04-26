@@ -240,10 +240,17 @@ class DataMedisController extends Controller
             'metode' => [
                 'required',
                 Rule::in([
-                    'bpjs',
-                    'asuransi',
                     'tunai',
                     'non-tunai',
+                ]),
+            ],
+            'kategori' => [
+                'required',
+                Rule::in([
+                    'bpjs',
+                    'asuransi',
+                    'dp',
+                    'lunas'
                 ]),
             ],
             'jumlah' => ['required', 'numeric', 'min:0'],
@@ -252,9 +259,11 @@ class DataMedisController extends Controller
         RmPembayaran::create([
             'pesanan_id' => $RmPemeriksaan->pesanan->id,
             'metode' => $validated['metode'],
+            'kategori' => $validated['kategori'],
             'jumlah' => $validated['jumlah'],
             'tanggal_bayar' => $validated['tanggal_bayar'],
         ]);
+
         return redirect()
             ->route('datamedis.show', [$RmPemeriksaan])
             ->with('success', 'Pembayaran berhasil dicatat');

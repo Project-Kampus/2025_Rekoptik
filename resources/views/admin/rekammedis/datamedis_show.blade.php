@@ -679,22 +679,35 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold text-gray-800 mb-2">Metode Pembayaran</label>
-                    <select name="metode" required
+                    <label class="block text-sm font-bold text-gray-800 mb-2">Kategori Pembayaran</label>
+                    <select name="kategori" required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white">
-                        <option value="">-- Pilih Metode --</option>
+                        <option value="">-- Pilih Kategori --</option>
                         @if ($RmPemeriksaan->pasien->kategori === 'bpjs')
                             <option value="bpjs">BPJS</option>
                         @elseif ($RmPemeriksaan->pasien->kategori === 'asuransi')
                             <option value="asuransi">Asuransi</option>
                         @endif
+                        <option value="dp">Uang Muka</option>
+                        <option value="lunas">Bayar Lunas</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-800 mb-2">Metode Pembayaran</label>
+                    <select name="metode" required
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white">
+                        <option value="">-- Pilih Metode --</option>
                         <option value="non-tunai">Non Tunai</option>
                         <option value="tunai">Tunai</option>
                     </select>
                 </div>
 
-                <x-form-input name="jumlah" class="mt-2 w-full" type="rupiah" value="{{ old('jumlah') }}"
-                    placeholder="0" max="{{ $sisaPembayaran }}" required />
+                <div>
+                    <label class="block text-sm font-bold text-gray-800 mb-2">Jumlah Pembayaran</label>
+                    <x-form-input name="jumlah" class="mt-2 w-full" type="rupiah" value="{{ old('jumlah') }}"
+                        placeholder="0" max="{{ $sisaPembayaran }}" required />
+                </div>
 
                 <!-- Action Buttons -->
                 <div class="flex gap-3 justify-end pt-4 border-t border-gray-100">

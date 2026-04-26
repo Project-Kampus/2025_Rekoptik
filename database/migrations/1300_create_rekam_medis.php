@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->text('alamat')->nullable();
             $table->date('tanggal_lahir')->nullable();
-            $table->enum('kategori', ['bpjs', 'asuransi', 'umum']);
+            $table->enum('kategori', ['bpjs', 'asuransi', 'dp', 'lunas']);
+            $table->enum('metode', ['tunai', 'non_tunai']);
             $table->string('no_kartu')->nullable();
             $table->enum('kelas', ['1', '2', '3'])->nullable();
             $table->timestamps();
