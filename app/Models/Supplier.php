@@ -23,4 +23,9 @@ class Supplier extends Model
     {
         return $this->hasMany(Lensa::class);
     }
+
+    public function aksesoris()
+    {
+        return $this->hasMany(Aksesoris::class);
+    }
 }

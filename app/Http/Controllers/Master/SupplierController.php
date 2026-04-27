@@ -54,7 +54,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        return view('admin.master.supplier_edit', compact('supplier'));
+        return view('admin.master.supplier_create', compact('supplier'));
     }
 
     /**
@@ -63,7 +63,7 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier)
     {
         $validated = $request->validate([
-            'nama_supplier' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'kontak'        => 'nullable|string|max:50',
             'alamat'        => 'nullable|string',
         ]);

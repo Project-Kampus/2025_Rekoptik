@@ -484,7 +484,11 @@
                     @endphp
 
                     <div
-                        class="border rounded-lg p-4 hover:shadow-md transition @if ($uploaded && file_exists(public_path('storage/' . $uploaded->url))) bg-green-50 @elseif($uploaded) bg-yellow-50 @else bg-orange-50 @endif">
+                        class="border rounded-lg p-4 hover:shadow-md transition
+                        @if ($uploaded && file_exists(public_path('storage/' . $uploaded->url))) bg-green-50
+                        @elseif($uploaded) bg-yellow-50
+                        @else bg-orange-50 @endif
+                        ">
                         <p class="font-semibold text-gray-800 mb-2">{{ $dokumen->nama }}</p>
 
                         @if ($uploaded)
