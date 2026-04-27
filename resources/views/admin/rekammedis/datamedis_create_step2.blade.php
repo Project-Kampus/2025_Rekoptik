@@ -193,7 +193,7 @@
                 </div>
                 <div>
                     <x-input-label value="Aksesoris" class="font-semibold" />
-                    <x-form-multiselect name="aksesoris_id" :options="$aksesoris" labelKey="nama"
+                    <x-form-multiselect name="aksesoris_id" class="mt-2 w-full" :options="$aksesoris" labelKey="nama"
                         placeholder="Pilih Aksesoris" />
                 </div>
                 <div>

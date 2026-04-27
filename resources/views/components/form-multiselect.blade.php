@@ -17,7 +17,9 @@
 }" class="relative">
     <!-- Trigger -->
     <div @click="open = !open"
-        class="border rounded px-3 py-2 mt-2 bg-white cursor-pointer min-h-[40px] flex flex-wrap gap-1">
+        {{ $attributes->merge(['class' => 'border rounded px-3 py-2 cursor-pointer shadow-sm min-h-[40px] flex flex-wrap gap-1']) }}
+        :class="open ? 'border-indigo-500 ring-1 ring-indigo-500' :
+            'border border-gray-300'">
         <template x-for="id in selected" :key="id">
             <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs mr-1 mb-1" x-text="options[id]"></span>
         </template>

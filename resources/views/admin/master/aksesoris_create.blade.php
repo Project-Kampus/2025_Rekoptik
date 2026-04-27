@@ -28,15 +28,10 @@
                 <!-- Supplier -->
                 <div>
                     <x-input-label value="Supplier" />
-                    <select name="supplier_id"
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="">-- Pilih Supplier --</option>
-                        @foreach ($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}" @selected(old('supplier_id', $aksesoris->supplier_id ?? '') == $supplier->id)>
-                                {{ $supplier->nama }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <x-form-select-search class="mt-1 w-full" name="supplier_id" :options="$suppliers" labelKey="nama"
+                        valueKey="id" placeholder="Pilih Supplier" :selected="old('supplier_id', $aksesoris->supplier_id ?? null)" />
+                    <x-input-error :messages="$errors->get('supplier_id')" class="mt-2" />
+
                 </div>
 
                 <!-- Nama -->

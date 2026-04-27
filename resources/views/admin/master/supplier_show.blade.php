@@ -21,7 +21,7 @@
                     </div>
 
                     <a href="{{ route('supplier.edit', $supplier->id) }}"
-                        class="px-4 py-2 rounded-md bg-white text-blue-600 font-medium hover:bg-blue-50 transition">
+                        class="px-4 py-2 rounded-md bg-white text-blue-600 text-sm hover:bg-blue-50 transition">
                         Edit Supplier
                     </a>
 
@@ -101,7 +101,7 @@
 
         <!-- Frame Section -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-8 py-6 bg-gray-50 border-b border-gray-200">
+            <div class="px-6 py-6 bg-gray-50 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-900">
                     ⊞ Daftar Frame
                 </h3>
@@ -150,7 +150,7 @@
 
         <!-- Lensa Section -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-8 py-6 bg-gray-50 border-b border-gray-200">
+            <div class="px-6 py-6 bg-gray-50 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-900">
                     ○ Daftar Lensa
                 </h3>
@@ -204,7 +204,7 @@
 
         <!-- Aksesoris Section -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-8 py-6 bg-gray-50 border-b border-gray-200">
+            <div class="px-6 py-6 bg-gray-50 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-900">
                     ✦ Daftar Aksesoris
                 </h3>

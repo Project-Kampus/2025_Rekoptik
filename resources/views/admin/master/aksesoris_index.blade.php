@@ -23,7 +23,6 @@
                 </p>
             </div>
             <div>
-                {{-- tombol untuk memfilter agar menampilkan aksesoris yang belum memiliki harga modal --}}
                 <form method="GET" action="{{ route('aksesoris.index') }}" class="flex gap-2">
                     <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama"
                         class="w-64 rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
@@ -45,53 +44,37 @@
 
         <div class="overflow-x-auto border border-gray-200 rounded-lg">
             <table class="min-w-full  ">
-                <thead class="bg-blue-700 text-white font-bold">
+                <thead class="bg-blue-700 text-white text-sm font-bold">
                     <tr>
-                        <th class="px-4 py-3 text-left text-sm font-semibold ">
-                            No
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold ">
-                            Nama
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold ">
-                            Supplier
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold ">
-                            Material
-                        </th>
+                        <th class="px-4 py-3 ">No</th>
+                        <th class="px-4 py-3 ">Nama</th>
+                        <th class="px-4 py-3 ">Supplier</th>
+                        <th class="px-4 py-3 ">Material</th>
                         @if (auth()->user()->hasRole('superadmin'))
-                            <th class="px-4 py-3 text-left text-sm font-semibold ">
-                                Harga Modal
-                            </th>
+                            <th class="px-4 py-3 ">Harga Modal </th>
                         @endif
-                        <th class="px-4 py-3 text-left text-sm font-semibold ">
-                            Harga Jual
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold">
-                            Keterangan
-                        </th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold">
-                            Aksi
-                        </th>
+                        <th class="px-4 py-3 ">Harga Jual</th>
+                        <th class="px-4 py-3">Keterangan</th>
+                        <th class="px-4 py-3 text-center "> Aksi </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y">
+                <tbody class="divide-y text-sm text-gray-700">
                     @forelse ($aksesoris as $item)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3 text-sm text-gray-600">
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-4 py-3">
                                 {{ $loop->iteration + ($aksesoris->currentPage() - 1) * $aksesoris->perPage() }}
                             </td>
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
                                 {{ $item->nama }}
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-600">
+                            <td class="px-4 py-3">
                                 {{ $item->supplier->nama ?? '-' }}
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-600">
+                            <td class="px-4 py-3">
                                 {{ $item->material ?? '-' }}
                             </td>
                             @if (auth()->user()->hasRole('superadmin'))
-                                <td class="px-4 py-3 text-sm text-gray-600 font-medium">
+                                <td class="px-4 py-3 text-right">
                                     @if ($item->modal && $item->modal > 0)
                                         Rp {{ number_format($item->modal, 0, ',', '.') }}
                                     @else
@@ -124,13 +107,13 @@
                                     @endif
                                 </td>
                             @endif
-                            <td class="px-4 py-3 text-smfont-medium text-green-600">
+                            <td class="px-4 py-3 text-green-600 text-right">
                                 Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-600">
+                            <td class="px-4 py-3">
                                 {{ $item->keterangan ?? '-' }}
                             </td>
-                            <td class="px-4 py-3 text-sm text-center">
+                            <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center gap-2">
                                     @if (auth()->user()->hasRole('superadmin'))
                                         <a href="{{ route('aksesoris.edit', $item) }}"

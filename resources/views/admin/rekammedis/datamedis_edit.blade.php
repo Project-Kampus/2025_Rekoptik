@@ -228,8 +228,8 @@
 
                 <div>
                     <x-input-label for="aksesoris_id" value="Aksesoris (bisa pilih lebih dari satu)" />
-                    <x-form-multiselect name="aksesoris_id" :options="$aksesoris" labelKey="nama" :selected="$RmPemeriksaan->pesanan?->aksesoris->pluck('id')->toArray() ?? []"
-                        placeholder="Pilih Aksesoris" />
+                    <x-form-multiselect name="aksesoris_id" class="mt-2 w-full" :options="$aksesoris" labelKey="nama"
+                        :selected="$RmPemeriksaan->pesanan?->aksesoris->pluck('id')->toArray() ?? []" placeholder="Pilih Aksesoris" />
                     <x-input-error :messages="$errors->get('aksesoris_id')" class="mt-2" />
                 </div>
 

@@ -8,14 +8,17 @@
     'selected' => null,
 ])
 
-<div x-data="selectSearchData()" x-init="init()" @click.outside="open = false" class="relative w-full"
-    data-options='@json($options)' data-selected='@json($selected)'
-    data-label-key='{{ $labelKey ?? 'label' }}' data-value-key='{{ $valueKey ?? 'value' }}'
-    data-extra-labels='@json($extraLabels)' data-placeholder='{{ $placeholder }}'>
+<div x-data="selectSearchData()" x-init="init()" @click.outside="open = false"
+    {{ $attributes->merge(['class' => 'relative w-full']) }} data-options='@json($options)'
+    data-selected='@json($selected)' data-label-key='{{ $labelKey ?? 'label' }}'
+    data-value-key='{{ $valueKey ?? 'value' }}' data-extra-labels='@json($extraLabels)'
+    data-placeholder='{{ $placeholder }}'>
 
     <!-- Trigger -->
     <div @click="open = !open"
-        class="flex items-center justify-between px-3 py-2 mt-2 border rounded-lg cursor-pointer bg-white">
+        class="flex items-center justify-between px-3 py-2 border  shadow-sm rounded-lg cursor-pointer"
+        :class="open ? 'border-indigo-500 ring-1 ring-indigo-500' :
+            'border border-gray-300'">
         <span x-text="selectedLabel || placeholder" class=" text-gray-700"></span>
 
         <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-90' : ''" fill="currentColor"

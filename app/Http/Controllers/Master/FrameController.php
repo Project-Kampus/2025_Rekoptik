@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Frame;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrameController extends Controller
 {
@@ -36,16 +37,22 @@ class FrameController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'kode_frame' => 'required|unique:frames,kode_frame',
             'merk' => 'nullable|string',
             'warna' => 'nullable|string',
             'bahan' => 'nullable|string',
             'harga' => 'required|numeric|min:0',
+            'modal' => 'nullable|numeric|min:0',
         ]);
 
-        Frame::create($request->all());
+        // jika bukan super admin
+        if (!Auth::user()->hasRole('superadmin')) {
+            unset($validated['modal']);
+        }
+
+        Frame::create($validated);
 
         return redirect()->route('frame.index')
             ->with('success', 'Frame berhasil ditambahkan');
@@ -54,23 +61,27 @@ class FrameController extends Controller
     public function edit(Frame $frame)
     {
         $suppliers = Supplier::orderBy('nama')->get();
-        return view('admin.master.frames_edit', compact('frame', 'suppliers'));
+        return view('admin.master.frames_create', compact('frame', 'suppliers'));
     }
 
     public function update(Request $request, Frame $frame)
     {
-        $request->validate([
+        $validated = $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'kode_frame'  => 'required|unique:frames,kode_frame,' . $frame->id,
             'merk'        => 'nullable|string|max:100',
             'warna'       => 'nullable|string|max:100',
             'bahan'       => 'nullable|string|max:100',
             'harga'       => 'required|numeric|min:0',
+            'modal'       => 'required|numeric|min:0',
         ]);
 
+        // jika bukan super admin
+        if (!Auth::user()->hasRole('superadmin')) {
+            unset($validated['modal']);
+        }
 
-        // return $request;
-        $frame->update($request->all());
+        $frame->update($validated);
 
         return redirect()->route('frame.index')
             ->with('success', 'Frame berhasil diperbarui');

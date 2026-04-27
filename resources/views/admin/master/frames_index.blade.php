@@ -43,41 +43,82 @@
 
 
         {{-- Table --}}
-        <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-200 rounded-lg">
-                <thead class="bg-gray-50">
-                    <tr class="text-left text-sm text-gray-600">
-                        <th class="px-4 py-3 border">Kode</th>
-                        <th class="px-4 py-3 border">Merk</th>
-                        <th class="px-4 py-3 border">Warna</th>
-                        <th class="px-4 py-3 border">Bahan</th>
-                        <th class="px-4 py-3 border">Harga</th>
-                        <th class="px-4 py-3 border">Supplier</th>
-                        <th class="px-4 py-3 border text-center">Aksi</th>
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full">
+                <thead class="bg-blue-700 text-white font-bold">
+                    <tr class="text-left text-sm ">
+                        <th class="px-4 py-3 w-12 whitespace-nowrap">No.</th>
+                        <th class="px-4 py-3 ">Kode</th>
+                        <th class="px-4 py-3 ">Merk</th>
+                        <th class="px-4 py-3 ">Warna</th>
+                        <th class="px-4 py-3 ">Bahan</th>
+                        @if (auth()->user()->hasRole('superadmin'))
+                            <th class="px-4 py-3 ">Harga Modal</th>
+                        @endif
+                        <th class="px-4 py-3 ">Harga Jual</th>
+                        <th class="px-4 py-3 ">Supplier</th>
+                        <th class="px-4 py-3  text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm text-gray-700">
+                <tbody class="divide-y text-sm text-gray-700">
                     @forelse ($frames as $frame)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border">
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-4 py-2">
+                                {{ $loop->iteration + ($frames->currentPage() - 1) * $frames->perPage() }}
+                            </td>
+                            <td class="px-4 py-2">
                                 {{ $frame->kode_frame }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ $frame->merk ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ $frame->warna ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ $frame->bahan ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border font-semibold text-right">
+                            @if (auth()->user()->hasRole('superadmin'))
+                                <td class="px-4 py-3 text-right">
+                                    @if ($frame->modal && $frame->modal > 0)
+                                        Rp {{ number_format($frame->modal, 0, ',', '.') }}
+                                    @else
+                                        <button type="button"
+                                            class="px-3 py-1.5 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 font-medium"
+                                            onclick="window.dispatchEvent(
+                                            new CustomEvent('open-modal', {
+                                                detail: 'verify-modal-{{ $frame->id }}'
+                                            })
+                                            )">
+                                            Verifikasi Harga Modal
+                                        </button>
+
+                                        <x-danger-modal id="verify-modal-{{ $frame->id }}"
+                                            title="Verifikasi Harga Modal">
+                                            <p class="text-sm text-gray-600">
+                                                Frame <strong class="text-gray-900">{{ $frame->kode_frame }}</strong>
+                                                belum memiliki harga modal.
+                                                <br>
+                                                Silakan atur harga modal dengan mengedit item ini.
+                                            </p>
+
+                                            <x-slot name="actions">
+                                                <a href="{{ route('frame.edit', $frame->id) }}"
+                                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+                                                    Edit & Atur Harga Modal
+                                                </a>
+                                            </x-slot>
+                                        </x-danger-modal>
+                                    @endif
+                                </td>
+                            @endif
+                            <td class="px-4 py-2 text-green-600 text-right">
                                 Rp {{ number_format($frame->harga, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ $frame->supplier->nama ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border text-center">
+                            <td class="px-4 py-2 text-center">
                                 <div class="flex justify-center gap-2">
                                     @if (auth()->user()->hasRole('superadmin'))
                                         <a href="{{ route('frame.edit', $frame->id) }}"
