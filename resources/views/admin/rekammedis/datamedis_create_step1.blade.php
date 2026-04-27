@@ -116,13 +116,22 @@
                                         </td>
                                         <td class="px-4 py-3 text-gray-600">{{ $p->no_kartu ?? '-' }}</td>
                                         <td class="px-4 py-3">
-                                            <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                                @if ($p->kategori === 'bpjs') bg-blue-100 text-blue-800
-                                                @elseif($p->kategori === 'asuransi') bg-purple-100 text-purple-800
-                                                @else bg-gray-100 text-gray-800 @endif">
-                                                {{ ucfirst($p->kategori) }}
-                                            </span>
+                                            @if ($p->kategori === 'bpjs')
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                    BPJS
+                                                </span>
+                                            @elseif($p->kategori === 'asuransi')
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                    Asuransi
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                    Umum
+                                                </span>
+                                            @endif
                                         </td>
                                         <td class="px-4 py-3 text-center">
                                             <a href="{{ route('datamedis.create.step2', $p->id) }}"
