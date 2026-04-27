@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use App\Models\Aksesoris;
 use App\Models\Supplier;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AksesorisController extends Controller
@@ -33,10 +34,17 @@ class AksesorisController extends Controller
     {
         $validated = $request->validate([
             'nama'        => 'required|string|max:255',
-            'material'    => 'nullable|string|max:255',
-            'keterangan'  => 'nullable|string',
             'supplier_id' => 'nullable|exists:suppliers,id',
+            'material'    => 'nullable|string|max:255',
+            'harga'       => 'required|numeric|min:0',
+            'modal'       => 'nullable|numeric|min:0',
+            'keterangan'  => 'nullable|string',
         ]);
+
+        // jika bukan super admin
+        if (!Auth::user()->hasRole('superadmin')) {
+            unset($validated['modal']);
+        }
 
         Aksesoris::create($validated);
 
@@ -45,26 +53,33 @@ class AksesorisController extends Controller
             ->with('success', 'Aksesoris berhasil ditambahkan');
     }
 
-    public function edit(Aksesoris $aksesori)
+    public function edit(Aksesoris $aksesoris)
     {
         $suppliers = Supplier::orderBy('nama')->get();
 
-        return view('admin.master.aksesoris_edit', compact('aksesori', 'suppliers'));
+        return view('admin.master.aksesoris_create', compact('aksesoris', 'suppliers'));
     }
 
     /**
      * Update data aksesoris
      */
-    public function update(Request $request, Aksesoris $aksesori)
+    public function update(Request $request, Aksesoris $aksesoris)
     {
         $validated = $request->validate([
             'nama'        => 'required|string|max:255',
-            'material'    => 'nullable|string|max:255',
-            'keterangan'  => 'nullable|string',
             'supplier_id' => 'nullable|exists:suppliers,id',
+            'material'    => 'nullable|string|max:255',
+            'harga'       => 'required|numeric|min:0',
+            'modal'       => 'nullable|numeric|min:0',
+            'keterangan'  => 'nullable|string',
         ]);
 
-        $aksesori->update($validated);
+        // jika bukan super admin
+        if (!Auth::user()->hasRole('superadmin')) {
+            unset($validated['modal']);
+        }
+
+        $aksesoris->update($validated);
 
         return redirect()
             ->route('aksesoris.index')
@@ -74,9 +89,9 @@ class AksesorisController extends Controller
     /**
      * Hapus aksesoris
      */
-    public function destroy(Aksesoris $aksesori)
+    public function destroy(Aksesoris $aksesoris)
     {
-        $aksesori->delete();
+        $aksesoris->delete();
 
         return redirect()
             ->route('aksesoris.index')

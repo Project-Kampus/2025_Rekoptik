@@ -5,10 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     currencyInputs.forEach((displayInput) => {
-        const form = displayInput.closest("form");
-        const hiddenInput = form
-            ? form.querySelector(".currency-hidden")
-            : null;
+        // Find the hidden input that comes right after this display input
+        const hiddenInput =
+            displayInput.nextElementSibling?.classList?.contains(
+                "currency-hidden",
+            )
+                ? displayInput.nextElementSibling
+                : null;
 
         if (!hiddenInput) return;
 

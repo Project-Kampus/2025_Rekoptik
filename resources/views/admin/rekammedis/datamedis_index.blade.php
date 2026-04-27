@@ -26,7 +26,8 @@
                     </p>
                 @endif
             </div>
-            <form method="GET" action="{{ route('datamedis.index') }}" class="flex flex-wrap gap-2">
+            <form method="GET" action="{{ route('datamedis.index', ['status' => 'dipesan']) }}"
+                class="flex flex-wrap gap-2">
                 <input type="text" name="search" placeholder="Cari nama pasien, nomor kartu, diagnosa..."
                     value="{{ $search }}"
                     class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
@@ -37,13 +38,13 @@
                 <input type="date" name="tanggal_akhir" value="{{ $tanggal_akhir }}"
                     class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
 
-                <select name="kategori"
+                {{-- <select name="kategori"
                     class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Semua Kategori --</option>
                     <option value="bpjs" @selected($kategori === 'bpjs')>BPJS</option>
                     <option value="asuransi" @selected($kategori === 'asuransi')>Asuransi</option>
                     <option value="umum" @selected($kategori === 'umum')>Umum</option>
-                </select>
+                </select> --}}
 
                 <select name="status"
                     class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">

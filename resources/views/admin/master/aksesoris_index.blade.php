@@ -22,43 +22,55 @@
                     Kelola data aksesoris dan keterangannya.
                 </p>
             </div>
-            <form method="GET" action="{{ route('aksesoris.index') }}" class="flex gap-2">
-                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama"
-                    class="w-64 rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <div>
+                {{-- tombol untuk memfilter agar menampilkan aksesoris yang belum memiliki harga modal --}}
+                <form method="GET" action="{{ route('aksesoris.index') }}" class="flex gap-2">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama"
+                        class="w-64 rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
 
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
-                    Cari
-                </button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
+                        Cari
+                    </button>
 
-                @if (request('q'))
-                    <a href="{{ route('aksesoris.index') }}"
-                        class="px-4 py-2 border rounded-md text-sm text-gray-600 hover:bg-gray-100">
-                        Reset
-                    </a>
-                @endif
-            </form>
+                    @if (request('q'))
+                        <a href="{{ route('aksesoris.index') }}"
+                            class="px-4 py-2 border rounded-md text-sm text-gray-600 hover:bg-gray-100">
+                            Reset
+                        </a>
+                    @endif
+                </form>
+            </div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-200 rounded-lg">
-                <thead class="bg-gray-50">
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full  ">
+                <thead class="bg-blue-700 text-white font-bold">
                     <tr>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold ">
                             No
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold ">
                             Nama
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                            Material
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold ">
                             Supplier
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-left text-sm font-semibold ">
+                            Material
+                        </th>
+                        @if (auth()->user()->hasRole('superadmin'))
+                            <th class="px-4 py-3 text-left text-sm font-semibold ">
+                                Harga Modal
+                            </th>
+                        @endif
+                        <th class="px-4 py-3 text-left text-sm font-semibold ">
+                            Harga Jual
+                        </th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">
                             Keterangan
                         </th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3 text-center text-sm font-semibold">
                             Aksi
                         </th>
                     </tr>
@@ -73,10 +85,47 @@
                                 {{ $item->nama }}
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-600">
-                                {{ $item->material ?? '-' }}
+                                {{ $item->supplier->nama ?? '-' }}
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-600">
-                                {{ $item->supplier->nama ?? '-' }}
+                                {{ $item->material ?? '-' }}
+                            </td>
+                            @if (auth()->user()->hasRole('superadmin'))
+                                <td class="px-4 py-3 text-sm text-gray-600 font-medium">
+                                    @if ($item->modal && $item->modal > 0)
+                                        Rp {{ number_format($item->modal, 0, ',', '.') }}
+                                    @else
+                                        <button type="button"
+                                            class="px-3 py-1.5 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 font-medium"
+                                            onclick="window.dispatchEvent(
+                                            new CustomEvent('open-modal', {
+                                                detail: 'verify-modal-{{ $item->id }}'
+                                            })
+                                            )">
+                                            Verifikasi Harga Modal
+                                        </button>
+
+                                        <x-danger-modal id="verify-modal-{{ $item->id }}"
+                                            title="Verifikasi Harga Modal">
+                                            <p class="text-sm text-gray-600">
+                                                Aksesoris <strong class="text-gray-900">{{ $item->nama }}</strong>
+                                                belum memiliki harga modal.
+                                                <br>
+                                                Silakan atur harga modal dengan mengedit item ini.
+                                            </p>
+
+                                            <x-slot name="actions">
+                                                <a href="{{ route('aksesoris.edit', $item) }}"
+                                                    class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+                                                    Edit & Atur Harga Modal
+                                                </a>
+                                            </x-slot>
+                                        </x-danger-modal>
+                                    @endif
+                                </td>
+                            @endif
+                            <td class="px-4 py-3 text-sm text-gray-600 font-medium text-green-600">
+                                Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-600">
                                 {{ $item->keterangan ?? '-' }}

@@ -7,7 +7,7 @@
 
     <x-slot name="headerAction">
         <div class="flex gap-2 flex-wrap">
-            <a href="{{ route('datamedis.index') }}"
+            <a href="{{ route('datamedis.index', ['status' => 'dipesan']) }}"
                 class="px-4 py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700 transition">
                 Kembali
             </a>
