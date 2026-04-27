@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lensa;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LensaController extends Controller
 {
@@ -32,7 +33,7 @@ class LensaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'nama_lensa' => 'required|string|max:255',
             'kategori'   => 'required|string|max:100',
@@ -41,9 +42,15 @@ class LensaController extends Controller
             'od'    => 'nullable|string|max:100',
             'os'    => 'nullable|string|max:100',
             'harga'      => 'required|numeric|min:0',
+            'modal'      => 'nullable|numeric|min:0',
         ]);
 
-        Lensa::create($request->all());
+        // jika bukan super admin
+        if (!Auth::user()->hasRole('superadmin')) {
+            unset($validated['modal']);
+        }
+
+        Lensa::create($validated);
 
         return redirect()
             ->route('lensa.index')
@@ -53,12 +60,12 @@ class LensaController extends Controller
     public function edit(Lensa $lensa)
     {
         $suppliers = Supplier::orderBy('nama')->get();
-        return view('admin.master.lensa_edit', compact('lensa', 'suppliers'));
+        return view('admin.master.lensa_create', compact('lensa', 'suppliers'));
     }
 
     public function update(Request $request, Lensa $lensa)
     {
-        $request->validate([
+        $validated = $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'nama_lensa' => 'required|string|max:255',
             'kategori'   => 'required|string|max:100',
@@ -67,9 +74,15 @@ class LensaController extends Controller
             'od'    => 'nullable|string|max:100',
             'os'    => 'nullable|string|max:100',
             'harga'      => 'required|numeric|min:0',
+            'modal'      => 'nullable|numeric|min:0',
         ]);
 
-        $lensa->update($request->all());
+        // jika bukan super admin
+        if (!Auth::user()->hasRole('superadmin')) {
+            unset($validated['modal']);
+        }
+
+        $lensa->update($validated);
 
         return redirect()
             ->route('lensa.index')

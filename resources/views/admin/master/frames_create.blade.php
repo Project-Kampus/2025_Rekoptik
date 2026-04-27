@@ -91,7 +91,7 @@
                 </x-secondary-button>
 
                 <x-primary-button>
-                    {{ isset($aksesoris) ? 'Update' : 'Simpan' }}
+                    {{ isset($frame) ? 'Update' : 'Simpan' }}
                 </x-primary-button>
             </div>
         </form>
