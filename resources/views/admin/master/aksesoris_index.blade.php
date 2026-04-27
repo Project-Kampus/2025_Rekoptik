@@ -124,7 +124,7 @@
                                     @endif
                                 </td>
                             @endif
-                            <td class="px-4 py-3 text-sm text-gray-600 font-medium text-green-600">
+                            <td class="px-4 py-3 text-smfont-medium text-green-600">
                                 Rp {{ number_format($item->harga, 0, ',', '.') }}
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-600">
