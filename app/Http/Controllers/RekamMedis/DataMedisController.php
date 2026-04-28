@@ -12,6 +12,7 @@ use App\Models\RmPasien;
 use App\Models\RmPembayaran;
 use App\Models\RmPemeriksaan;
 use App\Models\RmPesanan;
+use App\Models\Pengaturan;
 use App\Models\RmResep;
 use App\Models\RmPengambilan;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -291,10 +292,11 @@ class DataMedisController extends Controller
      */
     public function cetatakStruk(RmPembayaran $RmPembayaran)
     {
-        $RmPembayaran->load('pesanan.pemeriksaan.pasien', 'pesanan.pemeriksaan.resep', 'pesanan.pemeriksaan.user', 'pesanan.frame', 'pesanan.lensa', 'pesanan.pembayarans');
+        $RmPembayaran->load('pesanan.pemeriksaan.pasien', 'pesanan.pemeriksaan.resep', 'pesanan.pemeriksaan.user', 'pesanan.frame', 'pesanan.lensa', 'pesanan.aksesoris', 'pesanan.pembayarans');
         $RmPemeriksaan = $RmPembayaran->pesanan->pemeriksaan;
-        return view('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran')); // for debug
-        $pdf = Pdf::loadView('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran'));
+        $pengaturan = Pengaturan::first();
+        return view('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran', 'pengaturan')); // for debug
+        // $pdf = Pdf::loadView('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran', 'pengaturan'));
         return $pdf->download('Struk-' . str_pad($RmPembayaran->id, 6, '0', STR_PAD_LEFT) . '.pdf');
     }
 

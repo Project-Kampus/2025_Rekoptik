@@ -330,7 +330,7 @@
 
             <div class="form-row-double">
                 <div>
-                    <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Lens / Ass</div>
+                    <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Lensa</div>
                     <div style="border-bottom: 1px dotted #d32f2f; height: 20px; margin-top: 5px;">
                         {{ $RmPemeriksaan->pesanan->lensa->nama_lensa ?? '-' }}</div>
                 </div>
@@ -340,6 +340,28 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Section for Accessories --}}
+            @if ($RmPemeriksaan->pesanan->aksesoris->isNotEmpty())
+                @foreach ($RmPemeriksaan->pesanan->aksesoris as $aksesoris)
+                    <div class="form-row-double">
+                        <div>
+                            <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Aksesoris</div>
+                            <div style="border-bottom: 1px dotted #d32f2f; height: 20px; margin-top: 5px;">
+                                {{ $aksesoris->nama ?? '-' }}
+                                @if ($aksesoris->pivot->jumlah > 1)
+                                    (x{{ $aksesoris->pivot->jumlah }})
+                                @endif
+                            </div>
+                        </div>
+                        <div>
+                            <div style="color: #d32f2f; font-weight: bold; font-size: 12px;">Rp.
+                                {{ number_format(($aksesoris->harga ?? 0) * ($aksesoris->pivot->jumlah ?? 1), 0, ',', '.') }}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
 
             <div class="form-row">
                 <div class="form-label">Resep</div>

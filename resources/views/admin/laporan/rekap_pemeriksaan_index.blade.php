@@ -48,54 +48,43 @@
             </form>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-200 rounded-lg">
-                <thead class="bg-gray-50">
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full  ">
+                <thead class="bg-blue-700 text-white text-sm font-bold">
                     <tr>
-                        <th rowspan="2" colspan="1"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">No.
+                        <th rowspan="2" colspan="1" class="px-2 py-1 whitespace-nowrap">No.
                         </th>
-                        <th rowspan="2" colspan="1"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th rowspan="2" colspan="1" class="px-2 py-1  whitespace-nowrap">
                             Tanggal
                         </th>
-                        <th rowspan="2" colspan="1"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th rowspan="2" colspan="1" class="px-2 py-1 whitespace-nowrap">
                             Nama</th>
-                        <th rowspan="2" colspan="1"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700">Umur</th>
-                        <th rowspan="2" colspan="1"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700">No. HP</th>
-                        <th rowspan="2" colspan="1"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700">Diagnosa</th>
-                        <th rowspan="1" colspan="2"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th rowspan="2" colspan="1" class="px-2 py-1">Umur</th>
+                        <th rowspan="2" colspan="1" class="px-2 py-1">No. HP</th>
+                        <th rowspan="2" colspan="1" class="px-2 py-1">Diagnosa</th>
+                        <th rowspan="1" colspan="2" class="px-2 py-1 whitespace-nowrap">
                             Resep
                             Dokter
                         </th>
-                        <th rowspan="1" colspan="2"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th rowspan="1" colspan="2" class="px-2 py-1 whitespace-nowrap">
                             Ukuran
                             Kacamata
                         </th>
-                        <th rowspan="1" colspan="2"
-                            class="border px-2 py-1 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">Add
+                        <th rowspan="1" colspan="2" class="px-2 py-1 whitespace-nowrap">Add
                         </th>
                     </tr>
                     <tr>
-                        <th rowspan="1" colspan="1" class="border px-2 py-1 text-sm font-semibold text-gray-700">
+                        <th rowspan="1" colspan="1" class="px-2 py-1 ">
                             Nama</th>
-                        <th rowspan="1" colspan="1" class="border px-2 py-1 text-sm font-semibold text-gray-700">
+                        <th rowspan="1" colspan="1" class="px-2 py-1 ">
                             Tanggal</th>
-                        <th rowspan="1" colspan="1"
-                            class="border whitespace-nowrap px-2 py-1 text-sm font-semibold text-gray-700">Kanan (OD)
+                        <th rowspan="1" colspan="1" class="whitespace-nowrap px-2 py-1 ">Kanan (OD)
                         </th>
-                        <th rowspan="1" colspan="1"
-                            class="border whitespace-nowrap px-2 py-1 text-sm font-semibold text-gray-700">Kiri (OS)
+                        <th rowspan="1" colspan="1" class="whitespace-nowrap px-2 py-1 ">Kiri (OS)
                         </th>
-                        <th rowspan="1" colspan="1" class="border px-2 py-1 text-sm font-semibold text-gray-700">
+                        <th rowspan="1" colspan="1" class="px-2 py-1 ">
                             OD</th>
-                        <th rowspan="1" colspan="1" class="border px-2 py-1 text-sm font-semibold text-gray-700">
+                        <th rowspan="1" colspan="1" class="px-2 py-1 ">
                             OS</th>
                     </tr>
                 </thead>

@@ -85,14 +85,14 @@
             </div>
 
             <!-- TOMBOL -->
-            <div class="flex items-center gap-3 pt-4">
+            <div class="flex justify-between items-center pt-4 border-t">
+                <x-secondary-button href="{{ route('admin.index') }}">
+                    Batal
+                </x-secondary-button>
+
                 <x-primary-button>
                     Simpan
                 </x-primary-button>
-
-                <a href="{{ route('admin.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
-                    Batal
-                </a>
             </div>
 
         </form>

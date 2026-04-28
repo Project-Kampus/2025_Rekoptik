@@ -86,15 +86,14 @@
                 </div>
             </div>
 
-            <!-- TOMBOL -->
-            <div class="flex items-center gap-3 pt-4">
-                <x-primary-button>
-                    Update
-                </x-primary-button>
-
-                <a href="{{ route('admin.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+            <div class="flex justify-between items-center pt-4 border-t">
+                <x-secondary-button href="{{ route('admin.index') }}">
                     Batal
-                </a>
+                </x-secondary-button>
+
+                <x-primary-button>
+                    Perbaharui
+                </x-primary-button>
             </div>
 
         </form>

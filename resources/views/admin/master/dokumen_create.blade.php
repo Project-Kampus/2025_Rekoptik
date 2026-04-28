@@ -63,7 +63,7 @@
                 @enderror
             </div>
 
-            <div class="flex justify-end items-center gap-3">
+            <div class="flex justify-between items-center pt-4 border-t">
                 <x-secondary-button href="{{ route('document.index') }}">
                     Batal
                 </x-secondary-button>
