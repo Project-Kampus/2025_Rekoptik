@@ -105,10 +105,13 @@ class DataMedisController extends Controller
             'pesanan.pengambilan',
             'dokumens.dokumen'
         );
+
         $uploadedDokumens = $RmPemeriksaan->dokumens->keyBy('dokumens_id');
-        $allDokumens = Document::all();
+
+        $allDokumens = Document::where('kategori', $RmPemeriksaan->pasien->kategori)->get();
 
         return view('admin.rekammedis.datamedis_show', compact('RmPemeriksaan', 'uploadedDokumens', 'allDokumens'));
+        // return view('admin.rekammedis.datamedis_show', compact('RmPemeriksaan', 'allDokumens'));
     }
 
     /**

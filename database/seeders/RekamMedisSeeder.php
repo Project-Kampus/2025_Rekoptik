@@ -27,7 +27,7 @@ class RekamMedisSeeder extends Seeder
             RmPemeriksaan::factory($this->pemeriksaanPerPasien)
                 ->state(['pasien_id' => $pasien->id])
                 ->create()
-                ->each(function ($pemeriksaan) {
+                ->each(function ($pemeriksaan) use ($pasien) {
                     // Create resep untuk setiap pemeriksaan
                     $resep = RmResep::factory()
                         ->state(['pemeriksaan_id' => $pemeriksaan->id])
@@ -49,23 +49,32 @@ class RekamMedisSeeder extends Seeder
                         ])
                         ->create();
 
-                    // Create dokumen untuk setiap pemeriksaan
-                    $this->attachDokumen($pemeriksaan->id);
+                    // Create dokumen untuk setiap pemeriksaan (hanya untuk BPJS)
+                    $this->attachDokumen($pemeriksaan->id, $pasien->kategori);
                 });
         });
     }
 
     /**
-     * Attach dokumen ke pemeriksaan
+     * Attach dokumen ke pemeriksaan sesuai kategori pasien
      */
-    private function attachDokumen($pemeriksaanId): void
+    private function attachDokumen($pemeriksaanId, $kategoriPasien): void
     {
-        // Attach 2-5 dokumen per pemeriksaan (resep, elegilitas, legalitas, pengantar/rujukan, surat pernyataan)
-        $jumlahDokumen = rand(2, 5);
+        // Hanya attach dokumen jika kategori pasien adalah BPJS
+        if ($kategoriPasien !== 'bpjs') {
+            return;
+        }
 
-        for ($i = 1; $i <= $jumlahDokumen; $i++) {
+        // Dokumen BPJS: IDs 1-5 (Resep, Elegilitas, Legalitas, Pengantar/Rujukan, Surat Pernyataan)
+        $dokumenBpjsIds = [1, 2, 3, 4, 5];
+
+        // Attach 2-5 dokumen per pemeriksaan
+        $jumlahDokumen = rand(2, 5);
+        $selectedDokumen = array_rand(array_flip($dokumenBpjsIds), min($jumlahDokumen, count($dokumenBpjsIds)));
+
+        foreach ((array) $selectedDokumen as $dokumenId) {
             RmDokument::create([
-                'dokumens_id' => rand(1, 5), // Dokumen BPJS: Resep, Elegilitas, Legalitas, Pengantar/Rujukan, Surat Pernyataan
+                'dokumens_id' => $dokumenId,
                 'pemeriksaan_id' => $pemeriksaanId,
                 'url' => 'https://example.com/dokumen/' . uniqid() . '.pdf',
             ]);

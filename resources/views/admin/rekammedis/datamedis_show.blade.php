@@ -133,7 +133,7 @@
                                         @php
                                             $totalDokumen = $allDokumens->count();
                                             $uploadedCount = $uploadedDokumens->count();
-                                            $isComplete = $totalDokumen > 0 && $uploadedCount >= $totalDokumen;
+                                            $isComplete = $uploadedCount >= $totalDokumen;
                                         @endphp
                                         @if ($isComplete)
                                             <span
@@ -183,8 +183,19 @@
                             </tr>
                             <tr class="hover:bg-indigo-50">
                                 <td class="px-3 py-2 font-medium text-gray-600">Kategori</td>
-                                <td class="px-3 py-2"><span
-                                        class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded">{{ strtoupper($RmPemeriksaan->pasien->kategori) }}</span>
+                                <td class="px-3 py-2">
+                                    @php
+                                        $kategori = $RmPemeriksaan->pasien->kategori;
+                                        $kategoriColor = match ($kategori) {
+                                            'bpjs' => 'bg-blue-100 text-blue-700',
+                                            'asuransi' => 'bg-amber-100 text-amber-700',
+                                            'umum' => 'bg-green-100 text-green-700',
+                                            default => 'bg-gray-100 text-gray-700',
+                                        };
+                                    @endphp
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $kategoriColor }}">
+                                        {{ ucfirst($kategori) }}
+                                    </span>
                                 </td>
                             </tr>
                             <tr class="hover:bg-indigo-50">
@@ -421,8 +432,6 @@
             </div>
         </div>
 
-
-
         <!-- PENGAMBILAN -->
         @if (strtolower($RmPemeriksaan->pesanan->status) == 'diambil' && $RmPemeriksaan->pesanan->pengambilan)
             <div class="bg-white rounded-xl border p-6">
@@ -472,14 +481,12 @@
                 @foreach ($allDokumens as $dokumen)
                     @php
                         $uploaded = $uploadedDokumens->get($dokumen->id);
+                        $existsInStorage = $uploaded && file_exists(public_path('storage/' . $uploaded->url));
+                        $storeColor = $existsInStorage ? 'bg-green-50' : ($uploaded ? 'bg-yellow-50' : 'bg-orange-50');
                     @endphp
 
                     <div
-                        class="border rounded-lg p-4 hover:shadow-md transition
-                        @if ($uploaded && file_exists(public_path('storage/' . $uploaded->url))) bg-green-50
-                        @elseif($uploaded) bg-yellow-50
-                        @else bg-orange-50 @endif
-                        ">
+                        class="border rounded-lg p-4 hover:shadow-md transition {{ $storeColor }}                        ">
                         <p class="font-semibold text-gray-800 mb-2">{{ $dokumen->nama }}</p>
 
                         @if ($uploaded)
@@ -533,7 +540,7 @@
 
     <!-- MODAL LENGKAPI/PERBAIKI DOKUMEN -->
     <div id="dokumenModal"
-        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+        class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
             <!-- Header -->
             <div
@@ -610,12 +617,14 @@
         // Handle modal open
         function openDokumenModal() {
             document.getElementById('dokumenModal').classList.remove('hidden');
+            document.getElementById('dokumenModal').classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
 
         // Handle modal close
         function closeDokumenModal() {
             document.getElementById('dokumenModal').classList.add('hidden');
+            document.getElementById('dokumenModal').classList.remove('flex');
             document.body.style.overflow = 'auto';
             resetForm();
         }
@@ -670,8 +679,9 @@
     </script>
 
     <!-- MODAL TAMBAH PEMBAYARAN -->
+
     <div id="pembayaranModal"
-        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+        class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
             <!-- Header -->
             <div
@@ -721,7 +731,7 @@
 
                 <div>
                     <label class="block text-sm font-bold text-gray-800 mb-2">Jumlah Pembayaran</label>
-                    <x-form-input name="jumlah" class="mt-2 w-full" type="rupiah" value="{{ old('jumlah') }}"
+                    <x-form-input name="jumlah" class="mt w-full" type="rupiah" value="{{ old('jumlah') }}"
                         placeholder="0" max="{{ $sisaPembayaran }}" required />
                 </div>
 
@@ -744,11 +754,13 @@
         // Handle pembayaran modal
         function openPembayaranModal() {
             document.getElementById('pembayaranModal').classList.remove('hidden');
+            document.getElementById('pembayaranModal').classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
 
         function closePembayaranModal() {
             document.getElementById('pembayaranModal').classList.add('hidden');
+            document.getElementById('pembayaranModal').classList.remove('flex');
             document.body.style.overflow = 'auto';
             resetPembayaranForm();
         }
