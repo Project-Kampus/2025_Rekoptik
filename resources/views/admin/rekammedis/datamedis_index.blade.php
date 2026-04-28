@@ -164,7 +164,7 @@
                                 <div class="flex justify-center gap-2">
 
                                     @if (auth()->user()->hasRole('superadmin'))
-                                        <a href="#"
+                                        <a href="{{ route('datamedis.edit', [$item->id]) }}"
                                             class="px-3 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                             Edit
                                         </a>
@@ -194,7 +194,8 @@
                                             </p>
 
                                             <x-slot name="actions">
-                                                <form action="#" method="POST">
+                                                <form action="{{ route('datamedis.destroy', $item->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
 

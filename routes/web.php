@@ -93,6 +93,7 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/{RmPemeriksaan}/edit', [DataMedisController::class, 'edit'])->name('edit');
                 Route::put('/{RmPemeriksaan}/update', [DataMedisController::class, 'update'])->name('update');
                 Route::delete('/{RmPembayaran}/destroyPembayaran', [DataMedisController::class, 'destroyPembayaran'])->name('destroyPembayaran');
+                Route::delete('/{RmPemeriksaan}/destroy', [DataMedisController::class, 'destroy'])->name('destroy');
             });
 
         // Identitas Pasien

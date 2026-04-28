@@ -288,16 +288,24 @@
                 value="{{ old('biaya_kacamata', $RmPemeriksaan->pesanan->biaya_kacamata ?? 0) }}" required />
         </div>
 
-        <!-- Tombol -->
-        <div class="flex items-center gap-3 bg-white p-6 rounded-lg border border-gray-200">
-            <x-primary-button>
+        <!-- Action Buttons -->
+        <div
+            class="bg-white rounded-lg shadow-sm border flex justify-between items-center gap-4 px-6 py-3 border-gray-200">
+            <a href="{{ route('datamedis.show', $RmPemeriksaan->id) }}"
+                class="inline-flex items-center px-6 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-150">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                    </path>
+                </svg>
+                Kembali
+            </a>
+            <x-primary-button class="px-6 py-2.5">
+                <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                    </path>
+                </svg>
                 Simpan Perubahan
             </x-primary-button>
-
-            <a href="{{ route('datamedis.show', $RmPemeriksaan->id) }}"
-                class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-600 hover:bg-gray-50">
-                Batal
-            </a>
         </div>
     </form>
     <script src="{{ asset('app/js/order-calculator.js') }}"></script>

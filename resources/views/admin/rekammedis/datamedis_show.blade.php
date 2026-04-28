@@ -730,7 +730,7 @@
                     <select name="metode" required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white">
                         <option value="">-- Pilih Metode --</option>
-                        <option value="non-tunai">Non Tunai</option>
+                        <option value="non_tunai">Non Tunai</option>
                         <option value="tunai">Tunai</option>
                     </select>
                 </div>

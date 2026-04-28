@@ -247,7 +247,7 @@ class DataMedisController extends Controller
                 'required',
                 Rule::in([
                     'tunai',
-                    'non-tunai',
+                    'non_tunai',
                 ]),
             ],
             'kategori' => [
@@ -491,5 +491,16 @@ class DataMedisController extends Controller
         return redirect()
             ->route('datamedis.show', [$RmPemeriksaan])
             ->with('success', 'Data medis berhasil disimpan');
+    }
+
+    /**
+     * Hapus data medis pemeriksaan beserta resep, pesanan, dan pembayaran terkait
+     */
+    public function destroy(RmPemeriksaan $RmPemeriksaan)
+    {
+        $RmPemeriksaan->delete();
+        return redirect()
+            ->route('datamedis.index')
+            ->with('success', 'Data medis berhasil dihapus');
     }
 }
