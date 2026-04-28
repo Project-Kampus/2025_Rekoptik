@@ -60,7 +60,7 @@
                 </thead>
                 <tbody class="text-sm text-gray-700">
                     @forelse ($lensas as $lensa)
-                        <tr class="hover:bg-gray-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-4 py-2">
                                 {{ $loop->iteration + ($lensas->currentPage() - 1) * $lensas->perPage() }}
                             </td>

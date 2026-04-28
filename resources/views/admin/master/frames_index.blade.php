@@ -45,8 +45,8 @@
         {{-- Table --}}
         <div class="overflow-x-auto border border-gray-200 rounded-lg">
             <table class="min-w-full">
-                <thead class="bg-blue-700 text-white font-bold">
-                    <tr class="text-left text-sm ">
+                <thead class="bg-blue-700 text-white font-bold text-sm">
+                    <tr class="text-left ">
                         <th class="px-4 py-3 w-12 whitespace-nowrap">No.</th>
                         <th class="px-4 py-3 ">Kode</th>
                         <th class="px-4 py-3 ">Merk</th>

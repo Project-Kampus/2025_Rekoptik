@@ -45,6 +45,7 @@
             <table class="min-w-full">
                 <thead class="bg-blue-700 text-white font-bold">
                     <tr class="text-left text-sm ">
+                        <th class="px-4 py-3 w-12 whitespace-nowrap">No.</th>
                         <th class="px-4 py-3 ">Nama Supplier</th>
                         <th class="px-4 py-3 ">Kontak</th>
                         <th class="px-4 py-3 ">Alamat</th>
@@ -54,63 +55,64 @@
                 <tbody class="text-sm text-gray-700">
 
                     @forelse ($suppliers as $supplier)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border">
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-4 py-2 ">
+                                {{ $loop->iteration + ($suppliers->currentPage() - 1) * $suppliers->perPage() }}
+                            </td>
+                            <td class="px-4 py-2 ">
                                 {{ $supplier->nama }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2 ">
                                 {{ $supplier->kontak ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2 ">
                                 {{ $supplier->alamat ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border text-center">
+                            <td class="px-4 py-2  text-center">
                                 <div class="flex justify-center gap-2">
-
                                     <a href="{{ route('supplier.edit', $supplier->id) }}"
                                         class="px-2 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                         Edit
                                     </a>
-
                                     <a href="{{ route('supplier.show', $supplier->id) }}"
                                         class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
                                         Detail
                                     </a>
-
                                     <button type="button"
                                         class="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
                                         onclick="window.dispatchEvent(
-                              new CustomEvent('open-modal', {
-                                 detail: 'delete-supplier-{{ $supplier->id }}'
-                              })
-                           )">
+                                            new CustomEvent('open-modal', {
+                                                detail: 'delete-supplier-{{ $supplier->id }}'
+                                            })
+                                        )">
                                         Hapus
                                     </button>
+                                    <x-danger-modal id="delete-supplier-{{ $supplier->id }}" title="Hapus Supplier">
+                                        <p>
+                                            Apakah Anda yakin ingin menghapus supplier
+                                            <strong>{{ $supplier->nama_supplier }}</strong>?
+                                            <br>
+                                            Tindakan ini tidak dapat dibatalkan.
+                                        </p>
 
+                                        <x-slot name="actions">
+                                            <form action="{{ route('supplier.destroy', $supplier->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
+                                                    Ya, Hapus
+                                                </button>
+                                            </form>
+                                        </x-slot>
+                                    </x-danger-modal>
                                 </div>
                             </td>
 
                         </tr>
 
-                        <x-danger-modal id="delete-supplier-{{ $supplier->id }}" title="Hapus Supplier">
-                            <p>
-                                Apakah Anda yakin ingin menghapus supplier
-                                <strong>{{ $supplier->nama_supplier }}</strong>?
-                                <br>
-                                Tindakan ini tidak dapat dibatalkan.
-                            </p>
 
-                            <x-slot name="actions">
-                                <form action="{{ route('supplier.destroy', $supplier->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">
-                                        Ya, Hapus
-                                    </button>
-                                </form>
-                            </x-slot>
-                        </x-danger-modal>
                     @empty
                         <tr>
                             <td colspan="5" class="px-4 py-6 text-center text-gray-500">

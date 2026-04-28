@@ -32,19 +32,19 @@
                     value="{{ $search }}"
                     class="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
 
-                <input type="date" name="tanggal_awal" value="{{ $tanggal_awal }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+                {{-- <input type="date" name="tanggal_awal" value="{{ $tanggal_awal }}"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"> --}}
 
-                <input type="date" name="tanggal_akhir" value="{{ $tanggal_akhir }}"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
+                {{-- <input type="date" name="tanggal_akhir" value="{{ $tanggal_akhir }}"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"> --}}
 
-                {{-- <select name="kategori"
+                <select name="kategori"
                     class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Semua Kategori --</option>
                     <option value="bpjs" @selected($kategori === 'bpjs')>BPJS</option>
                     <option value="asuransi" @selected($kategori === 'asuransi')>Asuransi</option>
                     <option value="umum" @selected($kategori === 'umum')>Umum</option>
-                </select> --}}
+                </select>
 
                 <select name="status"
                     class="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500">
@@ -65,38 +65,32 @@
             </form>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-200 rounded-lg">
-                <thead class="bg-gray-50">
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full">
+                <thead class="bg-blue-700 text-white font-bold text-sm">
                     <tr>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3">
                             Tanggal
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th class="px-4 py-3 whitespace-nowrap">
                             Nama
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3">
                             Kategori
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                            Dokter
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                            Diagnosa
-                        </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th class="px-4 py-3 whitespace-nowrap">
                             Frame
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3">
                             Lensa
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th class="px-4 py-3 whitespace-nowrap">
                             Status
                         </th>
-                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th class="px-4 py-3">
                             Pembayaran
                         </th>
-                        <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        <th class="px-4 py-3 text-center whitespace-nowrap">
                             Aksi
                         </th>
                     </tr>
@@ -111,13 +105,18 @@
                                 {{ $item->pasien->nama_pasien }}
                             </td>
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
-                                {{ $item->pasien->kategori }}
-                            </td>
-                            <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
-                                {{ $item->resep->resep_dari }}
-                            </td>
-                            <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
-                                {{ $item->diagnosa }}
+                                @php
+                                    $kategori = $item->pasien->kategori;
+                                    $kategoriColor = match ($kategori) {
+                                        'bpjs' => 'bg-blue-100 text-blue-700',
+                                        'asuransi' => 'bg-amber-100 text-amber-700',
+                                        'umum' => 'bg-green-100 text-green-700',
+                                        default => 'bg-gray-100 text-gray-700',
+                                    };
+                                @endphp
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $kategoriColor }}">
+                                    {{ ucfirst($kategori) }}
+                                </span>
                             </td>
                             <td class="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-800">
                                 {{ $item->pesanan?->frame?->merk ?? '-' }}

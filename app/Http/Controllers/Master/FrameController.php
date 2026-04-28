@@ -22,7 +22,8 @@ class FrameController extends Controller
         }
 
         $frames = $query
-            ->orderBy('kode_frame')
+            // ->orderBy('kode_frame')
+            ->latest()
             ->paginate(20)
             ->withQueryString();
 

@@ -16,12 +16,15 @@ class DocumentController extends Controller
     }
     public function create()
     {
-        return view('admin.master.dokumen_create');
+        $document = null;
+        return view('admin.master.dokumen_create', compact('document'));
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
+            'kategori' => 'required|in:bpjs,asuransi,umum',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -32,17 +35,16 @@ class DocumentController extends Controller
             ->with('success', 'Dokumen berhasil ditambahkan');
     }
 
-
     public function edit(Document $document)
     {
-        return view('admin.master.dokumen_edit', compact('document'));
+        return view('admin.master.dokumen_create', compact('document'));
     }
-
 
     public function update(Request $request, Document $document)
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
+            'kategori' => 'required|in:bpjs,asuransi,umum',
             'keterangan' => 'nullable|string',
         ]);
 
