@@ -25,6 +25,11 @@ class IdentitasPasienController extends Controller
             });
         }
 
+        // Filter Kategori
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->input('kategori'));
+        }
+
         $rmPasiens = $query->paginate(15);
 
         return view('admin.rekammedis.identitaspasien_index', compact('rmPasiens'));

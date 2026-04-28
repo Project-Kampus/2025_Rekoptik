@@ -178,7 +178,13 @@
                             </tr>
                             <tr class="hover:bg-indigo-50">
                                 <td class="px-3 py-2 font-medium text-gray-600">Umur</td>
-                                <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pasien->umur ?? '-' }} Tahun
+                                @php
+
+                                    $tgl1 = \Carbon\Carbon::parse($RmPemeriksaan->pasien->tanggal_lahir);
+                                    $tgl2 = \Carbon\Carbon::parse($RmPemeriksaan->pesanan->tanggal_dipesan);
+                                    $umur = $tgl1->diff($tgl2)->y;
+                                @endphp
+                                <td class="px-3 py-2 text-gray-900">{{ $umur ?? '-' }} Tahun
                                 </td>
                             </tr>
                             <tr class="hover:bg-indigo-50">

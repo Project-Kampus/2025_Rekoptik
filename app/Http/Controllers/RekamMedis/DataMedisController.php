@@ -160,7 +160,7 @@ class DataMedisController extends Controller
 
             'frame_id' => 'required|exists:frames,id',
             'lensa_id' => 'required|exists:lensas,id',
-            'aksesoris_id' => 'required|array',
+            'aksesoris_id' => 'nullable|array',
             'aksesoris_id.*' => 'exists:aksesoris,id',
             'biaya_kacamata' => 'required|numeric',
             'tanggal_dipesan' => 'required|date',
@@ -201,11 +201,14 @@ class DataMedisController extends Controller
         $RmPemeriksaan->pesanan->update([
             'frame_id' => $validated['frame_id'],
             'lensa_id' => $validated['lensa_id'],
-            'aksesoris_id' => $validated['aksesoris_id'],
             'biaya_kacamata' => $validated['biaya_kacamata'],
             'tanggal_dipesan' => $validated['tanggal_dipesan'],
             'tanggal_pengambilan' => $validated['tanggal_pengambilan'],
         ]);
+
+        // Update aksesoris
+        $aksesorisIds = $validated['aksesoris_id'] ?? [];
+        $RmPemeriksaan->pesanan->aksesoris()->sync($aksesorisIds);
 
         return redirect()
             ->route('datamedis.show', [$RmPemeriksaan])

@@ -160,10 +160,11 @@
     @include('layouts.notification')
 
     <!-- Componen Select Search -->
+    <script src="{{ asset('app/Components/form-select-search.js') }}"></script>
+    <script src="{{ asset('app/Components/form-multiselect.js') }}"></script>
 
     <!-- Componen Form Input Type Rupiah -->
     <script src="{{ asset('app/Components/form-input.js') }}"></script>
-    <script src="{{ asset('app/Components/form-select-search.js') }}"></script>
 
 
 

@@ -62,6 +62,14 @@ function selectSearchData() {
             this.selectedLabel = this.getLabel(option);
             this.open = false;
             this.search = "";
+
+            // Dispatch change event on hidden input
+            const hiddenInput = this.$el.querySelector('input[type="hidden"]');
+            if (hiddenInput) {
+                hiddenInput.dispatchEvent(
+                    new Event("change", { bubbles: true }),
+                );
+            }
         },
 
         isSelected(option) {
@@ -70,6 +78,19 @@ function selectSearchData() {
 
         capitalizeFirst(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+
+        formatExtraLabel(label, value) {
+            // Format harga as currency
+            if (label.toLowerCase() === "harga" && !isNaN(value)) {
+                return new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                }).format(value);
+            }
+            return value;
         },
     };
 }

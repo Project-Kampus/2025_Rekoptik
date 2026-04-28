@@ -39,7 +39,8 @@
         </div>
     </div>
 
-    <form method="POST" action="{{ route('datamedis.store.step2', $pasien->id) }}" class="space-y-3">
+    <form method="POST" action="{{ route('datamedis.store.step2', $pasien->id) }}" class="space-y-3"
+        id="form_data_medis">
         @csrf
 
         <!-- Data Pemeriksaan -->
@@ -61,9 +62,7 @@
                     <x-form-input name="kebiasaan" class="mt-2 w-full" value="{{ old('kebiasaan') }}"
                         placeholder="Masukkan kebiasaan/pekerjaan" required />
                 </div>
-            </div>
 
-            <div class="space-y-4">
                 <div>
                     <x-input-label value="Keluhan Utama" class="font-semibold" />
                     <textarea name="keluhan_utama"
@@ -180,38 +179,82 @@
                 </h3>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div>
-                    <x-input-label value="Frame" class="font-semibold" />
-                    <x-form-select-search class="mt-2 w-full" name="frame_id" :options="$frame" labelKey="kode_frame"
-                        valueKey="id" :extraLabels="['merk', 'harga']" placeholder="Pilih Frame" />
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Input Section -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div>
+                        <x-input-label value="Frame" class="font-semibold" />
+                        <x-form-select-search class="mt-2 w-full" name="frame_id" :options="$frame"
+                            labelKey="kode_frame" valueKey="id" :extraLabels="['merk', 'harga']" placeholder="Pilih Frame"
+                            id="frame_select" />
+                    </div>
+                    <div>
+                        <x-input-label value="Lensa" class="font-semibold" />
+                        <x-form-select-search class="mt-2 w-full" name="lensa_id" :options="$lensa"
+                            labelKey="nama_lensa" valueKey="id" :extraLabels="['harga']" placeholder="Pilih Lensa"
+                            id="lensa_select" />
+                    </div>
+                    <div>
+                        <x-input-label value="Aksesoris" class="font-semibold" />
+                        <x-form-multiselect name="aksesoris_id" class="mt-2 w-full" :options="$aksesoris" labelKey="nama"
+                            placeholder="Pilih Aksesoris" id="aksesoris_select" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <x-input-label value="Tanggal Pemesanan" class="font-semibold" />
+                            <x-form-input name="tanggal_dipesan" type="date" class="mt-2 w-full"
+                                value="{{ old('tanggal_dipesan') }}" required />
+                        </div>
+                        <div>
+                            <x-input-label value="Tanggal Pengambilan" class="font-semibold" />
+                            <x-form-input name="tanggal_pengambilan" type="date" class="mt-2 w-full"
+                                value="{{ old('tanggal_pengambilan') }}" required />
+                        </div>
+                    </div>
+                    {{-- <div>
+                        <x-input-label value="Biaya (Rp)" class="font-semibold" />
+                        <x-form-input name="biaya_kacamata" class="mt-2 w-full" type="rupiah"
+                            value="{{ old('biaya_kacamata') }}" placeholder="0" required />
+                    </div> --}}
                 </div>
-                <div>
-                    <x-input-label value="Lensa" class="font-semibold" />
-                    <x-form-select-search class="mt-2 w-full" name="lensa_id" :options="$lensa" labelKey="nama_lensa"
-                        valueKey="id" :extraLabels="['harga']" placeholder="Pilih Lensa" />
-                </div>
-                <div>
-                    <x-input-label value="Aksesoris" class="font-semibold" />
-                    <x-form-multiselect name="aksesoris_id" class="mt-2 w-full" :options="$aksesoris" labelKey="nama"
-                        placeholder="Pilih Aksesoris" />
-                </div>
-                <div>
-                    <x-input-label value="Biaya (Rp)" class="font-semibold" />
-                    <x-form-input name="biaya_kacamata" class="mt-2 w-full" type="rupiah"
-                        value="{{ old('biaya_kacamata') }}" placeholder="0" required />
-                </div>
-                <div>
-                    <x-input-label value="Tanggal Pemesanan" class="font-semibold" />
-                    <x-form-input name="tanggal_dipesan" type="date" class="mt-2 w-full"
-                        value="{{ old('tanggal_dipesan') }}" required />
-                </div>
-                <div>
-                    <x-input-label value="Tanggal Pengambilan" class="font-semibold" />
-                    <x-form-input name="tanggal_pengambilan" type="date" class="mt-2 w-full"
-                        value="{{ old('tanggal_pengambilan') }}" required />
+
+                <!-- Summary Section -->
+                <div
+                    class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-indigo-200 h-fit sticky top-4">
+                    <h4 class="font-semibold text-gray-900 mb-4">Ringkasan Pesanan</h4>
+
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <p class="text-gray-600">Frame:</p>
+                            <p class="font-semibold text-gray-900" id="summary_frame">-</p>
+                            <p class="text-indigo-600" id="summary_frame_price">Rp 0</p>
+                        </div>
+
+                        <div class="border-t border-indigo-200 pt-3">
+                            <p class="text-gray-600">Lensa:</p>
+                            <p class="font-semibold text-gray-900" id="summary_lensa">-</p>
+                            <p class="text-indigo-600" id="summary_lensa_price">Rp 0</p>
+                        </div>
+
+                        <div class="border-t border-indigo-200 pt-3">
+                            <p class="text-gray-600">Aksesoris:</p>
+                            <div id="summary_aksesoris" class="space-y-1">
+                                <p class="text-gray-500 italic">Belum ada</p>
+                            </div>
+                            <p class="text-indigo-600 mt-2" id="summary_aksesoris_price">Rp 0</p>
+                        </div>
+
+                        <div class="border-t-2 border-indigo-300 pt-3">
+                            <p class="text-gray-600 mb-1">Total Biaya:</p>
+                            <p class="text-2xl font-bold text-indigo-600" id="summary_total">Rp 0</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Hidden Input for Total Biaya -->
+            <input type="hidden" name="biaya_kacamata" id="biaya_kacamata" value="{{ old('biaya_kacamata', 0) }}"
+                required />
         </div>
 
         <!-- Action Buttons -->
@@ -237,4 +280,5 @@
     </form>
 
     <script src="{{ asset('app/dummy/datamedis_create_step2.js') }}"></script>
+    <script src="{{ asset('app/js/order-calculator.js') }}"></script>
 </x-app-layout>

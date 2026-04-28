@@ -23,16 +23,24 @@
                 </p>
             </div>
 
-            <form method="GET" action="{{ route('identitaspasien.index') }}" class="flex gap-2">
+            <form method="GET" action="{{ route('identitaspasien.index') }}" class="flex gap-2 flex-wrap">
                 <input type="text" name="q" value="{{ request('q') }}"
                     placeholder="Cari nama / nomor kartu / email"
-                    class="w-64 rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    class="rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+
+                <select name="kategori"
+                    class="rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">-- Semua Kategori --</option>
+                    <option value="bpjs" @selected(request('kategori') === 'bpjs')>BPJS</option>
+                    <option value="asuransi" @selected(request('kategori') === 'asuransi')>Asuransi</option>
+                    <option value="umum" @selected(request('kategori') === 'umum')>Umum</option>
+                </select>
 
                 <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
                     Cari
                 </button>
 
-                @if (request('q'))
+                @if (request('q') || request('kategori'))
                     <a href="{{ route('identitaspasien.index') }}"
                         class="px-4 py-2 border rounded-md text-sm text-gray-600 hover:bg-gray-100">
                         Reset
@@ -76,7 +84,7 @@
                                 {{ $pasien->email ?? '-' }}
                             </td>
                             <td class="px-4 py-2">
-                                {{ $pasien->umur ?? '-' }}
+                                {{ $pasien->umur ?? '-' }} Tahun
                             </td>
                             <td class="px-4 py-2">
                                 @php

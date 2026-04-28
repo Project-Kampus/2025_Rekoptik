@@ -1,14 +1,21 @@
 @props([
+    'name' => '',
     'options' => [],
     'labelKey' => null,
     'valueKey' => null,
     'extraLabels' => [],
     'placeholder' => 'Pilih...',
-    'name' => '',
     'selected' => null,
 ])
 
-<div x-data="selectSearchData()" x-init="init()" @click.outside="open = false"
+<div x-data="selectSearchData()" x-init="init();
+$watch('selectedValue', function(val) {
+    setTimeout(() => {
+        if (typeof updateSummary === 'function') {
+            updateSummary();
+        }
+    }, 50);
+});" @click.outside="open = false"
     {{ $attributes->merge(['class' => 'relative w-full']) }} data-options='@json($options)'
     data-selected='@json($selected)' data-label-key='{{ $labelKey ?? 'label' }}'
     data-value-key='{{ $valueKey ?? 'value' }}' data-extra-labels='@json($extraLabels)'
@@ -65,7 +72,8 @@
                             <div class="text-xs text-gray-500 mt-0.5">
                                 <template x-for="(label, idx) in extraLabels" :key="idx">
                                     <span>
-                                        <span x-text="capitalizeFirst(label) + ': ' + (option[label] ?? '-')"></span>
+                                        <span
+                                            x-text="capitalizeFirst(label) + ': ' + formatExtraLabel(label, option[label] ?? '-')"></span>
                                         <template x-if="idx < extraLabels.length - 1">
                                             <span>•</span>
                                         </template>
