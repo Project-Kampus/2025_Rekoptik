@@ -101,6 +101,7 @@ class DataMedisController extends Controller
             'resep',
             'pesanan.frame',
             'pesanan.lensa',
+            'pesanan.aksesoris',
             'pesanan.pembayarans',
             'pesanan.pengambilan',
             'dokumens.dokumen'
@@ -111,7 +112,6 @@ class DataMedisController extends Controller
         $allDokumens = Document::where('kategori', $RmPemeriksaan->pasien->kategori)->get();
 
         return view('admin.rekammedis.datamedis_show', compact('RmPemeriksaan', 'uploadedDokumens', 'allDokumens'));
-        // return view('admin.rekammedis.datamedis_show', compact('RmPemeriksaan', 'allDokumens'));
     }
 
     /**

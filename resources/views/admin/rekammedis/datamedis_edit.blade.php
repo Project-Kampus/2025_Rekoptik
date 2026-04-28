@@ -202,60 +202,90 @@
         </div>
 
         <!-- Pesanan Kacamata -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div class="mb-6">
                 <h3 class="text-base font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
                     Pesanan
                 </h3>
             </div>
 
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Input Section -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div>
+                        <x-input-label value="Frame" class="font-semibold" />
+                        <x-form-select-search class="mt-2 w-full" name="frame_id" :options="$frames"
+                            labelKey="kode_frame" valueKey="id" :extraLabels="['merk', 'harga']" placeholder="Pilih Frame"
+                            id="frame_select" :selected="old('frame_id', $RmPemeriksaan->pesanan->frame_id)" />
+                    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
-                <div>
-                    <x-input-label for="frame_id" value="Frame" />
-                    <x-form-select-search class="mt-2 w-full" name="frame_id" :options="$frames"
-                        labelKey="kode_frame" valueKey="id" :extraLabels="['merk', 'harga']" placeholder="Pilih Frame"
-                        :selected="old('frame_id', $RmPemeriksaan->pesanan->frame_id)" />
-                    <x-input-error :messages="$errors->get('frame_id')" class="mt-2" />
+                    <div>
+                        <x-input-label value="Lensa" class="font-semibold" />
+                        <x-form-select-search class="mt-2 w-full" name="lensa_id" :options="$lensas"
+                            labelKey="nama_lensa" valueKey="id" :extraLabels="['harga']" placeholder="Pilih Lensa"
+                            id="lensa_select" :selected="old('lensa_id', $RmPemeriksaan->pesanan->lensa_id)" />
+                    </div>
+
+                    <div>
+                        <x-input-label value="Aksesoris" class="font-semibold" />
+                        <x-form-multiselect name="aksesoris_id" class="mt-2 w-full" :options="$aksesoris"
+                            labelKey="nama" id="aksesoris_select" :selected="$RmPemeriksaan->pesanan?->aksesoris->pluck('id')->toArray() ?? []" placeholder="Pilih Aksesoris" />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <x-input-label value="Tanggal Pemesanan" class="font-semibold" />
+                            <x-form-input name="tanggal_dipesan" type="date" class="mt-2 w-full"
+                                value="{{ old('tanggal_dipesan', optional($RmPemeriksaan->pesanan)->tanggal_dipesan?->format('Y-m-d')) }}"
+                                required />
+                        </div>
+
+                        <div>
+                            <x-input-label value="Tanggal Pengambilan" class="font-semibold" />
+                            <x-form-input name="tanggal_pengambilan" type="date" class="mt-2 w-full"
+                                value="{{ old('tanggal_pengambilan', optional($RmPemeriksaan->pesanan)->tanggal_pengambilan?->format('Y-m-d')) }}"
+                                required />
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <x-input-label for="lensa_id" value="Lensa" />
-                    <x-form-select-search class="mt-2 w-full" name="lensa_id" :options="$lensas"
-                        labelKey="nama_lensa" valueKey="id" placeholder="Pilih Lensa" :selected="old('lensa_id', $RmPemeriksaan->pesanan->lensa_id)" />
-                    <x-input-error :messages="$errors->get('lensa_id')" class="mt-2" />
-                </div>
+                <!-- Summary Section -->
+                <div
+                    class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-indigo-200 h-fit sticky top-4">
+                    <h4 class="font-semibold text-gray-900 mb-4">Ringkasan Pesanan</h4>
 
-                <div>
-                    <x-input-label for="aksesoris_id" value="Aksesoris (bisa pilih lebih dari satu)" />
-                    <x-form-multiselect name="aksesoris_id" class="mt-2 w-full" :options="$aksesoris" labelKey="nama"
-                        :selected="$RmPemeriksaan->pesanan?->aksesoris->pluck('id')->toArray() ?? []" placeholder="Pilih Aksesoris" />
-                    <x-input-error :messages="$errors->get('aksesoris_id')" class="mt-2" />
-                </div>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <p class="text-gray-600">Frame:</p>
+                            <p class="font-semibold text-gray-900" id="summary_frame">-</p>
+                            <p class="text-indigo-600" id="summary_frame_price">Rp 0</p>
+                        </div>
 
-                <div>
-                    <x-input-label for="biaya_kacamata" value="Biaya Kacamata (Rp)" />
-                    <x-form-input id="biaya_kacamata" name="biaya_kacamata" type="rupiah" class="w-full mt-2"
-                        value="{{ old('biaya_kacamata', $RmPemeriksaan->pesanan->biaya_kacamata) }}" required />
-                    <x-input-error :messages="$errors->get('biaya_kacamata')" class="mt-2" />
-                </div>
+                        <div class="border-t border-indigo-200 pt-3">
+                            <p class="text-gray-600">Lensa:</p>
+                            <p class="font-semibold text-gray-900" id="summary_lensa">-</p>
+                            <p class="text-indigo-600" id="summary_lensa_price">Rp 0</p>
+                        </div>
 
-                <div>
-                    <x-input-label for="tanggal_dipesan" value="Tanggal Pemesanan" />
-                    <x-form-input id="tanggal_dipesan" name="tanggal_dipesan" type="date" class="w-full mt-2"
-                        value="{{ old('tanggal_dipesan', optional($RmPemeriksaan->pesanan)->tanggal_dipesan ? $RmPemeriksaan->pesanan->tanggal_dipesan->format('Y-m-d') : '') }}"
-                        required />
-                    <x-input-error :messages="$errors->get('tanggal_dipesan')" class="mt-2" />
-                </div>
-                <div>
-                    <x-input-label for="tanggal_pengambilan" value="Tanggal Pengambilan" />
-                    <x-form-input id="tanggal_pengambilan" name="tanggal_pengambilan" type="date"
-                        class="w-full mt-2"
-                        value="{{ old('tanggal_pengambilan', optional($RmPemeriksaan->pesanan)->tanggal_pengambilan ? $RmPemeriksaan->pesanan->tanggal_pengambilan->format('Y-m-d') : '') }}"
-                        required />
-                    <x-input-error :messages="$errors->get('tanggal_pengambilan')" class="mt-2" />
+                        <div class="border-t border-indigo-200 pt-3">
+                            <p class="text-gray-600">Aksesoris:</p>
+                            <div id="summary_aksesoris" class="space-y-1">
+                                <p class="text-gray-500 italic">Belum ada</p>
+                            </div>
+                            <p class="text-indigo-600 mt-2" id="summary_aksesoris_price">Rp 0</p>
+                        </div>
+
+                        <div class="border-t-2 border-indigo-300 pt-3">
+                            <p class="text-gray-600 mb-1">Total Biaya:</p>
+                            <p class="text-2xl font-bold text-indigo-600" id="summary_total">Rp 0</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Hidden Input -->
+            <input type="hidden" name="biaya_kacamata" id="biaya_kacamata"
+                value="{{ old('biaya_kacamata', $RmPemeriksaan->pesanan->biaya_kacamata ?? 0) }}" required />
         </div>
 
         <!-- Tombol -->
@@ -270,4 +300,5 @@
             </a>
         </div>
     </form>
+    <script src="{{ asset('app/js/order-calculator.js') }}"></script>
 </x-app-layout>
