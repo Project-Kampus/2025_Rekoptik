@@ -60,12 +60,12 @@ class RekamMedisSeeder extends Seeder
      */
     private function attachDokumen($pemeriksaanId): void
     {
-        // Attach 1-3 dokumen per pemeriksaan
-        $jumlahDokumen = rand(1, 3);
+        // Attach 2-5 dokumen per pemeriksaan (resep, elegilitas, legalitas, pengantar/rujukan, surat pernyataan)
+        $jumlahDokumen = rand(2, 5);
 
         for ($i = 1; $i <= $jumlahDokumen; $i++) {
             RmDokument::create([
-                'dokumens_id' => rand(1, 2), // Assuming ada minimal 2 dokumen tipe
+                'dokumens_id' => rand(1, 5), // Dokumen BPJS: Resep, Elegilitas, Legalitas, Pengantar/Rujukan, Surat Pernyataan
                 'pemeriksaan_id' => $pemeriksaanId,
                 'url' => 'https://example.com/dokumen/' . uniqid() . '.pdf',
             ]);

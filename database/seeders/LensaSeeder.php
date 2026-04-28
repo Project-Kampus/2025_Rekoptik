@@ -18,7 +18,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'CR-39',
                 'coating'     => null,
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 250000,
+                'modal'       => 150000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -26,7 +29,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'CR-39',
                 'coating'     => 'Blue Cut',
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 300000,
+                'modal'       => 180000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -34,7 +40,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'bifokal',
                 'material'    => 'CR-39',
                 'coating'     => null,
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 350000,
+                'modal'       => 210000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -42,7 +51,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'kryptok',
                 'material'    => 'CR-39',
                 'coating'     => 'HMC',
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 400000,
+                'modal'       => 240000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -50,7 +62,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'progresif',
                 'material'    => 'High Index 1.67',
                 'coating'     => 'HMC',
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 800000,
+                'modal'       => 480000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -58,7 +73,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'CR-39',
                 'coating'     => 'Anti Radiasi',
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 320000,
+                'modal'       => 192000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -66,7 +84,10 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'Polycarbonate',
                 'coating'     => 'Photochromic',
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 600000,
+                'modal'       => 360000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -74,12 +95,15 @@ class LensaSeeder extends Seeder
                 'kategori'    => 'single vision',
                 'material'    => 'High Index 1.74',
                 'coating'     => 'Blue Cut',
+                'od'          => 0,
+                'os'          => 0,
                 'harga'       => 500000,
+                'modal'       => 300000,
             ],
         ];
 
         foreach ($data as $item) {
-            lensa::create($item);
+            Lensa::create($item);
         }
     }
 }

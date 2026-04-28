@@ -19,6 +19,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '0428',
                 'bahan'       => 'Metal',
                 'harga'       => 350000,
+                'modal'       => 210000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -27,6 +28,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '04GF',
                 'bahan'       => 'Metal',
                 'harga'       => 375000,
+                'modal'       => 225000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -35,6 +37,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '0531',
                 'bahan'       => 'Metal',
                 'harga'       => 360000,
+                'modal'       => 216000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -43,6 +46,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '700P',
                 'bahan'       => 'Metal',
                 'harga'       => 380000,
+                'modal'       => 228000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -51,6 +55,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '08H5',
                 'bahan'       => 'Metal',
                 'harga'       => 355000,
+                'modal'       => 213000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -59,6 +64,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '583',
                 'bahan'       => 'Metal',
                 'harga'       => 340000,
+                'modal'       => 204000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -67,6 +73,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '0978',
                 'bahan'       => 'Metal',
                 'harga'       => 365000,
+                'modal'       => 219000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -75,6 +82,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '0173',
                 'bahan'       => 'Metal',
                 'harga'       => 370000,
+                'modal'       => 222000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -83,6 +91,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '08F2',
                 'bahan'       => 'Metal',
                 'harga'       => 385000,
+                'modal'       => 231000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -91,6 +100,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '0909',
                 'bahan'       => 'Metal',
                 'harga'       => 390000,
+                'modal'       => 234000,
             ],
             [
                 'supplier_id' => $supplierId,
@@ -99,6 +109,7 @@ class FrameSeeder extends Seeder
                 'warna'       => '08HS',
                 'bahan'       => 'Metal',
                 'harga'       => 395000,
+                'modal'       => 237000,
             ],
         ];
 

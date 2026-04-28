@@ -21,8 +21,8 @@ class RmPembayaranFactory extends Factory
     {
         return [
             'pesanan_id' => null, // Akan diset di seeder
-            // 'bpjs', 'asuransi', 'tunai', 'non-tunai'
-            'metode' => $this->faker->randomElement(['tunai', 'non-tunai', 'bpjs', 'bpjs']),
+            'kategori' => $this->faker->randomElement(['bpjs', 'asuransi', 'dp', 'lunas']),
+            'metode' => $this->faker->randomElement(['tunai', 'non_tunai']),
             'jumlah' => 0, // Akan diset dari pesanan
             'tanggal_bayar' => now(),
         ];
@@ -41,25 +41,61 @@ class RmPembayaranFactory extends Factory
     }
 
     /**
-     * Pembayaran transfer
+     * Pembayaran non-tunai (transfer)
      */
-    public function transfer(): static
+    public function nonTunai(): static
     {
         return $this->state(function (array $attributes) {
             return [
-                'metode' => 'transfer',
+                'metode' => 'non_tunai',
             ];
         });
     }
 
     /**
-     * Pembayaran BPJS
+     * Kategori pembayaran BPJS
      */
-    public function bpjs(): static
+    public function kategoriBpjs(): static
     {
         return $this->state(function (array $attributes) {
             return [
-                'metode' => 'bpjs',
+                'kategori' => 'bpjs',
+            ];
+        });
+    }
+
+    /**
+     * Kategori pembayaran Asuransi
+     */
+    public function kategoriAsuransi(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'kategori' => 'asuransi',
+            ];
+        });
+    }
+
+    /**
+     * Kategori pembayaran DP
+     */
+    public function kategoriDp(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'kategori' => 'dp',
+            ];
+        });
+    }
+
+    /**
+     * Kategori pembayaran Lunas
+     */
+    public function kategoriLunas(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'kategori' => 'lunas',
             ];
         });
     }

@@ -28,6 +28,7 @@ return new class extends Migration
         Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->enum('kategori', ['bpjs', 'asuransi', 'umum']);
             $table->text('keterangan');
             $table->timestamps();
         });

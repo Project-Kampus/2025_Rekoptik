@@ -26,16 +26,5 @@ class PengaturanSeeder extends Seeder
                 'logo'          => null, // isi manual lewat menu pengaturan
             ]
         );
-
-        Document::insert([
-            [
-                'nama' => 'Surat Eligibilitas Peserta (SEP)',
-                'keterangan' => 'Dokumen resmi BPJS sebagai bukti eligibilitas layanan kesehatan',
-            ],
-            [
-                'nama' => 'Resep Kacamata',
-                'keterangan' => 'Salinan resep kacamata berdasarkan hasil pemeriksaan mata',
-            ],
-        ]);
     }
 }

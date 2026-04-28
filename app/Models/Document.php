@@ -13,6 +13,8 @@ class Document extends Model
 
     protected $fillable = [
         'nama',
+        'kategori',
+        // bpjs, asuransi, umum
         'keterangan',
     ];
 
