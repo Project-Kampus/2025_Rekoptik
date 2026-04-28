@@ -23,9 +23,33 @@
                 <!-- Row 1: Nama & No Kartu -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
                     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <label class="block font-semibold text-gray-500 uppercase tracking-wide">Kategori</label>
+                        <p class="mt-2">
+                            @php
+                                $kategori = $identitaspasien->kategori;
+                                $kategoriColor = match ($kategori) {
+                                    'bpjs' => 'bg-blue-100 text-blue-700',
+                                    'asuransi' => 'bg-amber-100 text-amber-700',
+                                    'umum' => 'bg-green-100 text-green-700',
+                                    default => 'bg-gray-100 text-gray-700',
+                                };
+                            @endphp
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $kategoriColor }}">
+                                {{ ucfirst($kategori) }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                         <label class="block font-semibold text-gray-500 uppercase tracking-wide">No.
                             Kartu</label>
                         <p class="mt-2 font-medium text-gray-900">{{ $identitaspasien->no_kartu ?? '—' }}</p>
+                    </div>
+                    <div class="bg-gray-50
+                                    rounded-lg p-4 border border-gray-200">
+                        <label class="block font-semibold text-gray-500 uppercase tracking-wide">Kelas</label>
+                        <p class="mt-2 font-medium text-gray-900">
+                            {{ $identitaspasien->kelas ? 'Kelas ' . $identitaspasien->kelas : '—' }}
+                        </p>
                     </div>
                     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                         <label class="block font-semibold text-gray-500 uppercase tracking-wide">No. HP</label>
@@ -36,38 +60,11 @@
                         <p class="mt-2 font-medium text-gray-900">{{ $identitaspasien->email ?? '—' }}</p>
                     </div>
                     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                        <label class="block font-semibold text-gray-500 uppercase tracking-wide">Umur</label>
-                        <p class="mt-2 font-medium text-gray-900">{{ $identitaspasien->umur ?? '—' }} Tahun</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                        <label class="block font-semibold text-gray-500 uppercase tracking-wide">Kategori</label>
-                        <p class="mt-2">
-                            @if ($identitaspasien->kategori === 'bpjs')
-                                <span
-                                    class="inline-block px-3 py-1 rounded-full text-sm font-semibold
-                                 bg-blue-100 text-blue-800">
-                                    BPJS
-                                </span>
-                            @elseif($identitaspasien->kategori === 'asuransi')
-                                <span
-                                    class="inline-block px-3 py-1 rounded-full text-sm font-semibold  bg-green-100 text-green-800">
-                                    Asuransi
-                                </span>
-                            @else
-                                <span
-                                    class="inline-block
-                                    px-3 py-1 rounded-full text-sm font-semibold bg-white text-gray-800">
-                                    Umum
-                                </span>
-                            @endif
-                        </p>
-                    </div>
-                    <div class="bg-gray-50
-                                    rounded-lg p-4 border border-gray-200">
-                        <label class="block font-semibold text-gray-500 uppercase tracking-wide">Kelas</label>
+                        <label class="block font-semibold text-gray-500 uppercase tracking-wide">Tanggal Lahir
+                            (Umur)</label>
                         <p class="mt-2 font-medium text-gray-900">
-                            {{ $identitaspasien->kelas ? 'Kelas ' . $identitaspasien->kelas : '—' }}
-                        </p>
+                            {{ $identitaspasien->tanggal_lahir ? $identitaspasien->tanggal_lahir->format('d M Y') : '—' }}
+                            ({{ $identitaspasien->umur ?? '—' }} Tahun)</p>
                     </div>
                     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                         <label class="block font-semibold text-gray-500 uppercase tracking-wide">Tanggal
@@ -141,37 +138,37 @@
             </header>
 
             @if ($pemeriksaans->isNotEmpty())
-                <div class="overflow-x-auto">
-                    <table class="min-w-full border border-gray-200 rounded-lg">
-                        <thead class="bg-gray-50">
-                            <tr class="text-left text-sm text-gray-600">
-                                <th class="px-4 py-3 border">Tanggal</th>
-                                <th class="px-4 py-3 border">Keluhan Utama</th>
-                                <th class="px-4 py-3 border">Diagnosa</th>
-                                <th class="px-4 py-3 border">No. SEP</th>
-                                <th class="px-4 py-3 border">Petugas</th>
-                                <th class="px-4 py-3 border text-center">Aksi</th>
+                <div class="overflow-x-auto border border-gray-200 rounded-lg">
+                    <table class="min-w-full">
+                        <thead class="bg-blue-700 text-sm text-white">
+                            <tr class="text-left">
+                                <th class="px-4 py-3">Tanggal</th>
+                                <th class="px-4 py-3">Keluhan Utama</th>
+                                <th class="px-4 py-3">Diagnosa</th>
+                                <th class="px-4 py-3">No. SEP</th>
+                                <th class="px-4 py-3">Petugas</th>
+                                <th class="px-4 py-3 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm text-gray-700">
+                        <tbody class="divide-y text-sm text-gray-700">
                             @foreach ($pemeriksaans as $pemeriksaan)
-                                <tr class="hover:bg-gray-50 border-b">
-                                    <td class="px-4 py-3 border whitespace-nowrap">
+                                <tr class="hover:bg-blue-50">
+                                    <td class="px-4 py-3 whitespace-nowrap">
                                         {{ $pemeriksaan->created_at->format('d F Y') }}
                                     </td>
-                                    <td class="px-4 py-3 border">
+                                    <td class="px-4 py-3">
                                         {{ substr($pemeriksaan->keluhan_utama ?? '-', 0, 50) }}{{ strlen($pemeriksaan->keluhan_utama ?? '-') > 50 ? '...' : '' }}
                                     </td>
-                                    <td class="px-4 py-3 border">
+                                    <td class="px-4 py-3">
                                         {{ substr($pemeriksaan->diagnosa ?? '-', 0, 40) }}{{ strlen($pemeriksaan->diagnosa ?? '-') > 40 ? '...' : '' }}
                                     </td>
-                                    <td class="px-4 py-3 border">
+                                    <td class="px-4 py-3">
                                         {{ $pemeriksaan->no_sep ?? '-' }}
                                     </td>
-                                    <td class="px-4 py-3 border">
+                                    <td class="px-4 py-3">
                                         {{ $pemeriksaan->user->name ?? '-' }}
                                     </td>
-                                    <td class="px-4 py-3 border text-center">
+                                    <td class="px-4 py-3 text-center">
                                         <a href="{{ route('datamedis.show', $pemeriksaan->id) }}"
                                             class="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600">
                                             Detail

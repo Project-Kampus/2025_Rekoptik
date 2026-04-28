@@ -58,7 +58,7 @@
                         <th class="px-4 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm text-gray-700">
+                <tbody class="divide-y text-sm text-gray-700">
                     @forelse ($lensas as $lensa)
                         <tr class="hover:bg-blue-50">
                             <td class="px-4 py-2">
@@ -168,12 +168,12 @@
                 </tbody>
             </table>
         </div>
-
+        {{--
         <p class="text-sm text-gray-500 mt-2">
             Menampilkan {{ $lensas->count() }} dari {{ $lensas->total() }} lensa
-        </p>
+        </p> --}}
 
-        <div class="mt-2">
+        <div class="mt-4">
             {{ $lensas->links() }}
         </div>
     </div>

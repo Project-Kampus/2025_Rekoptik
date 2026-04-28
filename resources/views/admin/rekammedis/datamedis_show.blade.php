@@ -331,27 +331,18 @@
                                     {{ $pembayaran->tanggal_bayar->format('d F Y') }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 font-semibold rounded">
-                                        @switch($pembayaran->kategori)
-                                            @case('bpjs')
-                                                BPJS
-                                            @break
-
-                                            @case('asuransi')
-                                                Asuransi
-                                            @break
-
-                                            @case('dp')
-                                                Uang Muka
-                                            @break
-
-                                            @case('lunas')
-                                                Pelunasan
-                                            @break
-
-                                            @default
-                                                -
-                                        @endswitch
+                                    @php
+                                        $kategori = $pembayaran->kategori;
+                                        $kategoriColor = match ($kategori) {
+                                            'bpjs' => 'bg-blue-100 text-blue-700',
+                                            'asuransi' => 'bg-amber-100 text-amber-700',
+                                            'dp' => 'bg-green-100 text-green-700',
+                                            'lunas' => 'bg-green-100 text-green-700',
+                                            default => 'bg-gray-100 text-gray-700',
+                                        };
+                                    @endphp
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $kategoriColor }}">
+                                        {{ ucfirst($kategori) }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-3">
@@ -361,7 +352,7 @@
                                                 Tunai
                                             @break
 
-                                            @case('non-tunai')
+                                            @case('non_tunai')
                                                 Non Tunai
                                             @break
 

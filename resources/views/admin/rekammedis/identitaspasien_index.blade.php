@@ -42,51 +42,60 @@
         </div>
 
         {{-- Table --}}
-        <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-200 rounded-lg">
-                <thead class="bg-gray-50">
-                    <tr class="text-left text-sm text-gray-600">
-                        <th class="px-4 py-3 border">Nama Pasien</th>
-                        <th class="px-4 py-3 border">No. Kartu</th>
-                        <th class="px-4 py-3 border">No. HP</th>
-                        <th class="px-4 py-3 border">Email</th>
-                        <th class="px-4 py-3 border">Umur</th>
-                        <th class="px-4 py-3 border">Kategori</th>
-                        <th class="px-4 py-3 border">Alamat</th>
-                        <th class="px-4 py-3 border text-center">Aksi</th>
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full">
+                <thead class="bg-blue-700 text-sm text-white">
+                    <tr class="text-left text-sm ">
+                        <th class="px-4 py-3 w-12 whitespace-nowrap">No</th>
+                        <th class="px-4 py-3">Nama Pasien</th>
+                        {{-- <th class="px-4 py-3">No. Kartu</th> --}}
+                        <th class="px-4 py-3">No. HP</th>
+                        <th class="px-4 py-3">Email</th>
+                        <th class="px-4 py-3">Umur</th>
+                        <th class="px-4 py-3">Kategori</th>
+                        <th class="px-4 py-3">Alamat</th>
+                        <th class="px-4 py-3 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm text-gray-700">
+                <tbody class="divide-y text-sm text-gray-700">
                     @forelse ($rmPasiens as $pasien)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border">
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-4 py-2">
+                                {{ $loop->iteration + ($rmPasiens->currentPage() - 1) * $rmPasiens->perPage() }}
+                            </td>
+                            <td class="px-4 py-2">
                                 {{ $pasien->nama_pasien }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            {{-- <td class="px-4 py-2">
                                 {{ $pasien->no_kartu ?? '-' }}
-                            </td>
-                            <td class="px-4 py-2 border">
+                            </td> --}}
+                            <td class="px-4 py-2">
                                 {{ $pasien->no_hp ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ $pasien->email ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ $pasien->umur ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 border">
-                                <span
-                                    class="px-2 py-1 rounded text-xs font-medium
-                                    @if ($pasien->kategori === 'bpjs') bg-blue-100 text-blue-800
-                                    @elseif($pasien->kategori === 'asuransi') bg-green-100 text-green-800
-                                    @else bg-gray-100 text-gray-800 @endif">
-                                    {{ ucfirst($pasien->kategori) }}
+                            <td class="px-4 py-2">
+                                @php
+                                    $kategori = $pasien->kategori;
+                                    $kategoriColor = match ($kategori) {
+                                        'bpjs' => 'bg-blue-100 text-blue-700',
+                                        'asuransi' => 'bg-amber-100 text-amber-700',
+                                        'umum' => 'bg-green-100 text-green-700',
+                                        default => 'bg-gray-100 text-gray-700',
+                                    };
+                                @endphp
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $kategoriColor }}">
+                                    {{ ucfirst($kategori) }}
                                 </span>
                             </td>
-                            <td class="px-4 py-2 border">
+                            <td class="px-4 py-2">
                                 {{ substr($pasien->alamat ?? '-', 0, 30) }}{{ strlen($pasien->alamat ?? '-') > 30 ? '...' : '' }}
                             </td>
-                            <td class="px-4 py-2 border text-center">
+                            <td class="px-4 py-2 text-center">
                                 <div class="flex justify-center gap-2">
                                     @if (auth()->user()->hasRole('superadmin'))
                                         <a href="{{ route('identitaspasien.edit', $pasien->id) }}"
@@ -113,11 +122,7 @@
             </table>
         </div>
 
-        <p class="text-sm text-gray-500 mt-1">
-            Menampilkan {{ $rmPasiens->count() }} dari {{ $rmPasiens->total() }} data pasien
-        </p>
-
-        <div class="mt-2">
+        <div class="mt-4">
             {{ $rmPasiens->links() }}
         </div>
 

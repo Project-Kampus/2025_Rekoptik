@@ -123,9 +123,9 @@
             </table>
         </div>
 
-        <p class="text-sm text-gray-500 mt-1">
+        {{-- <p class="text-sm text-gray-500 mt-1">
             Menampilkan {{ $documents->count() }} dari {{ $documents->total() }} frame
-        </p>
+        </p> --}}
 
         <div class="mt-4">
             {{ $documents->links() }}

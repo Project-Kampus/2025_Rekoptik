@@ -174,11 +174,11 @@
             </table>
         </div>
 
-        <p class="text-sm text-gray-500 mt-1">
+        {{-- <p class="text-sm text-gray-500 mt-1">
             Menampilkan {{ $frames->count() }} dari {{ $frames->total() }} frame
-        </p>
+        </p> --}}
 
-        <div class="mt-2">
+        <div class="mt-4">
             {{ $frames->links() }}
         </div>
 

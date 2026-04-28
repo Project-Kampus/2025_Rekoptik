@@ -43,7 +43,7 @@
 
         <div class="overflow-x-auto border border-gray-200 rounded-lg">
             <table class="min-w-full">
-                <thead class="bg-blue-700 text-white font-bold">
+                <thead class="bg-blue-700 text-white font-bold text-sm">
                     <tr class="text-left text-sm ">
                         <th class="px-4 py-3 w-12 whitespace-nowrap">No.</th>
                         <th class="px-4 py-3 ">Nama Supplier</th>
@@ -52,8 +52,7 @@
                         <th class="px-4 py-3  text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm text-gray-700">
-
+                <tbody class="divide-y text-sm text-gray-700">
                     @forelse ($suppliers as $supplier)
                         <tr class="hover:bg-blue-50">
                             <td class="px-4 py-2 ">
@@ -125,11 +124,11 @@
             </table>
         </div>
 
-        <p class="text-sm text-gray-500 mt-1">
+        {{-- <p class="text-sm text-gray-500 mt-1">
             Menampilkan {{ $suppliers->count() }} dari {{ $suppliers->total() }} supplier
-        </p>
+        </p> --}}
 
-        <div class="mt-2">
+        <div class="mt-4">
             {{ $suppliers->links() }}
         </div>
 

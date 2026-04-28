@@ -222,7 +222,7 @@
         </div>
 
         <!-- Pagination -->
-        <div class="mt-6">
+        <div class="mt-4">
             {{ $data->links() }}
         </div>
     </div>

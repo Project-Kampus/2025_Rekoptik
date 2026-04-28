@@ -46,7 +46,7 @@
             <table class="min-w-full  ">
                 <thead class="bg-blue-700 text-white text-sm font-bold">
                     <tr>
-                        <th class="px-4 py-3 ">No</th>
+                        <th class="px-4 py-3 w-12 whitespace-nowrap">No</th>
                         <th class="px-4 py-3 ">Nama</th>
                         <th class="px-4 py-3 ">Supplier</th>
                         <th class="px-4 py-3 ">Material</th>
@@ -171,9 +171,9 @@
             </table>
         </div>
 
-        <p class="text-sm text-gray-500 mt-1">
+        {{-- <p class="text-sm text-gray-500 mt-1">
             Menampilkan {{ $aksesoris->count() }} dari {{ $aksesoris->total() }} frame
-        </p>
+        </p> --}}
 
         <div class="mt-4">
             {{ $aksesoris->links() }}
