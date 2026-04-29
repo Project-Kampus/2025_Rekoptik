@@ -3,99 +3,108 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Surat Jawaban Pelayanan Refraksi & Optisi</title>
+    <title>Surat Jawaban Refraksi</title>
+
     <style>
+        @page {
+            size: A4;
+            margin: 2.5cm 1.5cm 2.5cm 2cm;
+        }
+
         body {
             font-family: "Times New Roman", serif;
-            font-size: 13px;
-            margin: 40px;
+            font-size: 12pt;
+            line-height: 1.6;
         }
 
         .container {
-            width: 400px;
-            margin: auto;
+            width: 100%;
         }
 
+        /* KOP */
         .kop {
-            text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
+            border-bottom: 2px solid black;
             margin-bottom: 20px;
+            padding-bottom: 10px;
+
+            /* border: none */
         }
 
-        .kop-row {
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .kop-logo {
-            width: 60px;
+        .kop-table {
+            width: 100%;
         }
 
         .kop-logo img {
-            width: 50px;
-            height: auto;
+            width: 70px;
         }
 
         .kop-text {
-            flex: 1;
             text-align: center;
         }
 
         .kop-text h2 {
             margin: 0;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16pt;
         }
 
         .kop-text p {
             margin: 2px 0;
-            font-size: 12px;
+            font-size: 11pt;
         }
 
         .kop-nomor {
-            font-size: 12px;
-            white-space: nowrap;
             text-align: right;
-            padding-left: 10px;
+            font-size: 11pt;
+            vertical-align: top;
         }
 
+        /* JUDUL */
         .judul {
             text-align: center;
             font-weight: bold;
-            text-transform: uppercase;
             margin: 20px 0;
+            text-transform: uppercase;
         }
 
+        /* ISI */
         .content p {
             margin: 6px 0;
+            text-align: justify;
         }
 
+        /* TABEL */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            /* margin-top: 15px; */
         }
 
-        table,
+        /* table,
         th,
         td {
-            border: 1px solid #000;
+            border: 1px solid black;
+        } */
+
+        .resep-table,
+        .resep-table th,
+        .resep-table td {
+            border: 1px solid black;
         }
 
         th,
         td {
-            padding: 6px;
+            padding: 8px;
             text-align: center;
-            font-size: 12px;
         }
 
+        /* TTD */
         .ttd {
+            margin-top: 40px;
             width: 100%;
-            margin-top: 20px;
         }
 
-        .ttd .kanan {
+        .ttd-kanan {
+            width: 250px;
             float: right;
             text-align: center;
         }
@@ -106,29 +115,30 @@
     </style>
 </head>
 
-<body>
+<body onload="window.print()">
+
     <div class="container">
 
-        <!-- KOP + NOMOR -->
+        <!-- KOP -->
         <div class="kop">
-            <div class="kop-row">
-                <!-- LOGO KIRI -->
-                <div class="kop-logo">
-                    <img src="{{ asset('storage/' . $pengaturan->logo) }}" alt="Logo Optik">
-                </div>
+            <table class="kop-table">
+                <tr>
+                    <td class="kop-logo" width="80">
+                        {{-- <img src="{{ asset('storage/' . $pengaturan->logo) }}"> --}}
+                        <img src="{{ public_path('storage/' . $pengaturan->logo) }}">
+                    </td>
 
-                <!-- TEKS TENGAH -->
-                <div class="kop-text">
-                    <h2>{{ $pengaturan['nama_toko'] ?? '-' }}</h2>
-                    <p> {{ $pengaturan['alamat'] ?? '-' }}</p>
-                    <p>Telp. {{ $pengaturan['telp'] }} | HP. {{ $pengaturan['no_hp'] }}</p>
-                </div>
+                    <td class="kop-text">
+                        <h2>{{ $pengaturan['nama_toko'] }}</h2>
+                        <p>{{ $pengaturan['alamat'] }}</p>
+                        <p>Telp. {{ $pengaturan['telp'] }} | HP. {{ $pengaturan['no_hp'] }}</p>
+                    </td>
 
-                <!-- NOMOR KANAN -->
-                <div class="kop-nomor">
-                    No. {{ str_pad($RmPemeriksaan->id, 6, '0', STR_PAD_LEFT) }}
-                </div>
-            </div>
+                    <td class="kop-nomor" width="120">
+                        No. {{ str_pad($RmPemeriksaan->id, 6, '0', STR_PAD_LEFT) }}
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <!-- JUDUL -->
@@ -139,8 +149,7 @@
         <!-- ISI -->
         <div class="content">
             <p>Yth. dr. {{ $RmPemeriksaan->resep->resep_dari }}</p>
-            <p>PKM / KP / Dokter Praktek Perorangan</p>
-            <p>di tempat</p>
+            <p>Di tempat</p>
 
             <br>
 
@@ -148,30 +157,30 @@
                 Berdasarkan hasil pemeriksaan Refraksi dan Optisi peserta atas nama:
             </p>
 
+            @php
+                $umur = \Carbon\Carbon::parse($RmPemeriksaan->pasien->tanggal_lahir)->diffInYears(
+                    $RmPemeriksaan->created_at,
+                );
+            @endphp
+
             <p>Nama : <strong>{{ $RmPemeriksaan->pasien->nama_pasien }}</strong></p>
             <p>No. Kartu JKN : {{ $RmPemeriksaan->no_kartu ?? '-' }}</p>
-            @php
-                $tanggal_lahir = \Carbon\Carbon::parse($RmPemeriksaan->pasien->tanggal_lahir);
-                $umur = $tanggal_lahir->diffInYears(\Carbon\Carbon::parse($RmPemeriksaan->created_at));
-                $umur = floor($umur);
-
-            @endphp
             <p>Umur : {{ $umur }} Tahun</p>
 
             <br>
 
             <p>
-                Didapatkan hasil bahwa peserta menderita gangguan Refraksi berupa,
-                sehingga perlu ditatalaksana dengan pemberian kacamata sebagai berikut:
+                Didapatkan hasil bahwa peserta memerlukan koreksi refraksi dengan resep sebagai berikut:
             </p>
 
-            <!-- TABEL RESEP -->
-            <table>
+            <!-- TABEL -->
+            <table class="resep-table">
                 <thead>
                     <tr>
-                        <th colspan="3">R / OD (Kanan)</th>
-                        <th colspan="3">L / OS (Kiri)</th>
-                        <th colspan="2">Dekat</th>
+                        <th colspan="3">R / OD</th>
+                        <th colspan="3">L / OS</th>
+                        <th>ADD</th>
+                        <th>PD</th>
                     </tr>
                     <tr>
                         <th>SPH</th>
@@ -180,8 +189,8 @@
                         <th>SPH</th>
                         <th>CYL</th>
                         <th>AXIS</th>
-                        <th>ADD</th>
-                        <th>PD</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -201,24 +210,22 @@
             <br>
 
             <p>
-                Demikian disampaikan atas perhatian dan kerja sama yang baik diucapkan terima kasih.
+                Demikian disampaikan, atas perhatian dan kerja sama yang baik diucapkan terima kasih.
             </p>
         </div>
 
         <!-- TTD -->
         <div class="ttd">
-            <div class="kanan">
+            <div class="ttd-kanan">
                 <p>Jambi, {{ $RmPemeriksaan->created_at->format('d F Y') }}</p>
                 <br><br><br>
-                <p><strong>
-                        {{ $RmPemeriksaan->user?->name ?? 'OPTIK UTAMA' }}
-                    </strong></p>
+                <p><strong>{{ $RmPemeriksaan->user?->name ?? 'OPTIK' }}</strong></p>
             </div>
         </div>
 
         <div class="clear"></div>
-    </div>
 
+    </div>
 
 </body>
 

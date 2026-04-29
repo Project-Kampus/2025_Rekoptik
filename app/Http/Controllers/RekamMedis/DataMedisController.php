@@ -307,7 +307,7 @@ class DataMedisController extends Controller
      */
     public function cetakSuratBalasan(RmPemeriksaan $RmPemeriksaan)
     {
-        return view('pdf.suratBalasan', compact('RmPemeriksaan')); // for debug
+        // return view('pdf.suratBalasan', compact('RmPemeriksaan')); // for debug
         $pdf = Pdf::loadView('pdf.suratBalasan', compact('RmPemeriksaan'));
         return $pdf->download('SuratBalasan-' . str_pad($RmPemeriksaan->id, 6, '0', STR_PAD_LEFT) . '.pdf');
     }
