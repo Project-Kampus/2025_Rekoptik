@@ -295,9 +295,11 @@ class DataMedisController extends Controller
         $RmPembayaran->load('pesanan.pemeriksaan.pasien', 'pesanan.pemeriksaan.resep', 'pesanan.pemeriksaan.user', 'pesanan.frame', 'pesanan.lensa', 'pesanan.aksesoris', 'pesanan.pembayarans');
         $RmPemeriksaan = $RmPembayaran->pesanan->pemeriksaan;
         $pengaturan = Pengaturan::first();
-        return view('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran', 'pengaturan')); // for debug
-        // $pdf = Pdf::loadView('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran', 'pengaturan'));
-        return $pdf->download('Struk-' . str_pad($RmPembayaran->id, 6, '0', STR_PAD_LEFT) . '.pdf');
+        // pembayran opsy
+        // return view('pdf.strukPembayaranOpsy', compact('RmPemeriksaan', 'RmPembayaran', 'pengaturan'));
+
+        // pembayaran Continuous form
+        return view('pdf.strukPembayaranContinuous', compact('RmPemeriksaan', 'RmPembayaran', 'pengaturan'));
     }
 
     /**
