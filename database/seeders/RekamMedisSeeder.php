@@ -16,8 +16,8 @@ class RekamMedisSeeder extends Seeder
      * Jumlah data yang akan dibuat
      * Ubah nilai ini untuk menambah/mengurangi jumlah data
      */
-    private int $jumlahPasien = 20;
-    private int $pemeriksaanPerPasien = 2;
+    private int $jumlahPasien = 5;
+    private int $pemeriksaanPerPasien = 1;
 
     public function run(): void
     {

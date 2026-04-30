@@ -84,6 +84,12 @@ class Sidebar extends Component
                         'requireRole' => ['admin', 'superadmin'],
                         'routePattern' => 'laporan.rekap-pemeriksaan.*',
                     ],
+                    [
+                        'label' => 'Rekap Pendapatan',
+                        'route' => 'laporan.rekap-pendapatan.index',
+                        'requireRole' => ['admin', 'superadmin'],
+                        'routePattern' => 'laporan.rekap-pendapatan.*',
+                    ],
                 ],
             ],
 

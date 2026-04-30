@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             DocumentSeeder::class,
             PasienSeeder::class,
 
-            // RekamMedisSeeder::class
+            RekamMedisSeeder::class
         ]);
     }
 }

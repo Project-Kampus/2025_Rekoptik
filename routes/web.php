@@ -9,6 +9,7 @@ use App\Http\Controllers\Super\PengaturanController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Laporan\RekapPemeriksaan;
+use App\Http\Controllers\Laporan\RekapPendapatan;
 use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\Mitra\RekapBpjsController;
@@ -51,7 +52,7 @@ Route::middleware('auth', 'verified')->group(function () {
                 Route::get('/{identitaspasien}/show', [IdentitasPasienController::class, 'show'])->name('show');
             });
 
-        // Laporan Rekap Pemeriksaan
+        // Laporan Rekap Pemeriksaan dan Pendapatan
         Route::prefix('laporan')
             ->name('laporan.')
             ->group(function () {
@@ -60,6 +61,12 @@ Route::middleware('auth', 'verified')->group(function () {
                     ->group(function () {
                         Route::get('/', [RekapPemeriksaan::class, 'index'])->name('index');
                         Route::get('/export', [RekapPemeriksaan::class, 'export'])->name('export');
+                    });
+                Route::prefix('rekap-pendapatan')
+                    ->name('rekap-pendapatan.')
+                    ->group(function () {
+                        Route::get('/', [RekapPendapatan::class, 'index'])->name('index');
+                        Route::get('/export', [RekapPendapatan::class, 'exportExcel'])->name('export');
                     });
             });
         // Mater data
