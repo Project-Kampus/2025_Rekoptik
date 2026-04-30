@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Document;
-use App\Models\pengaturan;
+use App\Models\Pengaturan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
