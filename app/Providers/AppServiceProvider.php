@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             try {
                 // Cek apakah database sudah siap
-                if (pengaturan::count() >= 0) {
+                if (Pengaturan::count() >= 0) {
                     $view->with('pengaturan', Pengaturan::first());
                 }
             } catch (\Exception $e) {
