@@ -32,14 +32,26 @@ class DashboardController extends Controller
     }
     public function indexreal()
     {
+        $today = Carbon::today();
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $currentDay = Carbon::now()->day;
+
         $totalPasien = RmPasien::count();
         $totalBpjs = RmPasien::where('kategori', 'bpjs')->count();
         $totalUmum = RmPasien::where('kategori', 'umum')->count();
         $totalAsuransi = RmPasien::where('kategori', 'asuransi')->count();
-        $hariIni = RmPemeriksaan::whereDate('created_at', Carbon::today())->count();
+
+        $hariIni = RmPemeriksaan::whereDate('created_at', $today)->count();
+        $kunjunganBulanIni = RmPemeriksaan::whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->count();
+        $rataRataHarian = $currentDay > 0 ? round($kunjunganBulanIni / $currentDay, 2) : 0;
         $belumDiambil = RmPesanan::where('status', 'dipesan')->count();
+        $belumDiambilColor = $belumDiambil > 0 ? 'text-red-600' : 'text-green-600';
+
         $aktivitas = RmPemeriksaan::with('pasien')
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', $today)
             ->latest()
             ->get()
             ->map(function ($item) {
@@ -52,7 +64,6 @@ class DashboardController extends Controller
             });
 
         // Data grafik kunjungan pasien per bulan (tahun saat ini)
-        $currentYear = Carbon::now()->year;
         $grafikData = [];
         $bulanNames = $this->bulanNames;
 
@@ -63,6 +74,36 @@ class DashboardController extends Controller
             $grafikData[] = $count;
         }
 
+        $lastMonthDate = Carbon::now()->subMonthNoOverflow();
+        $lastMonthLimitDay = min($currentDay, $lastMonthDate->daysInMonth);
+        $lastMonthEnd = $lastMonthDate->copy()->day($lastMonthLimitDay)->endOfDay();
+
+        $kunjunganBulanLalu = RmPemeriksaan::whereBetween('created_at', [
+            $lastMonthDate->copy()->startOfMonth(),
+            $lastMonthEnd,
+        ])->count();
+
+        $trendPercent = null;
+        if ($kunjunganBulanLalu > 0) {
+            $trendPercent = round((($kunjunganBulanIni - $kunjunganBulanLalu) / $kunjunganBulanLalu) * 100, 2);
+        }
+
+        $totalKategori = max(1, $totalPasien);
+        $bpjsShare = round($totalBpjs / $totalKategori * 100, 1);
+        $umumShare = round($totalUmum / $totalKategori * 100, 1);
+        $asuransiShare = round($totalAsuransi / $totalKategori * 100, 1);
+
+        $analysis = [
+            "Kunjungan bulan ini tercatat sebanyak {$kunjunganBulanIni} pasien, dengan rata-rata {$rataRataHarian} pasien per hari.",
+            $trendPercent !== null
+                ? "Performa kunjungan {$trendPercent}% " . ($trendPercent >= 0 ? 'naik' : 'turun') . " dibanding periode yang sama bulan lalu."
+                : 'Perbandingan bulan lalu belum tersedia karena data belum lengkap.',
+            "Komposisi pasien: BPJS {$bpjsShare}%, Umum {$umumShare}%, Asuransi {$asuransiShare}%.",
+            $belumDiambil > 0
+                ? "Terdapat {$belumDiambil} pesanan yang belum diambil; pastikan follow up untuk menyelesaikan transaksi dan meningkatkan kas."
+                : 'Semua pesanan telah diambil saat ini, operasional berjalan lancar.'
+        ];
+
         return view('dashboard', compact(
             'totalPasien',
             'totalBpjs',
@@ -72,7 +113,11 @@ class DashboardController extends Controller
             'belumDiambil',
             'aktivitas',
             'bulanNames',
-            'grafikData'
+            'grafikData',
+            'kunjunganBulanIni',
+            'rataRataHarian',
+            'trendPercent',
+            'analysis'
         ));
     }
 

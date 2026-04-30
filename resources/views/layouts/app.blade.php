@@ -119,13 +119,21 @@
             @if (isset($header))
                 <header class="bg-white border border-gray-200 rounded-lg mb-4">
                     <div class="px-6 py-4 flex items-center justify-between">
-                        {{ $header }}
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900"> {{ $header }}</h2>
+                            @isset($headerDetail)
+                                <p class="mt-1 text-sm text-gray-600">
+                                    {{ $headerDetail }}
+                                </p>
+                            @endisset
+                        </div>
 
                         @isset($headerAction)
                             <div class="flex items-center gap-2">
                                 {{ $headerAction }}
                             </div>
                         @endisset
+
                     </div>
                 </header>
             @endif
