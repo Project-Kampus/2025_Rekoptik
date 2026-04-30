@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
-use App\Models\pengaturan;
+use App\Models\Pengaturan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,7 +11,7 @@ class PengaturanController extends Controller
 {
     public function index()
     {
-        $pengaturan = pengaturan::first();
+        $pengaturan = Pengaturan::first();
 
         return view('admin.super.pengaturan_index', compact('pengaturan'));
     }

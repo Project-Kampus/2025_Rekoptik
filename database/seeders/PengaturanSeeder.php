@@ -15,7 +15,7 @@ class PengaturanSeeder extends Seeder
      */
     public function run(): void
     {
-        pengaturan::create(
+        Pengaturan::create(
             [
                 'nama_toko'     => 'OPTIK ARSY',
                 'nama_aplikasi' => 'OMS ARSY',

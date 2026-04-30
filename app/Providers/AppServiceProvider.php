@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\pengaturan;
+use App\Models\Pengaturan;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
             try {
                 // Cek apakah database sudah siap
                 if (pengaturan::count() >= 0) {
-                    $view->with('pengaturan', pengaturan::first());
+                    $view->with('pengaturan', Pengaturan::first());
                 }
             } catch (\Exception $e) {
                 // Jika database belum siap (saat migration atau test), gunakan null
