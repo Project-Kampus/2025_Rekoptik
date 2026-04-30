@@ -323,6 +323,17 @@ class DataMedisController extends Controller
             'bukti_pengambil' => 'required|string', // base64 canvas data
         ]);
 
+        // cek sisa pembayaran
+        $hargaTotal = $RmPemeriksaan->pesanan->biaya_kacamata;
+        $totalPembayaran = $RmPemeriksaan->pesanan->pembayarans->sum('jumlah');
+        $sisaPembayaran = $hargaTotal - $totalPembayaran;
+
+        if ($sisaPembayaran > 0) {
+            return redirect()
+                ->route('datamedis.show', [$RmPemeriksaan])
+                ->with('error', 'Pembayaran belum selesai. Selesaikan pembayaran terlebih dahulu sebelum melakukan pengambilan.');
+        }
+
         // Decode base64 image and save to storage
         if (strpos($validated['bukti_pengambil'], 'data:image') === 0) {
             $imageData = explode(',', $validated['bukti_pengambil']);
