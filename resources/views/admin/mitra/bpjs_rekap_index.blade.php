@@ -166,7 +166,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="16" class="border px-4 py-3 text-center py-2 text-sm">Belum ada data</td>
+                            <td colspan="16" class="border px-4 text-center py-2 text-sm">Belum ada data</td>
                         </tr>
                     @endforelse
                 </tbody>

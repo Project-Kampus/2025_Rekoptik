@@ -7,6 +7,7 @@ use App\Models\RmPasien;
 use App\Models\RmPembayaran;
 use App\Models\RmPemeriksaan;
 use App\Models\RmPesanan;
+use App\Models\RmPengambilan;
 use App\Models\RmResep;
 use Illuminate\Database\Seeder;
 
@@ -47,7 +48,20 @@ class RekamMedisSeeder extends Seeder
                             'pesanan_id' => $pesanan->id,
                             'jumlah' => $pesanan->biaya_kacamata,
                         ])
+                        ->when($pasien->kategori === 'bpjs', fn($q) => $q->kategoriBpjs())
+                        ->when($pasien->kategori === 'asuransi', fn($q) => $q->kategoriAsuransi())
+                        ->when(!in_array($pasien->kategori, ['bpjs', 'asuransi']), fn($q) => $q->kategoriLunas())
                         ->create();
+
+                    // Jika pesanan sudah diambil, buatkan record pengambilan
+                    if ($pesanan->status === 'diambil') {
+                        RmPengambilan::create([
+                            'pesanan_id' => $pesanan->id,
+                            'nama_pengambil' => fake()->name(),
+                            'hub_pengambil' => fake()->randomElement(['Diri Sendiri', 'Suami/Istri', 'Orang Tua', 'Anak', 'Saudara']),
+                            'bukti_pengambil' => null,
+                        ]);
+                    }
 
                     // Create dokumen untuk setiap pemeriksaan (hanya untuk BPJS)
                     $this->attachDokumen($pemeriksaan->id, $pasien->kategori);
