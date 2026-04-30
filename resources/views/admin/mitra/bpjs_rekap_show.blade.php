@@ -5,6 +5,11 @@
         </h2>
     </x-slot>
 
+    @php
+        $RmPemeriksaan = $pesanan->pemeriksaan;
+        $sisaPembayaran = $pesanan->biaya_kacamata - $pesanan->pembayarans->sum('jumlah');
+    @endphp
+
     <x-slot name="headerAction">
         <div class="flex gap-2 flex-wrap">
             <a href="{{ route('mitra.bpjs.index') }}"
@@ -457,5 +462,4 @@
         </div>
 
     </div>
-
 </x-app-layout>

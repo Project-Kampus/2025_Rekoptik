@@ -107,6 +107,9 @@
                                             class="px-2 py-1 mr-2 bg-blue-100 text-blue-700 text-xs font-semibold rounded">
                                             {{ $RmPemeriksaan->pesanan->status }}
                                         </span>
+                                        @if ($RmPemeriksaan->pesanan->status == 'diambil')
+                                            {{ $RmPemeriksaan->pesanan->pengambilan->created_at->format('d F Y H:i') }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-blue-50">
@@ -133,7 +136,7 @@
                                         @php
                                             $totalDokumen = $allDokumens->count();
                                             $uploadedCount = $uploadedDokumens->count();
-                                            $isComplete = $uploadedCount >= $totalDokumen;
+                                            $isComplete = $totalDokumen > 0 && $uploadedCount >= $totalDokumen;
                                         @endphp
                                         @if ($isComplete)
                                             <span

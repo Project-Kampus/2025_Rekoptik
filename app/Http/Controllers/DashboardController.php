@@ -27,9 +27,56 @@ class DashboardController extends Controller
     ];
     public function index()
     {
+        if (auth()->check() && (auth()->user()->hasRole('bpjs') || auth()->user()->hasRole('asuransi'))) {
+            return $this->indexMitra();
+        }
+
         // return $this->indexsampel();
         return $this->indexreal();
     }
+
+    protected function indexMitra()
+    {
+        $today = Carbon::today();
+        $category = auth()->user()->hasRole('bpjs') ? 'bpjs' : 'asuransi';
+        $categoryLabel = ucfirst($category);
+
+        $totalCategory = RmPasien::where('kategori', $category)->count();
+        $hariIni = RmPemeriksaan::whereHas('pasien', function ($query) use ($category) {
+            $query->where('kategori', $category);
+        })->whereDate('created_at', $today)->count();
+
+        $belumDiambil = RmPesanan::where('status', 'dipesan')
+            ->whereHas('pemeriksaan.pasien', function ($query) use ($category) {
+                $query->where('kategori', $category);
+            })
+            ->count();
+
+        $aktivitas = RmPemeriksaan::with('pasien')
+            ->whereHas('pasien', function ($query) use ($category) {
+                $query->where('kategori', $category);
+            })->whereDate('created_at', $today)
+            ->latest()
+            ->get()
+            ->map(function ($item) {
+                return (object) [
+                    'id' => $item->id,
+                    'tanggal_pemeriksaan' => $item->created_at,
+                    'nama_pasien' => $item->pasien->nama_pasien ?? '-',
+                    'kategori' => $item->pasien->kategori ?? '-',
+                ];
+            });
+
+        return view('dashboard-mitra', compact(
+            'category',
+            'categoryLabel',
+            'totalCategory',
+            'hariIni',
+            'belumDiambil',
+            'aktivitas'
+        ));
+    }
+
     public function indexreal()
     {
         $today = Carbon::today();

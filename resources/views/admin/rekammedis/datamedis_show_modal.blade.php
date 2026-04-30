@@ -422,18 +422,21 @@
       }
 
       // Save signature data before form submission
-      document.getElementById('pengambilanForm').addEventListener('submit', function(e) {
-          const signatureData = canvas.toDataURL('image/png');
-          document.getElementById('bukti_pengambil').value = signatureData;
+      const pengambilanForm = document.getElementById('pengambilanForm');
+      if (pengambilanForm) {
+          pengambilanForm.addEventListener('submit', function(e) {
+              const signatureData = canvas.toDataURL('image/png');
+              document.getElementById('bukti_pengambil').value = signatureData;
 
-          if (signatureData ===
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
-          ) {
-              e.preventDefault();
-              alert('Mohon buat tanda tangan terlebih dahulu');
-              return false;
-          }
-      });
+              if (signatureData ===
+                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
+              ) {
+                  e.preventDefault();
+                  alert('Mohon buat tanda tangan terlebih dahulu');
+                  return false;
+              }
+          });
+      }
 
       // Close modal when clicking outside
       document.getElementById('pengambilanModal').addEventListener('click', function(e) {
