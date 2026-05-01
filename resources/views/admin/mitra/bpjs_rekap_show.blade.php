@@ -446,11 +446,17 @@
                 @foreach ($allDokumens as $dokumen)
                     @php
                         $uploaded = $uploadedDokumens->get($dokumen->id);
+                        $uploadedColor = 'bg-orange-50';
+                        if ($uploaded && file_exists(public_path('storage/' . $uploaded->url))) {
+                            $uploadedColor = 'bg-green-50';
+                        } elseif ($uploaded) {
+                            $uploadedColor = 'bg-yellow-50';
+                        }
                     @endphp
 
-                    <div
-                        class="border rounded-lg p-4 hover:shadow-md transition @if ($uploaded && file_exists(public_path('storage/' . $uploaded->url))) bg-green-50 @elseif($uploaded) bg-yellow-50 @else bg-orange-50 @endif">
+                    <div class="border rounded-lg p-4 hover:shadow-md transition {{ $uploadedColor }}">
                         <p class="font-semibold text-gray-800 mb-2">{{ $dokumen->nama }}</p>
+
 
                         @if ($uploaded)
                             @php
