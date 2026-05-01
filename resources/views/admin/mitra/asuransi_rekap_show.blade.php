@@ -1,7 +1,7 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Detail Rekap Medis BPJS
+            Detail Rekap Medis Asuransi
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
 
     <x-slot name="headerAction">
         <div class="flex gap-2 flex-wrap">
-            <a href="{{ route('mitra.bpjs.index') }}"
+            <a href="{{ route('mitra.asuransi.index') }}"
                 class="px-4 py-2 bg-gray-600 text-white rounded-lg text-sm hover:bg-gray-700 transition">
                 Kembali
             </a>

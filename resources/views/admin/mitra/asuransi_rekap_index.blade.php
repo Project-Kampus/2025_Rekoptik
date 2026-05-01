@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800">
-            Rekap Medis Pasien
+            Rekap Medis Asuransi
         </h2>
     </x-slot>
 
@@ -14,7 +14,7 @@
                     Tabel Pemeriksaan
                 </h2>
                 <p class="mt-1 text-sm text-gray-600">
-                    Kelola data pemeriksaan
+                    Kelola data pemeriksaan asuransi
                 </p>
             </div>
             <!-- Filter Tanggal -->
@@ -34,7 +34,7 @@
                         class="px-3 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
                         Filter
                     </button>
-                    <a href="{{ route('mitra.bpjs.rekap.export', ['tanggal_awal' => request('tanggal_awal'), 'tanggal_akhir' => request('tanggal_akhir')]) }}"
+                    <a href="{{ route('mitra.asuransi.rekap.export', ['tanggal_awal' => request('tanggal_awal'), 'tanggal_akhir' => request('tanggal_akhir')]) }}"
                         class="px-3 py-2 bg-green-600 text-white rounded-md text-sm hover:bg-green-700 flex items-center"
                         target="_blank">
                         Download Excel
@@ -46,7 +46,7 @@
         <!-- Tabel Laporan -->
         <div class="overflow-x-auto border border-gray-200 rounded-lg">
             <table class="min-w-full">
-                <thead class="bg-blue-700 text-white font-bold text-sm">
+                <thead class="bg-amber-700 text-white font-bold text-sm">
                     <tr>
                         <th rowspan="2" colspan="1" class="border px-2 py-1 whitespace-nowrap">NO
                         </th>
@@ -55,7 +55,7 @@
                         <th rowspan="2" colspan="1" class="border px-2 py-1 whitespace-nowrap">
                             Nama Peserta</th>
                         <th rowspan="2" colspan="1" class="border px-2 py-1">Umur</th>
-                        <th rowspan="2" colspan="1" class="border px-2 py-1">No.Kartu BPJS</th>
+                        <th rowspan="2" colspan="1" class="border px-2 py-1">No.Kartu Asuransi</th>
                         <th rowspan="2" colspan="1" class="border px-2 py-1">No.Hp</th>
                         <th rowspan="1" colspan="2" class="border px-2 py-1 whitespace-nowrap">
                             Resep dokter</th>
@@ -82,9 +82,9 @@
                         <th rowspan="1" colspan="1" class="border px-2 py-1">OS</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-blue-100">
+                <tbody class="divide-y divide-amber-100">
                     @forelse($rekamMedis as $index => $rm)
-                        <tr class="hover:bg-blue-50">
+                        <tr class="hover:bg-amber-50">
                             <td class="border px-4 py-3 w-12 whitespace-nowrap">
                                 {{ $rekamMedis->firstItem() + $index }}</td>
                             <td class="border px-4 py-3 whitespace-nowrap">
@@ -123,11 +123,11 @@
                             </td>
                             <td class="border px-4 py-3 whitespace-nowrap text-right">
                                 Rp.
-                                {{ number_format($rm->pembayarans->where('kategori', 'bpjs')->sum('jumlah') ?? 0, 0, ',', '.') }}
+                                {{ number_format($rm->pembayarans->where('kategori', 'asuransi')->sum('jumlah') ?? 0, 0, ',', '.') }}
                             </td>
                             <td class="border px-4 py-3 whitespace-nowrap text-right">
                                 Rp.
-                                {{ number_format(($rm->biaya_kacamata ?? 0) - ($rm->pembayarans->where('kategori', 'bpjs')->sum('jumlah') ?? 0), 0, ',', '.') }}
+                                {{ number_format(($rm->biaya_kacamata ?? 0) - ($rm->pembayarans->where('kategori', 'asuransi')->sum('jumlah') ?? 0), 0, ',', '.') }}
                             </td>
                             <td class="border px-4 py-3 text-sm text-center">
                                 @if (!empty($rm->pengambilan->bukti_pengambil))
@@ -138,8 +138,8 @@
                                 @endif
                             </td>
                             <td class="border px-4 py-1 text-sm text-center">
-                                <a href="{{ route('mitra.bpjs.show', $rm->id) }}"
-                                    class="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
+                                <a href="{{ route('mitra.asuransi.show', $rm->id) }}"
+                                    class="px-2 py-1 bg-amber-600 text-white rounded text-xs hover:bg-amber-700">
                                     Detail
                                 </a>
                             </td>

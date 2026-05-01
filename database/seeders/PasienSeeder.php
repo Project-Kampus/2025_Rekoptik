@@ -20,7 +20,7 @@ class PasienSeeder extends Seeder
         $kategori = ['umum', 'bpjs', 'asuransi'];
         $kelas = ['1', '2', '3'];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $selectedKategori = $faker->randomElement($kategori);
 
             RmPasien::create([

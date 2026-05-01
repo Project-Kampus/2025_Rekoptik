@@ -97,7 +97,7 @@
                 </thead>
                 <tbody class="divide-y">
                     @forelse ($data as $item)
-                        <tr class="hover:bg-gray-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-4 py-3 text-sm font-medium text-gray-800">
                                 {{ $item->pesanan->created_at->format('d/F/Y') }}
                             </td>

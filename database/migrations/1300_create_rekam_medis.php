@@ -49,17 +49,17 @@ return new class extends Migration
             $table->string('resep_dari');
             $table->date('tanggal')->default(now());
 
-            $table->decimal('od_sferis', 6, 2)->nullable();
-            $table->decimal('od_silindris', 6, 2)->nullable();
-            $table->integer('od_axis')->nullable();
-            $table->decimal('od_add_lensa', 6, 2)->nullable();
-            $table->integer('pd_od')->nullable();
+            $table->decimal('od_sferis', 6, 2)->default(0);
+            $table->decimal('od_silindris', 6, 2)->default(0);
+            $table->integer('od_axis')->default(0);
+            $table->decimal('od_add_lensa', 6, 2)->default(0);
+            $table->integer('pd_od')->default(0);
 
-            $table->decimal('os_sferis', 6, 2)->nullable();
-            $table->decimal('os_silindris', 6, 2)->nullable();
-            $table->integer('os_axis')->nullable();
-            $table->decimal('os_add_lensa', 6, 2)->nullable();
-            $table->integer('pd_os')->nullable();
+            $table->decimal('os_sferis', 6, 2)->default(0);
+            $table->decimal('os_silindris', 6, 2)->default(0);
+            $table->integer('os_axis')->default(0);
+            $table->decimal('os_add_lensa', 6, 2)->default(0);
+            $table->integer('pd_os')->default(0);
 
             $table->timestamps();
 

@@ -13,6 +13,7 @@ use App\Http\Controllers\Laporan\RekapPendapatan;
 use App\Http\Controllers\Master\AksesorisController;
 use App\Http\Controllers\Master\DocumentController;
 use App\Http\Controllers\Mitra\RekapBpjsController;
+use App\Http\Controllers\Mitra\RekapAsuransiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedis\DataMedisController;
 use App\Http\Controllers\RekamMedis\IdentitasPasienController;
@@ -24,6 +25,8 @@ Route::get('/test', fn() => view('test'))->name('test');
 Route::middleware('auth', 'verified')->group(function () {
     // Export Rekap BPJS Excel
     Route::get('mitra/bpjs/rekap/export', [RekapBpjsController::class, 'export'])->name('mitra.bpjs.rekap.export');
+    // Export Rekap Asuransi Excel
+    Route::get('mitra/asuransi/rekap/export', [RekapAsuransiController::class, 'export'])->name('mitra.asuransi.rekap.export');
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -157,6 +160,16 @@ Route::middleware('auth', 'verified')->group(function () {
             ->group(function () {
                 Route::get('/', [RekapBpjsController::class, 'index'])->name('index');
                 Route::get('/{pesanan}', [RekapBpjsController::class, 'show'])->name('show');
+            });
+    });
+
+    Route::middleware('role:asuransi')->prefix('mitra')->name('mitra.')->group(function () {
+        // Pengaturan Sistem
+        Route::prefix('asuransi')
+            ->name('asuransi.')
+            ->group(function () {
+                Route::get('/', [RekapAsuransiController::class, 'index'])->name('index');
+                Route::get('/{pesanan}', [RekapAsuransiController::class, 'show'])->name('show');
             });
     });
 

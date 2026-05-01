@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $bpjsRole  = Role::firstOrCreate(['name' => 'bpjs']);
+        $asuransiRole = Role::firstOrCreate(['name' => 'asuransi']);
         $superRole = Role::firstOrCreate(['name' => 'superadmin']);
 
         $admin = User::firstOrCreate(
@@ -35,6 +36,15 @@ class DatabaseSeeder extends Seeder
             ]
         );
         $bpjs->roles()->syncWithoutDetaching([$bpjsRole->id]);
+
+        $asuransi = User::firstOrCreate(
+            [
+                'email' => 'asuransi@gmail.com',
+                'name'     => 'Petugas Asuransi',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $asuransi->roles()->syncWithoutDetaching([$asuransiRole->id]);
 
         $superadmin = User::firstOrCreate(
             [

@@ -68,6 +68,12 @@ class Sidebar extends Component
                         'requireRole' => ['bpjs'],
                         'routePattern' => 'mitra.bpjs.*',
                     ],
+                    [
+                        'label' => 'Rekam Medis',
+                        'route' => 'mitra.asuransi.index',
+                        'requireRole' => ['asuransi'],
+                        'routePattern' => 'mitra.asuransi.*',
+                    ],
                 ],
             ],
 

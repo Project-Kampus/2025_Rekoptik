@@ -19,11 +19,11 @@
             @endif
 
             @php
-                $pembayaran = $RmPemeriksaan->pesanan->pembayarans->last();
+                $lastPembayaran = $RmPemeriksaan->pesanan->pembayarans->last();
             @endphp
 
-            @if ($pembayaran)
-                <a href="{{ route('datamedis.cetatakStruk', $pembayaran->id) }}" target="_blank"
+            @if ($lastPembayaran)
+                <a href="{{ route('datamedis.cetatakStruk', $lastPembayaran->id) }}" target="_blank"
                     class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition">
                     Lihat Struk
                 </a>
@@ -103,12 +103,29 @@
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Status</td>
                                     <td class="px-3 py-2">
-                                        <span
-                                            class="px-2 py-1 mr-2 bg-blue-100 text-blue-700 text-xs font-semibold rounded">
-                                            {{ $RmPemeriksaan->pesanan->status }}
-                                        </span>
+                                        @if ($sisaPembayaran > 1)
+                                            <span
+                                                class="px-2 py-1 mr-2 bg-orange-100 text-orange-700 text-xs font-semibold rounded">
+                                                Belum Lunas
+                                            </span>
+                                        @else
+                                            <span
+                                                class="px-2 py-1 mr-2 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                                                Lunas
+                                            </span>
+                                        @endif
                                         @if ($RmPemeriksaan->pesanan->status == 'diambil')
-                                            {{ $RmPemeriksaan->pesanan->pengambilan->created_at->format('d F Y H:i') }}
+                                            <span
+                                                class="px-2 py-1 mr-2 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                                                {{ $RmPemeriksaan->pesanan->status }}
+                                            </span>
+                                            {{ $RmPemeriksaan->pesanan->pembayarans->last()?->tanggal_bayar?->format('d F Y') }}
+                                        @else
+                                            <span
+                                                class="px-2 py-1 mr-2 bg-orange-100 text-orange-700 text-xs font-semibold rounded">
+                                                {{ $RmPemeriksaan->pesanan->status }}
+                                            </span>
+                                            {{ $RmPemeriksaan->pesanan->tanggal_dipesan->format('d F Y') }}
                                         @endif
                                     </td>
                                 </tr>
@@ -124,12 +141,6 @@
                                         {{ $RmPemeriksaan->pesanan->tanggal_pengambilan?->format('d F Y') ?? '-' }}
                                     </td>
                                 </tr>
-                                {{-- <tr class="hover:bg-blue-50">
-                                    <td class="px-3 py-2 font-medium text-gray-600">Tgl Diambilan</td>
-                                    <td class="px-3 py-2 text-gray-900">
-                                        {{ $RmPemeriksaan->pesanan->pengambilan?->created_at->format('d F Y') ?? '-' }}
-                                    </td>
-                                </tr> --}}
                                 <tr class="hover:bg-blue-50">
                                     <td class="px-3 py-2 font-medium text-gray-600">Dokumen</td>
                                     <td class="px-3 py-2">
@@ -227,35 +238,35 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600 w-1/5">No SEP</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->no_sep ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Keluhan Utama</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->keluhan_utama ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Riwayat Penyakit</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->riwayat_penyakit ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Penyakit Sekarang</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->penyakit_sekarang ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Penyakit Keluarga</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->penyakit_keluarga ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Kebiasaan</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->kebiasaan ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Pengobatan</td>
                             <td class="px-3 py-2 text-gray-900">{{ $RmPemeriksaan->pengobatan ?? '-' }}</td>
                         </tr>
-                        <tr class="hover:bg-green-50">
+                        <tr class="hover:bg-blue-50">
                             <td class="px-3 py-2 font-medium text-gray-600">Diagnosa</td>
                             <td class="px-3 py-2 font-semibold text-green-700">{{ $RmPemeriksaan->diagnosa ?? '-' }}
                             </td>
@@ -270,18 +281,18 @@
         @if ($RmPemeriksaan->resep)
             <!-- DETAIL RESEP -->
             <div class="bg-white rounded-xl border p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-6">Detail Resep</h3>
+                <h3 class="text-base font-bold text-gray-800 mb-4 pb-3 border-b border-gray-200">Detail Resep</h3>
                 <div class="mb-8">
                     <h4 class="font-semibold text-gray-700 mb-3">
                         Resep dri {{ $RmPemeriksaan->resep->resep_dari }}
                         <span class="text-sm text-gray-500">
-                            ({{ $RmPemeriksaan->resep->tanggal }})
+                            ({{ $RmPemeriksaan->resep->tanggal?->format('d F Y') }})
                         </span>
                     </h4>
 
                     <div class="overflow-x-auto rounded-lg border border-gray-200">
                         <table class="w-full text-sm">
-                            <thead class="bg-gradient-to-r from-indigo-200 to-indigo-100 text-gray-700">
+                            <thead class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
                                 <tr>
                                     <th class="px-4 py-3 text-left font-semibold">Mata</th>
                                     <th class="px-4 py-3 text-left font-semibold">SPH</th>
@@ -291,8 +302,8 @@
                                     <th class="px-4 py-3 text-left font-semibold">PD</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50 transition-colors">
+                            <tbody class="divide-y divide-blue-200">
+                                <tr class="hover:bg-blue-50 transition-colors">
                                     <td class="px-4 py-3 font-semibold text-gray-700">Mata Kanan (OD)</td>
                                     <td class="px-4 py-3">{{ $RmPemeriksaan->resep->od_sferis ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $RmPemeriksaan->resep->od_silindris ?? '-' }}</td>
@@ -300,7 +311,7 @@
                                     <td class="px-4 py-3">{{ $RmPemeriksaan->resep->od_add_lensa ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $RmPemeriksaan->resep->pd_od ?? '-' }}</td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-blue-50 transition-colors">
                                     <td class="px-4 py-3 font-semibold text-gray-700">Mata Kiri (OS)</td>
                                     <td class="px-4 py-3">{{ $RmPemeriksaan->resep->os_sferis ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $RmPemeriksaan->resep->os_silindris ?? '-' }}</td>
@@ -319,34 +330,33 @@
         <!-- RIWAYAT PEMBAYARAN -->
         <div class="bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
-                {{-- <h3 class="text-base font-bold text-gray-800">Riwayat Pembayaran</h3> --}}
                 <div>
                     <h3 class="text-base font-bold text-gray-800">Riwayat Pembayaran</h3>
-                    <p class="text-sm text-gray-500 mt-1">Total: <strong class="text-green-600">Rp
+                    <p class="text-sm text-gray-500 mt-1">
+                        Total Pembayaran: <strong class="text-green-600">Rp
                             {{ number_format($RmPemeriksaan->pesanan->pembayarans->sum('jumlah'), 0, ',', '.') }}</strong>
                         / Rp
                         {{ number_format($RmPemeriksaan->pesanan->biaya_kacamata, 0, ',', '.') }}</p>
                 </div>
                 <button onclick="openPembayaranModal()"
-                    class="px-3 py-1.5 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition">
+                    class="px-3 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition">
                     Tambah Pembayaran
                 </button>
             </div>
-
             <div class="overflow-x-auto rounded-lg border border-gray-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-gradient-to-r from-green-200 to-green-100 border-b border-gray-200">
+                    <thead class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold text-left">
                         <tr>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Tanggal Bayar</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Kategori</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Metode</th>
-                            <th class="px-4 py-3 text-right font-semibold text-gray-700">Jumlah</th>
-                            <th class="px-4 py-3 w-1/6 text-center font-semibold text-gray-700"></th>
+                            <th class="px-4 py-3">Tanggal Bayar</th>
+                            <th class="px-4 py-3">Kategori</th>
+                            <th class="px-4 py-3">Metode</th>
+                            <th class="px-4 py-3 text-right">Jumlah</th>
+                            <th class="px-4 py-3 w-1/6 text-center font-semibold"></th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100">
+                    <tbody class="divide-y divide-blue-100">
                         @foreach ($RmPemeriksaan->pesanan->pembayarans as $pembayaran)
-                            <tr class="hover:bg-green-50 transition">
+                            <tr class="hover:bg-blue-50 transition">
                                 <td class="px-4 py-3 text-gray-900">
                                     {{ $pembayaran->tanggal_bayar->format('d F Y') }}
                                 </td>
@@ -446,8 +456,16 @@
             <div class="bg-white rounded-xl border p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4">Detail Pengambilan</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <x-detail label="Nama Pengambil" :value="$RmPemeriksaan->pesanan->pengambilan->nama_pengambil" />
-                    <x-detail label="Hubungan Pengambil" :value="$RmPemeriksaan->pesanan->pengambilan->hub_pengambil" />
+                    <div>
+                        <p class="text-gray-500 text-sm">Nama Pengambil</p>
+                        <p class="font-medium text-gray-900">
+                            {{ $RmPemeriksaan->pesanan->pengambilan->nama_pengambil ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Hubungan Pengambil</p>
+                        <p class="font-medium text-gray-900">
+                            {{ $RmPemeriksaan->pesanan->pengambilan->hub_pengambil ?? '-' }}</p>
+                    </div>
 
                     <!-- Bukti Pengambil (Signature Image) -->
                     <div class="border rounded-lg p-4 bg-gray-50">

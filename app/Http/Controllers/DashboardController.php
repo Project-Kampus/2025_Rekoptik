@@ -38,13 +38,23 @@ class DashboardController extends Controller
     protected function indexMitra()
     {
         $today = Carbon::today();
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $currentDay = Carbon::now()->day;
         $category = auth()->user()->hasRole('bpjs') ? 'bpjs' : 'asuransi';
         $categoryLabel = ucfirst($category);
 
         $totalCategory = RmPasien::where('kategori', $category)->count();
+
         $hariIni = RmPemeriksaan::whereHas('pasien', function ($query) use ($category) {
             $query->where('kategori', $category);
         })->whereDate('created_at', $today)->count();
+
+        $kunjunganBulanIni = RmPemeriksaan::whereHas('pasien', function ($query) use ($category) {
+            $query->where('kategori', $category);
+        })->whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->count();
 
         $belumDiambil = RmPesanan::where('status', 'dipesan')
             ->whereHas('pemeriksaan.pasien', function ($query) use ($category) {
@@ -67,13 +77,42 @@ class DashboardController extends Controller
                 ];
             });
 
+        // Data grafik kunjungan bulanan tahun ini (khusus mitra)
+        $bulanNames = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
+        $grafikData = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $count = RmPemeriksaan::whereHas('pasien', function ($query) use ($category) {
+                $query->where('kategori', $category);
+            })->whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $month)
+                ->count();
+            $grafikData[] = $count;
+        }
+
         return view('dashboard-mitra', compact(
             'category',
             'categoryLabel',
             'totalCategory',
             'hariIni',
+            'kunjunganBulanIni',
             'belumDiambil',
-            'aktivitas'
+            'aktivitas',
+            'grafikData',
+            'bulanNames'
         ));
     }
 

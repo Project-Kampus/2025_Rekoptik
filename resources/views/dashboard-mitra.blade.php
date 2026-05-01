@@ -15,15 +15,23 @@
         </div>
 
         <div class="rounded-xl border border-gray-200 bg-white p-5">
-            <p class="text-sm text-gray-500">Kunjungan Hari Ini</p>
-            <p class="mt-3 text-3xl font-semibold text-gray-900">{{ $hariIni }}</p>
-            <p class="mt-2 text-sm text-gray-500">Pemeriksaan {{ $categoryLabel }} yang dicatat hari ini.</p>
+            <p class="text-sm text-gray-500">Kunjungan Bulan Ini</p>
+            <p class="mt-3 text-3xl font-semibold text-gray-900">{{ $kunjunganBulanIni }}</p>
+            <p class="mt-2 text-sm text-gray-500">Total pemeriksaan {{ $categoryLabel }} bulan ini.</p>
         </div>
 
         <div class="rounded-xl border border-gray-200 bg-white p-5">
             <p class="text-sm text-gray-500">Pesanan Belum Diambil</p>
             <p class="mt-3 text-3xl font-semibold text-rose-600">{{ $belumDiambil }}</p>
             <p class="mt-2 text-sm text-gray-500">Pesanan {{ $categoryLabel }} yang masih dalam status dipesan.</p>
+        </div>
+    </div>
+
+    <!-- Grafik Kunjungan Bulanan -->
+    <div class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
+        <h3 class="mb-4 text-lg font-semibold text-gray-900">Grafik Kunjungan Bulanan - Tahun Ini</h3>
+        <div style="height: 300px;">
+            <canvas id="kunjunganChart"></canvas>
         </div>
     </div>
 
@@ -38,48 +46,59 @@
                     class="inline-flex items-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
                     Buka Rekap BPJS
                 </a>
+            @elseif ($category === 'asuransi')
+                <a href="{{ route('mitra.asuransi.index') }}"
+                    class="inline-flex items-center rounded-full bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700">
+                    Buka Rekap Asuransi
+                </a>
             @else
                 <div class="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
-                    Fitur rekap untuk mitra Asuransi akan ditambahkan sesuai pengaturan sistem.
+                    Fitur rekap akan ditampilkan sesuai kategori Anda.
                 </div>
             @endif
         </div>
     </div>
 
-    <div class="mt-6 rounded-xl border border-gray-200 bg-white p-6">
-        <h3 class="text-lg font-semibold text-gray-900">Aktivitas {{ $categoryLabel }} Hari Ini</h3>
-        <p class="mt-1 text-sm text-gray-500">Daftar pasien {{ $categoryLabel }} yang diproses hari ini.</p>
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('kunjunganChart').getContext('2d');
+        const grafikData = @json($grafikData);
+        const bulanNames = @json($bulanNames);
 
-        <div class="mt-6 overflow-x-auto rounded-xl border border-gray-200">
-            <table class="min-w-full text-left text-sm text-gray-700">
-                <thead class="bg-slate-50 text-gray-600">
-                    <tr>
-                        <th class="px-4 py-3">Jam</th>
-                        <th class="px-4 py-3">Nama</th>
-                        <th class="px-4 py-3">Kategori</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 bg-white">
-                    @forelse ($aktivitas as $item)
-                        <tr class="hover:bg-slate-50">
-                            <td class="px-4 py-3 text-gray-700">
-                                {{ optional($item->tanggal_pemeriksaan)->format('H:i') }}</td>
-                            <td class="px-4 py-3 text-gray-900">{{ $item->nama_pasien }}</td>
-                            <td class="px-4 py-3">
-                                <span
-                                    class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                                    {{ ucfirst($item->kategori) }}
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="px-4 py-8 text-center text-gray-500">Tidak ada aktivitas hari ini.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+        // Menggunakan label bulan (Januari - Desember)
+        const labels = bulanNames;
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Kunjungan {{ $categoryLabel }}',
+                    data: grafikData,
+                    backgroundColor: '{{ $category === 'bpjs' ? '#2563eb' : '#b45309' }}',
+                    borderColor: '{{ $category === 'bpjs' ? '#1d4ed8' : '#92400e' }}',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </x-app-layout>
