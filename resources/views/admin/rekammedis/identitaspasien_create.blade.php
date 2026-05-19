@@ -53,12 +53,12 @@
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
-                <!-- Umur -->
+                <!-- Tanggal Lahir -->
                 <div>
-                    <x-input-label for="umur" value="Umur (Tahun)" />
-                    <x-form-input id="umur" name="umur" type="number" class="mt-1 block w-full"
-                        value="{{ old('umur') }}" min="0" />
-                    <x-input-error :messages="$errors->get('umur')" class="mt-2" />
+                    <x-input-label for="tanggal_lahir" value="Tanggal Lahir" />
+                    <x-form-input id="tanggal_lahir" name="tanggal_lahir" type="date" class="mt-1 block w-full"
+                        value="{{ old('tanggal_lahir') }}" required />
+                    <x-input-error :messages="$errors->get('tanggal_lahir')" class="mt-2" />
                 </div>
 
                 <!-- Kategori -->

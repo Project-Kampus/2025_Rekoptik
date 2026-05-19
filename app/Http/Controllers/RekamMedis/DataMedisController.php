@@ -376,7 +376,7 @@ class DataMedisController extends Controller
                 'nama_pasien' => 'required|string',
             ]);
 
-            $pasien = RmPasien::where('nama_pasien', 'like', '%' . $request->nama_pasien . '%')->get();
+            $pasien = RmPasien::where('nama_pasien', 'like', '%' . $request->nama_pasien . '%')->limit(10)->get();
         }
 
         return view('admin.rekammedis.datamedis_create_step1', compact('action', 'pasien', 'nama_pasien'));
@@ -450,7 +450,8 @@ class DataMedisController extends Controller
 
             'frame_id' => 'required|exists:frames,id',
             'lensa_id' => 'required|exists:lensas,id',
-            'aksesoris_id' => 'required|exists:aksesoris,id',
+            'aksesoris_id' => 'required|array',
+            'aksesoris_id.*' => 'exists:aksesoris,id',
             'biaya_kacamata' => 'required|numeric',
             'tanggal_dipesan' => 'required|date',
             'tanggal_pengambilan' => 'required|date',

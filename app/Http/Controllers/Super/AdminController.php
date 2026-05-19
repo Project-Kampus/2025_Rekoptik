@@ -109,11 +109,8 @@ class AdminController extends Controller
      */
     public function destroy(User $admin)
     {
-        // Lepas role admin sebelum hapus (opsional)
-        $adminRole = Role::where('name', 'admin')->first();
-        if ($adminRole) {
-            $admin->roles()->detach($adminRole->id);
-        }
+        // Lepas semua role admin sebelum hapus
+        $admin->roles()->detach();
 
         $admin->delete();
 

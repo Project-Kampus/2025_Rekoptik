@@ -294,7 +294,8 @@
                       </label>
                       <div class="border-2 border-gray-300 rounded-lg bg-gray-50 overflow-hidden">
                           <canvas id="signatureCanvas" width="400" height="200"
-                              class="w-full bg-white cursor-crosshair touch-none block"></canvas>
+                              class="w-full bg-white cursor-crosshair block"
+                              style="touch-action: none; user-select: none;"></canvas>
                       </div>
                       <div class="flex gap-2 mt-2">
                           <button type="button" onclick="clearSignature()"
@@ -333,6 +334,8 @@
       let ctx = null;
       let isDrawing = false;
 
+      let canvasInitialized = false;
+
       function initSignatureCanvas() {
           canvas = document.getElementById('signatureCanvas');
           ctx = canvas.getContext('2d');
@@ -341,30 +344,41 @@
           const rect = canvas.getBoundingClientRect();
           canvas.width = rect.width;
           canvas.height = rect.height;
+          canvas.style.touchAction = 'none';
+          canvas.style.userSelect = 'none';
 
-          // Mouse events
-          canvas.addEventListener('mousedown', startDrawing);
-          canvas.addEventListener('mousemove', draw);
-          canvas.addEventListener('mouseup', stopDrawing);
-          canvas.addEventListener('mouseout', stopDrawing);
+          if (canvasInitialized) {
+              clearSignature();
+              return;
+          }
 
-          // Touch events
-          canvas.addEventListener('touchstart', handleTouch);
-          canvas.addEventListener('touchmove', handleTouch);
-          canvas.addEventListener('touchend', stopDrawing);
+          // Pointer events cover mouse, touch, and pen/stylus
+          canvas.addEventListener('pointerdown', startDrawing);
+          canvas.addEventListener('pointermove', draw);
+          canvas.addEventListener('pointerup', stopDrawing);
+          canvas.addEventListener('pointercancel', stopDrawing);
+          canvas.addEventListener('pointerleave', stopDrawing);
+
+          canvasInitialized = true;
       }
 
       function startDrawing(e) {
+          if (e.pointerType === 'mouse' && e.button !== 0) return;
+          e.preventDefault();
           isDrawing = true;
           const rect = canvas.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
           ctx.beginPath();
           ctx.moveTo(x, y);
+          if (e.pointerId) {
+              canvas.setPointerCapture(e.pointerId);
+          }
       }
 
       function draw(e) {
           if (!isDrawing) return;
+          e.preventDefault();
           const rect = canvas.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
@@ -375,17 +389,11 @@
           ctx.stroke();
       }
 
-      function handleTouch(e) {
-          const touch = e.touches[0];
-          const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
-              clientX: touch.clientX,
-              clientY: touch.clientY
-          });
-          canvas.dispatchEvent(mouseEvent);
-      }
-
-      function stopDrawing() {
+      function stopDrawing(e) {
           isDrawing = false;
+          if (e && e.pointerId && canvas) {
+              canvas.releasePointerCapture(e.pointerId);
+          }
       }
 
       function clearSignature() {
